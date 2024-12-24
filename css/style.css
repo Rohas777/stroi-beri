@@ -2718,7 +2718,6 @@ input[type=radio]:checked {
 }
 
 .product-card {
-  width: 296px;
   padding: 20px;
   display: -webkit-box;
   display: -moz-box;
