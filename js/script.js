@@ -58,25 +58,37 @@ $(document).ready(function () {
 
     //=================== Переключение тени у стики хедера ============
 
-    const $stickyHeader = $(".header__main");
+    const stickyHeader = $(".header__main");
 
     let isStuck = false; // Флаг для отслеживания состояния
 
     $(window).on("scroll", function () {
-        const rect = $stickyHeader[0].getBoundingClientRect(); // Получаем размеры и положение элемента
+        const rect = stickyHeader[0].getBoundingClientRect(); // Получаем размеры и положение элемента
 
         if (rect.top <= 0 && !isStuck) {
-            $stickyHeader.css("box-shadow", "0 4px 8px 0 rgba(0, 0, 0, 0.1)");
+            stickyHeader.css("box-shadow", "0 4px 8px 0 rgba(0, 0, 0, 0.1)");
             isStuck = true;
+            if ($("body").hasClass("product-page")) {
+                $(".sticky").addClass("active");
+                stickyHeader
+                    .css("pointer-events", "none")
+                    .animate({ opacity: 0 }, 50);
+            }
         } else if (rect.top > 0 && isStuck) {
-            $stickyHeader.css("box-shadow", "none");
+            stickyHeader.css("box-shadow", "none");
             isStuck = false;
+            if ($("body").hasClass("product-page")) {
+                $(".sticky").removeClass("active");
+                stickyHeader
+                    .css("pointer-events", "auto")
+                    .animate({ opacity: 1 }, 50);
+            }
         }
     });
 
     //=================== Слайдер в оффере на главной ============
 
-    const offerSlider = new Swiper(".offer-silder", {
+    const offerSlider = new Swiper(".offer-slider", {
         loop: true,
         speed: 800,
         grabCursor: true,
@@ -86,22 +98,22 @@ $(document).ready(function () {
         },
 
         navigation: {
-            nextEl: ".offer-silder-next",
-            prevEl: ".offer-silder-prev",
+            nextEl: ".offer-slider-next",
+            prevEl: ".offer-slider-prev",
         },
     });
 
     //=================== Слайдр каталога ============
 
-    const menuSlider = new Swiper(".menu-silder", {
+    const menuSlider = new Swiper(".menu-slider", {
         spaceBetween: 20,
         initialSlide: 0,
         speed: 600,
         slidesPerView: 7,
         grabCursor: true,
         navigation: {
-            nextEl: ".slider__menu .offer-silder-next",
-            prevEl: ".slider__menu .offer-silder-prev",
+            nextEl: ".slider__menu .offer-slider-next",
+            prevEl: ".slider__menu .offer-slider-prev",
         },
         breakpoints: {
             1200: {
@@ -124,8 +136,8 @@ $(document).ready(function () {
         slidesPerView: 5,
         grabCursor: true,
         navigation: {
-            nextEl: ".bestsellers .silder-next",
-            prevEl: ".bestsellers .silder-prev",
+            nextEl: ".bestsellers .slider-next",
+            prevEl: ".bestsellers .slider-prev",
         },
         breakpoints: {
             1200: {
@@ -145,8 +157,8 @@ $(document).ready(function () {
         slidesPerView: 5,
         grabCursor: true,
         navigation: {
-            nextEl: ".novelties .silder-next",
-            prevEl: ".novelties .silder-prev",
+            nextEl: ".novelties .slider-next",
+            prevEl: ".novelties .slider-prev",
         },
         breakpoints: {
             1200: {
@@ -201,7 +213,7 @@ $(document).ready(function () {
 
     //=================== Слайдре партнеров ============
 
-    const partnersSlider = new Swiper(".partners-silder", {
+    const partnersSlider = new Swiper(".partners-slider", {
         spaceBetween: 20,
         initialSlide: 0,
         speed: 600,
@@ -246,51 +258,51 @@ $(document).ready(function () {
 
     //=================== Часто задаваемые вопросы ============
 
-    // Сначала скроем все ответы
-    $(".faq__item-answer").slideUp();
+    // // Сначала скроем все ответы
+    // $(".faq__item-answer").slideUp();
 
-    $(".faq__item").click(function () {
-        // Уберем класс rotate-faq у всех SVG в заголовках вопросов
-        $(".faq__item-question svg").removeClass("rotate-faq");
+    // $(".faq__item").click(function () {
+    //     // Уберем класс rotate-faq у всех SVG в заголовках вопросов
+    //     $(".faq__item-question svg").removeClass("rotate-faq");
 
-        // Применим исходные стили к всем элементам
-        $(this).find(".faq__item-question").css("border", "1px solid #E8E8E8");
-        $(this)
-            .find(".faq__item-question span, .faq__item-question p")
-            .css("color", "#000");
-        $(".faq__item").css("border", "1px solid transparent");
+    //     // Применим исходные стили к всем элементам
+    //     $(this).find(".faq__item-question").css("border", "1px solid #E8E8E8");
+    //     $(this)
+    //         .find(".faq__item-question span, .faq__item-question p")
+    //         .css("color", "#000");
+    //     $(".faq__item").css("border", "1px solid transparent");
 
-        // Находим текущий вопрос и ответ
-        let $currentAnswer = $(this).find(".faq__item-answer");
-        let $currentQuestion = $(this).find(".faq__item-question");
+    //     // Находим текущий вопрос и ответ
+    //     let $currentAnswer = $(this).find(".faq__item-answer");
+    //     let $currentQuestion = $(this).find(".faq__item-question");
 
-        // Если текущий ответ виден, скроем его
-        if ($currentAnswer.is(":visible")) {
-            $currentAnswer.slideUp();
-        } else {
-            // Скроем все ответы, кроме текущего
-            $(".faq__item-answer").not($currentAnswer).slideUp();
+    //     // Если текущий ответ виден, скроем его
+    //     if ($currentAnswer.is(":visible")) {
+    //         $currentAnswer.slideUp();
+    //     } else {
+    //         // Скроем все ответы, кроме текущего
+    //         $(".faq__item-answer").not($currentAnswer).slideUp();
 
-            // Раскроем только текущий ответ
-            $currentAnswer.slideDown();
+    //         // Раскроем только текущий ответ
+    //         $currentAnswer.slideDown();
 
-            // Изменяем стиль для текущего вопроса
-            $(this)
-                .find(".faq__item-question")
-                .css("border", "1px solid transparent");
-            $(this)
-                .parent()
-                .find(".faq__item-question span, .faq__item-question p")
-                .css("color", "#000");
-            $(this)
-                .find(".faq__item-question span, .faq__item-question p")
-                .css("color", "#DA0916");
-            $(this).css("border", "1px solid #E8E8E8");
+    //         // Изменяем стиль для текущего вопроса
+    //         $(this)
+    //             .find(".faq__item-question")
+    //             .css("border", "1px solid transparent");
+    //         $(this)
+    //             .parent()
+    //             .find(".faq__item-question span, .faq__item-question p")
+    //             .css("color", "#000");
+    //         $(this)
+    //             .find(".faq__item-question span, .faq__item-question p")
+    //             .css("color", "#DA0916");
+    //         $(this).css("border", "1px solid #E8E8E8");
 
-            // Добавляем класс rotate-faq к SVG текущего вопроса
-            $currentQuestion.find("svg").addClass("rotate-faq");
-        }
-    });
+    //         // Добавляем класс rotate-faq к SVG текущего вопроса
+    //         $currentQuestion.find("svg").addClass("rotate-faq");
+    //     }
+    // });
 
     //=================== Анимация у checkbox ============
 
@@ -305,73 +317,551 @@ $(document).ready(function () {
 
     //=================== Вы смотрели ============
 
-    const wachedSlider = new Swiper(".wached__slider", {
-        spaceBetween: 20,
-        initialSlide: 0,
-        speed: 600,
-        slidesPerView: "auto",
-        // grabCursor: true,
-        // autoplay: {
-        //   delay: 4000,
-        //   disableOnInteraction: false,
-        // },
-        scrollbar: {
-            el: ".swiper-scrollbar-recommendation",
-        },
-        navigation: {
-            nextEl: ".wached-slider-next",
-            prevEl: ".wached-slider-prev",
-        },
+    // const wachedSlider = new Swiper(".wached__slider", {
+    //     spaceBetween: 20,
+    //     initialSlide: 0,
+    //     speed: 600,
+    //     slidesPerView: "auto",
+    //     // grabCursor: true,
+    //     // autoplay: {
+    //     //   delay: 4000,
+    //     //   disableOnInteraction: false,
+    //     // },
+    //     scrollbar: {
+    //         el: ".swiper-scrollbar-recommendation",
+    //     },
+    //     navigation: {
+    //         nextEl: ".wached-slider-next",
+    //         prevEl: ".wached-slider-prev",
+    //     },
 
-        breakpoints: {
-            1200: {
-                spaceBetween: 13,
-            },
-            1500: {
-                spaceBetween: 16,
-            },
-            601: {
-                slidesPerView: "auto",
-            },
-            310: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-            },
+    //     breakpoints: {
+    //         1200: {
+    //             spaceBetween: 13,
+    //         },
+    //         1500: {
+    //             spaceBetween: 16,
+    //         },
+    //         601: {
+    //             slidesPerView: "auto",
+    //         },
+    //         310: {
+    //             slidesPerView: 2,
+    //             spaceBetween: 10,
+    //         },
+    //     },
+    // });
+
+    //=================== Слайдер партнеров ============
+
+    // const productGallery = new Swiper(".product-gallery", {
+    //     loop: true,
+    //     speed: 600,
+    //     slidesPerView: "auto",
+    //     centeredSlides: true,
+    //     spaceBetween: 30,
+    //     // grabCursor: true,
+    //     navigation: {
+    //         nextEl: ".product-slider-next",
+    //         prevEl: ".product-slider-prev",
+    //     },
+
+    //     breakpoints: {
+    //         1200: {
+    //             spaceBetween: 13,
+    //         },
+    //         1500: {
+    //             spaceBetween: 16,
+    //         },
+    //         0: {
+    //             spaceBetween: 5,
+    //         },
+    //     },
+    //     on: {
+    //         slideChangeTransitionStart: function () {},
+    //         transitionEnd: function () {
+    //             let activeSlideImgLink = this.slides[this.activeIndex].src;
+    //             $(".product__photo>img").attr("src", activeSlideImgLink);
+    //         },
+    //     },
+    // });
+
+    //=================== Диапазон цены в каталоге ============
+
+    const priceMask = (val) => {
+        if (!val) return;
+        val = String(val);
+        val = val.replace(/\D/g, "");
+        val = val.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return val;
+    };
+
+    const onChangePrice = () => {
+        const min = Number($("#slider-range").data("min"));
+        const max = Number($("#slider-range").data("max"));
+
+        const start = Number($("#start-range").val().replace(" ", ""));
+        const end = Number($("#end-range").val().replace(" ", ""));
+
+        if (start === min) {
+            $("#start-range").closest("label").find("svg").fadeOut(200);
+        } else {
+            $("#start-range").closest("label").find("svg").fadeIn(200);
+        }
+        if (end === max) {
+            $("#end-range").closest("label").find("svg").fadeOut(200);
+        } else {
+            $("#end-range").closest("label").find("svg").fadeIn(200);
+        }
+
+        if (end !== max || start !== min) {
+            $(".price .filters__product-categorise-reset").fadeIn(200);
+        } else {
+            $(".price .filters__product-categorise-reset").fadeOut(200);
+        }
+
+        if (start > end) {
+            $("#start-range").val(priceMask(end));
+            $("#slider-range").slider("values", 0, end);
+        }
+        if (end > max) {
+            $("#end-range").val(priceMask(max));
+            $("#slider-range").slider("values", 1, max);
+        }
+    };
+
+    $("#slider-range").slider({
+        range: true,
+        min: $("#slider-range").data("min"),
+        max: $("#slider-range").data("max"),
+        values: [
+            $("#slider-range").data("min"),
+            $("#slider-range").data("max"),
+        ],
+        slide: function (event, ui) {
+            $("#start-range").val(priceMask(ui.values[0]));
+            $("#end-range").val(priceMask(ui.values[1]));
+            onChangePrice();
         },
     });
+    $("#start-range").val(priceMask($("#slider-range").slider("values", 0)));
+    $("#end-range").val(priceMask($("#slider-range").slider("values", 1)));
 
-    //=================== Слайдре партнеров ============
+    $("#start-range").on("input", function () {
+        const val = priceMask($(this).val());
+        $(this).val(val);
+        $("#slider-range").slider("values", 0, Number(val.replace(" ", "")));
+        onChangePrice();
+    });
+    $("#end-range").on("input", function () {
+        const val = priceMask($(this).val());
+        $(this).val(val);
+        $("#slider-range").slider("values", 1, Number(val.replace(" ", "")));
+        onChangePrice();
+    });
 
-    const productGallery = new Swiper(".product-gallery", {
-        loop: true,
-        speed: 600,
-        slidesPerView: "auto",
-        centeredSlides: true,
-        spaceBetween: 30,
-        // grabCursor: true,
-        navigation: {
-            nextEl: ".product-slider-next",
-            prevEl: ".product-slider-prev",
-        },
+    const endReset = $("#end-range").closest("label").find("svg");
+    const startReset = $("#start-range").closest("label").find("svg");
 
-        breakpoints: {
-            1200: {
-                spaceBetween: 13,
+    const resetStartRange = () => {
+        startReset.fadeOut(200);
+        $("#start-range").val(priceMask($("#slider-range").data("min")));
+        $("#slider-range").slider("values", 0, $("#slider-range").data("min"));
+
+        onChangePrice();
+    };
+    const resetEndRange = () => {
+        endReset.fadeOut(200);
+        $("#end-range").val(priceMask($("#slider-range").data("max")));
+        $("#slider-range").slider("values", 1, $("#slider-range").data("max"));
+        onChangePrice();
+    };
+
+    startReset.on("click", resetStartRange);
+    endReset.on("click", resetEndRange);
+
+    $(".filters__product-categorise-reset").on("click", function (e) {
+        e.preventDefault();
+        if ($(this).closest(".price").length) {
+            resetStartRange();
+            resetEndRange();
+        }
+
+        $(this)
+            .closest(".filters__product-categorise")
+            .find("input[type='checkbox']")
+            .prop("checked", false);
+
+        $(this).fadeOut(200);
+    });
+
+    //=================== Кнопки сброса стандартных фильтров ============
+
+    const resetCommonFilter = (categoryWrapper) => {
+        if (!!categoryWrapper.find("input[type='checkbox']:checked").length) {
+            categoryWrapper
+                .find(".filters__product-categorise-reset")
+                .fadeIn(200);
+        } else {
+            categoryWrapper
+                .find(".filters__product-categorise-reset")
+                .fadeOut(200);
+        }
+    };
+
+    $(".filters__product-categorise input[type='checkbox']").on(
+        "change",
+        function () {
+            resetCommonFilter($(this).closest(".filters__product-categorise"));
+        }
+    );
+
+    $(".filters__product-categorise").each(function () {
+        resetCommonFilter($(this));
+    });
+
+    //=================== Кнопка сброса всех фильтров ============
+
+    $(".filters__reset").on("click", function (e) {
+        e.preventDefault();
+        resetStartRange();
+        resetEndRange();
+
+        $(".filters__product-categorise input[type='checkbox']").prop(
+            "checked",
+            false
+        );
+        $(
+            ".filters__product-categorise .filters__product-categorise-reset"
+        ).fadeOut(200);
+    });
+
+    //=================== Слайдер миниатюр в карточке каталога ============
+
+    $(".catalog__item").each(function (index, card) {
+        const $card = $(card);
+        const $swiperContainer = $card.find(".catalog__item-slider");
+        // Инициализация Swiper для каждой карточки
+        const swiper = new Swiper($swiperContainer[0], {
+            loop: true,
+            autoplay: {
+                delay: 1000,
+                disableOnInteraction: false,
             },
-            1500: {
-                spaceBetween: 16,
+            speed: 600,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            pagination: {
+                el: $card.find(".swiper-pagination")[0],
+                type: "bullets",
             },
-            0: {
-                spaceBetween: 5,
+        });
+
+        swiper.autoplay.stop();
+
+        // Привязка событий к карточке
+        $card.on("mouseenter", function () {
+            swiper.autoplay.start();
+        });
+
+        $card.on("mouseleave", function () {
+            swiper.autoplay.stop();
+        });
+    });
+
+    //=================== Кнопка добавить в корзину ============
+
+    const animateAddToCartButton = (
+        btn,
+        parentSelector,
+        width = "84px",
+        bySelector = false
+    ) => {
+        const button = bySelector ? $(btn) : btn;
+        if (button.closest(parentSelector).hasClass("added")) {
+            button.animate(
+                {
+                    backgroundColor: "#ffffff",
+                    borderColor: "#2bb41f",
+                    width: width,
+                },
+                200
+            );
+
+            button.find("span").fadeOut(200);
+            button.find("svg").animate(
+                {
+                    opacity: 1,
+                },
+                200
+            );
+        } else {
+            button.animate(
+                {
+                    backgroundColor: "#e94d11",
+                    borderColor: "#e94d11",
+                    width: "100%",
+                },
+                200
+            );
+            button.find("span").fadeIn(200);
+            button.find("svg").animate(
+                {
+                    opacity: 0,
+                },
+                200
+            );
+        }
+    };
+
+    $(".catalog__item-add-to-cart").each(function (index, btn) {
+        animateAddToCartButton($(btn), ".catalog__item");
+    });
+
+    $(".product-page .add-to-cart").each(function (index, btn) {
+        animateAddToCartButton(".add-to-cart", ".product-page", "150px", true);
+    });
+
+    //=================== Уведомление о добавлении в корзину ============
+
+    /**
+     * Показывает уведомление, добавляя класс "show" и выполняя анимацию его появления.
+     *
+     * @param {jQuery} notification - jQuery элемент уведомления, который нужно показать.
+     */
+
+    const showNotification = (notification) => {
+        notification.addClass("show");
+        $({ offset: 150 }).animate(
+            { offset: 0 }, // Конечное значение
+            {
+                duration: 300,
+                step: function (now) {
+                    notification.css(
+                        "-moz-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css(
+                        "-ms-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css(
+                        "-webkit-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css(
+                        "-o-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css("transform", "translate(" + now + "%, 0)");
+                },
+            }
+        );
+    };
+
+    /**
+     * Скрывает уведомление, удаляя класс "show" и выполняя анимацию его исчезновения.
+     *
+     * @param {jQuery} notification - jQuery элемент уведомления, который нужно скрыть.
+     */
+
+    const hideNotification = (notification) => {
+        notification.removeClass("show");
+        $({ offset: 0 }).animate(
+            { offset: 150 }, // Конечное значение
+            {
+                duration: 300,
+                step: function (now) {
+                    notification.css(
+                        "-moz-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css(
+                        "-ms-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css(
+                        "-webkit-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css(
+                        "-o-transform",
+                        "translate(" + now + "%, 0)"
+                    );
+                    notification.css("transform", "translate(" + now + "%, 0)");
+                },
+            }
+        );
+    };
+    /**
+     * Закрывает уведомление, останавливая таймер закрытия уведомления,
+     * если он существует, и скрывая уведомление.
+     *
+     * !!!ВАЖНО!!! Вызывать только для предотварщения уже сработавшей
+     * анимации показа уведомления
+     *
+     * @param {jQuery} notification - jQuery элемент уведомления, которое нужно закрыть.
+     */
+    const closeNotification = (notification) => {
+        const progress = $(".catalog-notification__progress");
+        // Остановить текущий таймер, если он существует
+        if (notificationTimeoutID) {
+            clearTimeout(notificationTimeoutID);
+            notificationTimeoutID = null; // Сброс переменной
+        }
+        hideNotification(notification);
+        progress.stop(true, true);
+    };
+
+    let notificationTimeoutID;
+
+    $(".add-to-cart-button").on("click", function () {
+        $(this).closest(".catalog__item, .product-page").toggleClass("added");
+        const notification = $(".catalog-notification");
+        const progress = $(".catalog-notification__progress");
+
+        if (!!$(this).closest(".product-page").length) {
+            animateAddToCartButton(
+                ".add-to-cart-button",
+                ".product-page",
+                "150px",
+                true
+            );
+        } else {
+            animateAddToCartButton($(this), ".catalog__item");
+        }
+
+        if (!$(this).closest(".catalog__item, .product-page").hasClass("added"))
+            return;
+
+        if (notification.hasClass("show")) {
+            closeNotification(notification);
+        }
+
+        progress.css("width", "100%");
+        progress.animate(
+            {
+                width: "0%",
             },
-        },
-        on: {
-            slideChangeTransitionStart: function () {},
-            transitionEnd: function () {
-                let activeSlideImgLink = this.slides[this.activeIndex].src;
-                $(".product__photo>img").attr("src", activeSlideImgLink);
-            },
-        },
+            3000
+        );
+        showNotification(notification);
+        notificationTimeoutID = setTimeout(function () {
+            hideNotification(notification);
+        }, 3000);
+    });
+
+    $(".catalog-notification__header svg").on("click", function () {
+        closeNotification($(".catalog-notification"));
+    });
+
+    // ================== Выбор количества товара ============
+
+    const checkAvailableQuantityRange = (btn) => {
+        const quantity = btn
+            .closest(".catalog__item-quantity")
+            .data("quantity");
+        // const counter = btn.closest(".catalog__item-quantity").find("span");
+        // let currentQuantity = Number(counter.text());
+        const isProductPage = !!btn.closest(".product-page").length;
+        const counter = isProductPage
+            ? $(".catalog__item-quantity span")
+            : btn.closest(".catalog__item-quantity").find("span");
+        let currentQuantity = isProductPage
+            ? Number(counter.eq(0).text())
+            : Number(counter.text());
+
+        if (currentQuantity === 1) {
+            if (!isProductPage) {
+                btn.closest(".catalog__item-quantity")
+                    .find(".catalog__item-quantity-btn_minus")
+                    .addClass("disabled");
+            } else {
+                $(".catalog__item-quantity-btn_minus").addClass("disabled");
+            }
+        } else {
+            if (!isProductPage) {
+                btn.closest(".catalog__item-quantity")
+                    .find(".catalog__item-quantity-btn_minus")
+                    .removeClass("disabled");
+            } else {
+                $(".catalog__item-quantity-btn_minus").removeClass("disabled");
+            }
+        }
+
+        if (currentQuantity === quantity) {
+            if (!isProductPage) {
+                btn.closest(".catalog__item-quantity")
+                    .find(".catalog__item-quantity-btn_plus")
+                    .addClass("disabled");
+            } else {
+                $(".catalog__item-quantity-btn_plus").addClass("disabled");
+            }
+        } else {
+            if (!isProductPage) {
+                btn.closest(".catalog__item-quantity")
+                    .find(".catalog__item-quantity-btn_plus")
+                    .removeClass("disabled");
+            } else {
+                $(".catalog__item-quantity-btn_plus").removeClass("disabled");
+            }
+        }
+    };
+
+    $(".catalog__item-quantity-btn").each(function (index, btn) {
+        checkAvailableQuantityRange($(btn));
+    });
+
+    $(".catalog__item-quantity-btn").on("click", function () {
+        const quantity = $(this)
+            .closest(".catalog__item-quantity")
+            .data("quantity");
+        const isProductPage = !!$(this).closest(".product-page").length;
+        const counter = isProductPage
+            ? $(".catalog__item-quantity span")
+            : $(this).closest(".catalog__item-quantity").find("span");
+        let currentQuantity = isProductPage
+            ? Number(counter.eq(0).text())
+            : Number(counter.text());
+
+        if ($(this).hasClass("disabled")) return;
+
+        if ($(this).hasClass("catalog__item-quantity-btn_plus")) {
+            currentQuantity++;
+            counter.text(currentQuantity);
+        } else {
+            currentQuantity--;
+            counter.text(currentQuantity);
+        }
+
+        checkAvailableQuantityRange($(this));
+        if (currentQuantity < 1) {
+            counter.text(1);
+        }
+
+        if (currentQuantity > quantity) {
+            counter.text(quantity);
+        }
+    });
+
+    // ================== Кнопка добавить в избранное ============
+
+    $(".catalog__item-fav").on("click", function () {
+        if (!!$(this).closest(".product-page").length) {
+            $(".product-page").toggleClass("fav");
+        } else {
+            $(this).closest(".catalog__item").toggleClass("fav");
+        }
+    });
+
+    $(".catalog__item-fav").click(function () {
+        if (!!$(this).closest(".product-page").length) {
+            $(".product-page").toggleClass("fav");
+            $(".catalog__item-fav").toggleClass("active");
+        } else {
+            $(this).closest(".catalog__item").toggleClass("fav");
+            $(this).toggleClass("active");
+        }
     });
 
     //=================== Выбор цвета у товара ============
@@ -389,6 +879,114 @@ $(document).ready(function () {
             $(this).parent().parent().find("p span").text(currentColor);
         }
     );
+
+    //=================== Слайдер логотипов оригиналов ============
+
+    const origsSlider = new Swiper(".origs__slider .swiper", {
+        slidesPerView: 6,
+        spaceBetween: 20,
+        loop: true,
+        speed: 800,
+        grabCursor: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+
+        navigation: {
+            nextEl: ".origs__slider .slider-next",
+            prevEl: ".origs__slider .slider-prev",
+        },
+    });
+
+    //=================== Прокрутка вверх страницы ============
+
+    $(".float__item_to-top").on("click", function (e) {
+        window.scrollTo(0, 0);
+    });
+
+    //=================== Галлерея товара ============
+
+    const productThumbsSlider = new Swiper(".product__slider-thumbs .swiper", {
+        slidesPerView: 6,
+        direction: "vertical",
+        spaceBetween: 10,
+        freeMode: false,
+        watchSlidesProgress: true,
+        navigation: {
+            nextEl: ".product__slider-thumbs .slider-next",
+            prevEl: ".product__slider-thumbs .slider-prev",
+        },
+    });
+    const productSlider = new Swiper(".product__slider", {
+        slidesPerView: 1,
+        direction: "vertical",
+        spaceBetween: 10,
+        effect: "fade",
+        fadeEffect: {
+            crossFade: true,
+        },
+        thumbs: {
+            swiper: productThumbsSlider,
+        },
+    });
+
+    //=================== Подключение табов для товара ============
+
+    $("#product-tabs").tabs({
+        show: { effect: "fade", duration: 200 },
+        hide: { effect: "fade", duration: 200 },
+
+        load: function (event, ui) {},
+    });
+
+    //=================== Галлерея отзывов ============
+
+    const reviewsSlider = new Swiper(".reviews__slider .swiper", {
+        spaceBetween: 10,
+        freeMode: true,
+        slidesPerView: "auto",
+        speed: 600,
+        navigation: {
+            nextEl: ".reviews__slider .slider-next",
+            prevEl: ".reviews__slider .slider-prev",
+        },
+    });
+    //=================== Подключение fancybox ============
+
+    Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+    });
+    $("#product-tabs").on("tabsload", function (event, ui) {
+        Fancybox.bind("[data-fancybox='reviews']", {
+            // Your custom options
+        });
+    });
+
+    //=================== Сортировка отзывов ============
+    $(
+        ".reviews__sorter-item[data-sort='asc'] svg, .reviews__sorter-item[data-sort='desc'] svg"
+    ).fadeIn(200);
+    $(".reviews__sorter-item").on("click", function () {
+        const siblings = $(".reviews__sorter-item").not(this);
+        siblings.attr("data-sort", "");
+        siblings.find("svg").fadeOut(200);
+        const currentSort = $(this).attr("data-sort");
+
+        switch (currentSort) {
+            case "asc":
+                $(this).attr("data-sort", "desc");
+                break;
+            case "desc":
+                $(this).attr("data-sort", "");
+                $(this).find("svg").fadeOut(200);
+                break;
+            default:
+                $(this).attr("data-sort", "asc");
+                $(this).find("svg").fadeIn(200);
+                $(this).addClass("active");
+        }
+    });
 
     //=================== Выбор цвета у товара ============
 
@@ -461,13 +1059,6 @@ $(document).ready(function () {
         },
     });
 
-    //=================== Анимация для иконуи "Избранное" ============
-
-    $(".favourites-icon").on("click", function () {
-        console.log("aaa");
-        $(this).toggleClass("active");
-    });
-
     //=================== Меню в личерм кабинете ============
 
     $(".account__content-item").slideUp();
@@ -487,7 +1078,7 @@ $(document).ready(function () {
 
     //=================== Слайдр каталога ============
 
-    const docsSlider = new Swiper(".docs-silder", {
+    const docsSlider = new Swiper(".docs-slider", {
         spaceBetween: 20,
         initialSlide: 0,
         speed: 600,
@@ -552,10 +1143,6 @@ $(document).ready(function () {
             $("#catalog").find(".cross-icon").toggleClass("open");
             $(".header__overlay").fadeToggle(300);
         }
-    });
-
-    $(".catalog__item-fav").click(function () {
-        $(this).toggleClass("active");
     });
 
     $("#bannerClose").click(function () {
