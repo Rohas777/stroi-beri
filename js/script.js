@@ -721,12 +721,26 @@ $(document).ready(function () {
         const progress = $(".catalog-notification__progress");
 
         if (!!$(this).closest(".product-page").length) {
-            animateAddToCartButton(
-                ".add-to-cart-button",
-                ".product-page",
-                "150px",
-                true
-            );
+            const containers = $(".product__btns");
+            let diff;
+            containers.each(function (index, container) {
+                const currentDiff =
+                    $(container).width() -
+                    $(container).find(".catalog__item-quantity").width();
+                diff =
+                    currentDiff == 0
+                        ? diff
+                        : !!currentDiff
+                        ? currentDiff
+                        : diff;
+                const width = diff - 10 + "px";
+                console.log(width);
+                animateAddToCartButton(
+                    $(container).find(".add-to-cart-button"),
+                    ".product-page",
+                    width
+                );
+            });
         } else {
             animateAddToCartButton($(this), ".catalog__item");
         }
@@ -761,8 +775,6 @@ $(document).ready(function () {
         const quantity = btn
             .closest(".catalog__item-quantity")
             .data("quantity");
-        // const counter = btn.closest(".catalog__item-quantity").find("span");
-        // let currentQuantity = Number(counter.text());
         const isProductPage = !!btn.closest(".product-page").length;
         const counter = isProductPage
             ? $(".catalog__item-quantity span")
