@@ -734,7 +734,6 @@ $(document).ready(function () {
                         ? currentDiff
                         : diff;
                 const width = diff - 10 + "px";
-                console.log(width);
                 animateAddToCartButton(
                     $(container).find(".add-to-cart-button"),
                     ".product-page",
@@ -767,6 +766,30 @@ $(document).ready(function () {
 
     $(".catalog-notification__header svg").on("click", function () {
         closeNotification($(".catalog-notification"));
+    });
+
+    $(".order-card-mini__add-to-cart-button").on("click", function () {
+        $(this).closest(".order-card-mini").toggleClass("added");
+        const notification = $(".catalog-notification");
+        const progress = $(".catalog-notification__progress");
+
+        if (!$(this).closest(".order-card-mini").hasClass("added")) return;
+
+        if (notification.hasClass("show")) {
+            closeNotification(notification);
+        }
+
+        progress.css("width", "100%");
+        progress.animate(
+            {
+                width: "0%",
+            },
+            3000
+        );
+        showNotification(notification);
+        notificationTimeoutID = setTimeout(function () {
+            hideNotification(notification);
+        }, 3000);
     });
 
     // ================== Выбор количества товара ============
@@ -858,39 +881,188 @@ $(document).ready(function () {
 
     // ================== Кнопка добавить в избранное ============
 
-    $(".catalog__item-fav").on("click", function () {
-        if (!!$(this).closest(".product-page").length) {
-            $(".product-page").toggleClass("fav");
-        } else {
-            $(this).closest(".catalog__item").toggleClass("fav");
-        }
-    });
-
     $(".catalog__item-fav").click(function () {
         if (!!$(this).closest(".product-page").length) {
             $(".product-page").toggleClass("fav");
             $(".catalog__item-fav").toggleClass("active");
         } else {
-            $(this).closest(".catalog__item").toggleClass("fav");
+            $(this)
+                .closest(".catalog__item, .cart__item, .order-card-mini")
+                .toggleClass("fav");
             $(this).toggleClass("active");
         }
     });
 
-    //=================== Выбор цвета у товара ============
-    let defaultColor = $(
-        ".product__info-selector-color .product__info-selector-item input"
-    )
-        .first()
-        .attr("value");
-    $(".product__info-selector-color p span").text(defaultColor);
+    //=================== Удаление товаров из корзины ============
 
-    $(".product__info-selector-color .product__info-selector-item").on(
-        "click",
-        function () {
-            let currentColor = $(this).find("input").attr("value");
-            $(this).parent().parent().find("p span").text(currentColor);
+    const animateRemoveFromCart = (item) => {
+        item.closest(".cart__item").animate(
+            {
+                left: "-200%",
+            },
+            300,
+            function () {
+                $(this)
+                    .closest("li")
+                    .animate(
+                        {
+                            height: 0,
+                        },
+                        100,
+                        function () {
+                            $(this).remove();
+                        }
+                    );
+            }
+        );
+    };
+
+    $(".cart__item-remove").on("click", function () {
+        animateRemoveFromCart($(this));
+    });
+
+    $(".cart__checkbox-all input").on("change", function () {
+        if ($(this).prop("checked")) {
+            $(".cart__item input").prop("checked", true);
+        } else {
+            $(".cart__item input").prop("checked", false);
         }
-    );
+    });
+
+    $(".cart__delete-selected").on("click", function () {
+        const selectedItems = $(".cart__item input:checked");
+
+        selectedItems.each(function (index, item) {
+            setTimeout(function () {
+                animateRemoveFromCart($(item));
+            }, 100 * index);
+        });
+    });
+
+    //=================== Промокоды ============
+
+    $(".cart__buy-promo input").on("input", function () {
+        if ($(this).val()) {
+            $(".cart__buy-promo").addClass("typing").removeClass("activated");
+        } else {
+            $(".cart__buy-promo")
+                .removeClass("typing")
+                .removeClass("activated");
+        }
+    });
+
+    $(".cart__buy-promo button").on("click", function () {
+        const input = $(".cart__buy-promo input");
+        if (input.val()) {
+            $(".cart__buy-promo").addClass("activated").removeClass("typing");
+        }
+    });
+
+    //=================== Форма получателя ============
+
+    $(".cart__recipient-form input").on("input", function () {
+        if ($(this).val()) {
+            $(this).addClass("typing");
+        } else {
+            $(this).removeClass("typing");
+        }
+    });
+
+    const recipientOptions = [
+        {
+            id: 0,
+            name: 'ООО "АРБИ-М"',
+            tel: "",
+            isOrganization: true,
+        },
+        {
+            id: 1,
+            name: "Имя покупателя",
+            tel: "+7 (978) 777 - 77 - 77",
+            isOrganization: false,
+        },
+    ];
+
+    const createListRecipients = (id) => {
+        const filteredOptions = recipientOptions.filter(
+            (option) => option.id !== id
+        );
+        $(".cart__recipient-selector ul").empty();
+        filteredOptions.forEach((option) => {
+            $(".cart__recipient-selector ul").append(`
+            <li data-is-organization="${option.isOrganization}" data-id="${
+                option.id
+            }">
+                <strong>${option.name}</strong>
+                ${option.tel ? `<span>${option.tel}</span>` : ""}
+            </li>
+        `);
+        });
+
+        $(".cart__recipient-selector li").on("click", function (e) {
+            e.preventDefault();
+            const id = $(this).data("id");
+            console.log("id");
+            $(this)
+                .closest(".cart__recipient-selector")
+                .find("p")
+                .attr("data-id", id)
+                .text($(this).find("strong").text());
+
+            if (!$(this).data("is-organization")) {
+                $(this)
+                    .closest(".cart__recipient-select")
+                    .find("label:has(input[type='tel'])")
+                    .fadeIn(200)
+                    .find("input")
+                    .addClass("typing")
+                    .val($(this).find("span").text());
+                $(".cart__recipient-alert").slideUp(200);
+                $(".cart__recipient-switch").slideDown(200);
+                onSwitchRecipient();
+            } else {
+                $(this)
+                    .closest(".cart__recipient-select")
+                    .find("label:has(input[type='tel'])")
+                    .fadeOut(200);
+                $(".cart__recipient-alert").slideDown(200);
+
+                $(".cart__recipient-another, .cart__recipient-switch").slideUp(
+                    200
+                );
+            }
+            createListRecipients(id);
+        });
+    };
+
+    createListRecipients($(".cart__recipient-selector p").data("id"));
+
+    $(".cart__recipient-selector").on("click", function (e) {
+        $(this).toggleClass("open").find("ul").fadeToggle(200);
+    });
+
+    const onSwitchRecipient = () => {
+        if ($(".cart__recipient-switch input").prop("checked")) {
+            $(".cart__recipient-another").slideDown(200);
+        } else {
+            $(".cart__recipient-another").slideUp(200);
+        }
+    };
+    onSwitchRecipient();
+
+    $(".cart__recipient-switch input").on("change", function () {
+        onSwitchRecipient();
+    });
+
+    //=================== Радио боксы в корзине ============
+
+    $(".radio-box").on("click", function () {
+        const isChecked = $(this).find("input").prop("checked");
+        $(this).find("input").prop("checked", !isChecked);
+    });
+    $(".radio-box input").on("click", function () {
+        $(this).prop("checked", !$(this).prop("checked"));
+    });
 
     //=================== Слайдер логотипов оригиналов ============
 
@@ -977,10 +1149,10 @@ $(document).ready(function () {
 
     //=================== Сортировка отзывов ============
     $(
-        ".reviews__sorter-item[data-sort='asc'] svg, .reviews__sorter-item[data-sort='desc'] svg"
+        ".sorter-item[data-sort='asc'] svg, .sorter-item[data-sort='desc'] svg"
     ).fadeIn(200);
-    $(".reviews__sorter-item").on("click", function () {
-        const siblings = $(".reviews__sorter-item").not(this);
+    $(".sorter-item").on("click", function () {
+        const siblings = $(".sorter-item").not(this);
         siblings.attr("data-sort", "");
         siblings.find("svg").fadeOut(200);
         const currentSort = $(this).attr("data-sort");
@@ -1000,134 +1172,313 @@ $(document).ready(function () {
         }
     });
 
-    //=================== Выбор цвета у товара ============
+    //=================== Инпуты контактов в ЛК ============
 
-    let defaultСrosspiece = $(
-        ".product__info-selector-crosspiece .product__info-selector-item input"
-    )
-        .first()
-        .attr("value");
-    $(".product__info-selector-crosspiece p span").text(defaultСrosspiece);
+    $(".account__content-profile-row_contacts input").on("input", function () {
+        if ($(this).val()) {
+            $(this)
+                .closest(".input")
+                .addClass("typing")
+                .removeClass("activated");
+        } else {
+            $(this)
+                .closest(".input")
+                .removeClass("typing")
+                .removeClass("activated");
+        }
+    });
 
-    $(".product__info-selector-crosspiece .product__info-selector-item").on(
+    $(".account__content-profile-row_contacts button").on("click", function () {
+        const input = $(this).closest(".input").find("input");
+        if (input.val()) {
+            $(this)
+                .closest(".input")
+                .addClass("activated")
+                .removeClass("typing");
+        }
+    });
+
+    $(".account__content-profile-row_contacts .tip-mark").on(
         "click",
-        function () {
-            let currentColor = $(this).find("input").attr("value");
-            $(this).parent().parent().find("p span").text(currentColor);
+        function (e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
     );
 
-    //=================== Выбор характеристики товара у первого типа карточки ============
+    //=================== Меню в личном кабинете ============
 
-    $(".product__full-info-tabs span").on("click", function () {
-        $(".product__full-info-tabs span").removeClass("active");
+    $(".account__nav a").on("click", function (e) {
+        e.preventDefault();
+        $(".account__nav a").not(this).removeClass("active");
+        $(this).addClass("active");
+
+        const targetId = $(this).attr("href");
+
+        if (!targetId.split("#")[0]) {
+            const accountContent = $(targetId);
+            history.pushState(null, null, targetId);
+            $(".account__content-item").removeClass("active").slideUp(200);
+            $(accountContent).addClass("active").slideDown(200);
+            const hash = window.location.hash;
+        } else {
+            window.location.href = targetId;
+        }
+    });
+
+    function showElementFromHash() {
+        if (window.location.pathname === "/account.html") {
+            const hash = window.location.hash;
+
+            if (hash) {
+                const target = $(hash);
+                $(".account__nav a").removeClass("active");
+                $(".account__nav a[href='" + hash + "']").addClass("active");
+                if (target.length) {
+                    $(".account__content-item").not(target).slideUp(200);
+                    target.slideDown(200);
+                }
+            } else {
+                $(".account__nav a").removeClass("active");
+                $(".account__content-item").slideUp(200);
+                $("#profile").addClass("active").slideDown(200);
+                $(".account__nav a[href='#profile']").addClass("active");
+            }
+        }
+    }
+
+    showElementFromHash();
+
+    $(window).on("hashchange", function () {
+        showElementFromHash();
+    });
+
+    //=================== Карточка заказа ============
+
+    $(".order-card").each(function () {
+        const goods = $(this).find(".order-card__product");
+        const goodsCount = goods.length;
+        if (goodsCount > 6) {
+            const overlay = $("<span>");
+            overlay.text("+" + (goodsCount - 6));
+            goods.eq(3).append(overlay);
+        }
+    });
+
+    //=================== Опции юр лица ============
+
+    $(".account__content-legal-item-header-btn").on("click", function () {
+        $(this)
+            .closest(".account__content-legal-item")
+            .find(".account__content-legal-item-header-options")
+            .fadeToggle(200);
+    });
+    $(".account__content-legal-item-header-options a").on("click", function () {
+        $(this)
+            .closest(".account__content-legal-item-header-options")
+            .fadeToggle(200);
+    });
+
+    //=================== Инпут загрузки документа юр лица ============
+
+    $(".account__content-legal-edit-doc input").on("change", function (e) {
+        const file = e.target.files[0];
+        const parent = $(this).closest(".account__content-legal-edit-doc");
+        const button = parent.find("strong");
+
+        const fileNameBlock = $(
+            ".account__content-legal-edit-filename span:first-child"
+        );
+        const fileTypeBlock = $(
+            ".account__content-legal-edit-filename span:last-child"
+        );
+        fileNameBlock.empty();
+        fileTypeBlock.empty();
+        parent.removeClass("success");
+        button.find("span").text("Прикрепить документ");
+        button.find(".success").hide();
+        button.find(".default").fadeIn(200);
+
+        if (!file) {
+            fileNameBlock.text("Файл не выбран");
+            return;
+        }
+
+        const lastDotIndex = file.name.lastIndexOf(".");
+        if (lastDotIndex !== -1) {
+            const name = file.name.slice(0, lastDotIndex);
+            const type = file.name.slice(lastDotIndex + 1);
+            fileNameBlock.text(name);
+            fileTypeBlock.text(type);
+        } else {
+            fileNameBlock.text(file.name);
+        }
+
+        parent.addClass("success");
+        button.find("span").text("Документ получен!");
+        button.find(".default").hide();
+        button.find(".success").fadeIn(200);
+    });
+
+    //=================== Инпуты юр лица ============
+
+    $(".address-equal").on("change", function () {
+        const hiddenInput = $(this)
+            .closest(".account__content-item")
+            .find(".account__content-legal-edit-row_physical-address-wrapper");
+        if ($(this).is(":checked")) {
+            hiddenInput.slideUp(200);
+        } else {
+            hiddenInput.slideDown(200);
+        }
+    });
+
+    $(".account__content input").on("input", function () {
+        if ($(this).val()) {
+            $(this).addClass("typing");
+        } else {
+            $(this).removeClass("typing");
+        }
+    });
+
+    $(".account__content-legal-add-block_accordion").on("click", function () {
         $(this).toggleClass("active");
+        $(this)
+            .find(".account__content-legal-add-block_accordion-content")
+            .slideToggle(200);
     });
 
-    //=================== Dropdown инструкции в карточке товара ============
-    $(".product__full-info-manual button").on("click", function () {
-        $(".product__full-info-manual-files").slideToggle(300);
+    $(".account__content-legal-add-save").hide();
+    $(".account__content-legal-add-block_select input").on(
+        "input",
+        function () {
+            if ($(this).hasClass("typing")) {
+                $(".account__content-legal-add-block_select ul").slideDown(200);
+            } else {
+                $(".account__content-legal-add-block_select ul").slideUp(200);
+                $(".account__content-legal-add-block_info").slideUp(200);
+                $(".account__content-legal-add-block_accordion").slideUp(200);
+                $(".account__content-legal-add-save").slideUp(200);
+            }
+        }
+    );
 
-        $(this).find("svg").toggleClass("active");
+    $(".account__content-legal-add-block_select li").on("click", function () {
+        $(".account__content-legal-add-block_select ul").slideUp(200);
+
+        if (!$(this).hasClass("another")) {
+            $(".account__content-legal-add-block_info").slideDown(200);
+            $(".account__content-legal-add-block_accordion").slideDown(200);
+            $(".account__content-legal-add-save").slideDown(200);
+        }
     });
 
-    $(".product__full-info-specifications").slideDown();
-    $(".product__full-info-collection").slideUp();
+    //=================== Меню на странице "О нас" ============
 
-    $("#product__full-info-tabs-specifications").on("click", function () {
-        $(".product__full-info-specifications").slideDown();
-        $(".product__full-info-collection").slideUp();
+    $(".about__nav a").on("click", function (e) {
+        e.preventDefault();
+        $(".about__nav a").not(this).removeClass("active");
+        $(this).addClass("active");
+
+        const targetId = $(this).attr("href");
+
+        if (!targetId.split("#")[0]) {
+            const aboutContent = $(targetId);
+            history.pushState(null, null, targetId);
+            $(".about__item").removeClass("active").slideUp(200);
+            $(aboutContent).addClass("active").slideDown(200);
+            const hash = window.location.hash;
+        } else {
+            window.location.href = targetId;
+        }
     });
 
-    $("#product__full-info-tabs-collection").on("click", function () {
-        $(".product__full-info-specifications").slideUp();
-        $(".product__full-info-collection").slideDown();
+    function showAboutElementFromHash() {
+        if (window.location.pathname === "/about.html") {
+            const hash = window.location.hash;
+
+            if (hash) {
+                const target = $(hash);
+                $(".about__nav a").removeClass("active");
+                $(".about__nav a[href='" + hash + "']").addClass("active");
+                if (target.length) {
+                    $(".about__item").not(target).slideUp(200);
+                    target.slideDown(200);
+                }
+            } else {
+                $(".about__nav a").removeClass("active");
+                $(".about__item").slideUp(200);
+                $("#profile").addClass("active").slideDown(200);
+                $(".about__nav a[href='#profile']").addClass("active");
+            }
+        }
+    }
+
+    showAboutElementFromHash();
+
+    $(window).on("hashchange", function () {
+        showAboutElementFromHash();
     });
 
-    //=================== Слайдер "Коллекции товара" ============
+    //=================== Слайдер благодарственных писем ============
 
-    const collectionSlider = new Swiper(".product-collection-slider", {
+    const thxLetterSlider = new Swiper(".about__slider .swiper", {
+        slidesPerView: 4,
         spaceBetween: 20,
-        initialSlide: 0,
-        speed: 600,
-        slidesPerView: "auto",
-        grabCursor: true,
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-        },
+        speed: 800,
+
         navigation: {
-            nextEl: ".product-collection-slider-next",
-            prevEl: ".product-collection-slider-prev",
-        },
-
-        breakpoints: {
-            1200: {
-                spaceBetween: 13,
-            },
-            1500: {
-                spaceBetween: 16,
-            },
+            nextEl: ".about__slider .slider-next",
+            prevEl: ".about__slider .slider-prev",
         },
     });
 
-    //=================== Меню в личерм кабинете ============
+    //=================== Автособираемое содержание статьи ============
 
-    $(".account__content-item").slideUp();
-    $(".account__content-profile").slideDown();
-    //  $('.account__content-discounts').slideDown();
-    $("#profile").addClass("active");
+    const articleNav = $(".article__nav ul");
+    const content = $(".article__content");
 
-    $(".account aside nav ul li").on("click", function () {
-        $(".account aside nav ul li").removeClass("active");
-        $(this).addClass("active");
-        let munudId = $(this).attr("id");
-        let accountContent =
-            '[class^="account__content-"][class$="' + munudId + '"]';
-        $(".account__content-item").slideUp();
-        $(accountContent).slideDown();
+    articleNav.empty();
+
+    content.find("h1, h2, h3, h4, h5, h6").each(function (index) {
+        const headingText = $(this).text();
+        const headingId = `heading-${index}`;
+
+        $(this).attr("id", headingId);
+
+        const link = $(
+            `<li>
+                <a href="#${headingId}">
+                   <span>${headingText}</span>
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M4 1L10 7L4 13"
+                            stroke="#28272D"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </a>
+            </li>`
+        );
+
+        articleNav.append(link);
     });
 
-    //=================== Слайдр каталога ============
+    $(".article__nav a").on("click", function (e) {
+        e.preventDefault();
+        const target = $(this).attr("href");
 
-    const docsSlider = new Swiper(".docs-slider", {
-        spaceBetween: 20,
-        initialSlide: 0,
-        speed: 600,
-        slidesPerView: "auto",
-        grabCursor: true,
-        keyboard: {
-            enabled: true,
-        },
-        scrollbar: {
-            el: ".swiper-scrollbar",
-        },
-        breakpoints: {
-            1200: {
-                spaceBetween: 13,
-            },
-            1500: {
-                spaceBetween: 16,
-            },
-        },
+        window.scrollTo(0, $(target).offset().top - 120);
     });
 
-    //=================== Смена текста на странице оформления карты ============
-
-    $(".gift__card-form-info-content").slideUp();
-    $("#1").addClass("active");
-    $(".gift__card-form-info-content-1").slideDown();
-
-    $(".gift__card-form-info-swich span").on("click", function () {
-        $(".gift__card-form-info-swich span").removeClass("active");
-        $(this).addClass("active");
-
-        let munudId = $(this).attr("id");
-        let content =
-            '[class^="gift__card-form-info-content"][class$="' + munudId + '"]';
-        $(".gift__card-form-info-content").slideUp();
-        $(content).slideDown();
-    });
+    //=================== Мобильное меню ============
 
     $("#burger_menu").click(function () {
         $(this).toggleClass("open");
@@ -1162,7 +1513,6 @@ $(document).ready(function () {
     });
 
     const showMegaMenuCategory = (element) => {
-        console.log($(element));
         $(element).addClass("active").siblings().removeClass("active");
         $(".catalog__category")
             .filter("#" + $(element).data("category"))
