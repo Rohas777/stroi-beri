@@ -59,6 +59,7 @@ $(document).ready(function () {
     //=================== Переключение тени у стики хедера ============
 
     const stickyHeader = $(".header__main");
+    const scrollToTopButton = $(".float__item_to-top");
 
     let isStuck = false; // Флаг для отслеживания состояния
 
@@ -84,6 +85,18 @@ $(document).ready(function () {
                     .animate({ opacity: 1 }, 50);
             }
         }
+
+        if (window.scrollY > 150) {
+            scrollToTopButton.fadeIn(200);
+        } else {
+            scrollToTopButton.fadeOut(200);
+        }
+    });
+
+    //=================== Прокрутка вверх страницы ============
+
+    scrollToTopButton.on("click", function (e) {
+        window.scrollTo(0, 0);
     });
 
     //=================== Слайдер в оффере на главной ============
@@ -256,54 +269,6 @@ $(document).ready(function () {
         showMaskOnFocus: true,
     });
 
-    //=================== Часто задаваемые вопросы ============
-
-    // // Сначала скроем все ответы
-    // $(".faq__item-answer").slideUp();
-
-    // $(".faq__item").click(function () {
-    //     // Уберем класс rotate-faq у всех SVG в заголовках вопросов
-    //     $(".faq__item-question svg").removeClass("rotate-faq");
-
-    //     // Применим исходные стили к всем элементам
-    //     $(this).find(".faq__item-question").css("border", "1px solid #E8E8E8");
-    //     $(this)
-    //         .find(".faq__item-question span, .faq__item-question p")
-    //         .css("color", "#000");
-    //     $(".faq__item").css("border", "1px solid transparent");
-
-    //     // Находим текущий вопрос и ответ
-    //     let $currentAnswer = $(this).find(".faq__item-answer");
-    //     let $currentQuestion = $(this).find(".faq__item-question");
-
-    //     // Если текущий ответ виден, скроем его
-    //     if ($currentAnswer.is(":visible")) {
-    //         $currentAnswer.slideUp();
-    //     } else {
-    //         // Скроем все ответы, кроме текущего
-    //         $(".faq__item-answer").not($currentAnswer).slideUp();
-
-    //         // Раскроем только текущий ответ
-    //         $currentAnswer.slideDown();
-
-    //         // Изменяем стиль для текущего вопроса
-    //         $(this)
-    //             .find(".faq__item-question")
-    //             .css("border", "1px solid transparent");
-    //         $(this)
-    //             .parent()
-    //             .find(".faq__item-question span, .faq__item-question p")
-    //             .css("color", "#000");
-    //         $(this)
-    //             .find(".faq__item-question span, .faq__item-question p")
-    //             .css("color", "#DA0916");
-    //         $(this).css("border", "1px solid #E8E8E8");
-
-    //         // Добавляем класс rotate-faq к SVG текущего вопроса
-    //         $currentQuestion.find("svg").addClass("rotate-faq");
-    //     }
-    // });
-
     //=================== Анимация у checkbox ============
 
     $(".check-label").on("click", function () {
@@ -315,76 +280,14 @@ $(document).ready(function () {
         }
     });
 
-    //=================== Вы смотрели ============
+    //=================== Фиксация фильтров в каталоге ============
 
-    // const wachedSlider = new Swiper(".wached__slider", {
-    //     spaceBetween: 20,
-    //     initialSlide: 0,
-    //     speed: 600,
-    //     slidesPerView: "auto",
-    //     // grabCursor: true,
-    //     // autoplay: {
-    //     //   delay: 4000,
-    //     //   disableOnInteraction: false,
-    //     // },
-    //     scrollbar: {
-    //         el: ".swiper-scrollbar-recommendation",
-    //     },
-    //     navigation: {
-    //         nextEl: ".wached-slider-next",
-    //         prevEl: ".wached-slider-prev",
-    //     },
-
-    //     breakpoints: {
-    //         1200: {
-    //             spaceBetween: 13,
-    //         },
-    //         1500: {
-    //             spaceBetween: 16,
-    //         },
-    //         601: {
-    //             slidesPerView: "auto",
-    //         },
-    //         310: {
-    //             slidesPerView: 2,
-    //             spaceBetween: 10,
-    //         },
-    //     },
-    // });
-
-    //=================== Слайдер партнеров ============
-
-    // const productGallery = new Swiper(".product-gallery", {
-    //     loop: true,
-    //     speed: 600,
-    //     slidesPerView: "auto",
-    //     centeredSlides: true,
-    //     spaceBetween: 30,
-    //     // grabCursor: true,
-    //     navigation: {
-    //         nextEl: ".product-slider-next",
-    //         prevEl: ".product-slider-prev",
-    //     },
-
-    //     breakpoints: {
-    //         1200: {
-    //             spaceBetween: 13,
-    //         },
-    //         1500: {
-    //             spaceBetween: 16,
-    //         },
-    //         0: {
-    //             spaceBetween: 5,
-    //         },
-    //     },
-    //     on: {
-    //         slideChangeTransitionStart: function () {},
-    //         transitionEnd: function () {
-    //             let activeSlideImgLink = this.slides[this.activeIndex].src;
-    //             $(".product__photo>img").attr("src", activeSlideImgLink);
-    //         },
-    //     },
-    // });
+    $("#filters").stickySidebar({
+        containerSelector: ".catalog__inner",
+        innerWrapperSelector: ".filters",
+        topSpacing: 110,
+        bottomSpacing: 20,
+    });
 
     //=================== Диапазон цены в каталоге ============
 
@@ -544,29 +447,29 @@ $(document).ready(function () {
         // Инициализация Swiper для каждой карточки
         const swiper = new Swiper($swiperContainer[0], {
             loop: true,
-            autoplay: {
-                delay: 1000,
-                disableOnInteraction: false,
-            },
+            // autoplay: {
+            //     delay: 1000,
+            //     disableOnInteraction: false,
+            // },
             speed: 600,
             slidesPerView: 1,
             spaceBetween: 30,
-            pagination: {
-                el: $card.find(".swiper-pagination")[0],
-                type: "bullets",
-            },
+            // pagination: {
+            //     el: $card.find(".swiper-pagination")[0],
+            //     type: "bullets",
+            // },
         });
 
-        swiper.autoplay.stop();
+        // swiper.autoplay.stop();
 
-        // Привязка событий к карточке
-        $card.on("mouseenter", function () {
-            swiper.autoplay.start();
-        });
+        // // Привязка событий к карточке
+        // $card.on("mouseenter", function () {
+        //     swiper.autoplay.start();
+        // });
 
-        $card.on("mouseleave", function () {
-            swiper.autoplay.stop();
-        });
+        // $card.on("mouseleave", function () {
+        //     swiper.autoplay.stop();
+        // });
     });
 
     //=================== Кнопка добавить в корзину ============
@@ -1083,12 +986,6 @@ $(document).ready(function () {
         },
     });
 
-    //=================== Прокрутка вверх страницы ============
-
-    $(".float__item_to-top").on("click", function (e) {
-        window.scrollTo(0, 0);
-    });
-
     //=================== Галлерея товара ============
 
     const productThumbsSlider = new Swiper(".product__slider-thumbs .swiper", {
@@ -1117,6 +1014,13 @@ $(document).ready(function () {
 
     //=================== Подключение табов для товара ============
 
+    $(".product__all-chatacteristics").on("click", function (e) {
+        e.preventDefault();
+        window.scrollTo(0, $("#product-tabs").offset().top - 100);
+
+        $("#product-tabs").tabs("option", "active", 1);
+    });
+
     $("#product-tabs").tabs({
         show: { effect: "fade", duration: 200 },
         hide: { effect: "fade", duration: 200 },
@@ -1129,8 +1033,9 @@ $(document).ready(function () {
     const reviewsSlider = new Swiper(".reviews__slider .swiper", {
         spaceBetween: 10,
         freeMode: true,
+        slidesPerGroup: 5,
         slidesPerView: "auto",
-        speed: 600,
+        speed: 400,
         navigation: {
             nextEl: ".reviews__slider .slider-next",
             prevEl: ".reviews__slider .slider-prev",
@@ -1206,6 +1111,14 @@ $(document).ready(function () {
         }
     );
 
+    //=================== Якорные ссылки ============
+
+    $(".scroll-to").on("click", function (e) {
+        e.preventDefault();
+        const target = $(this).attr("href");
+        window.scrollTo(0, $(target).offset().top - 100);
+    });
+
     //=================== Меню в личном кабинете ============
 
     $(".account__nav a").on("click", function (e) {
@@ -1216,6 +1129,7 @@ $(document).ready(function () {
         const targetId = $(this).attr("href");
 
         if (!targetId.split("#")[0]) {
+            window.scrollTo(0, 0);
             const accountContent = $(targetId);
             history.pushState(null, null, targetId);
             $(".account__content-item").removeClass("active").slideUp(200);
@@ -1388,6 +1302,7 @@ $(document).ready(function () {
             $(".about__item").removeClass("active").slideUp(200);
             $(aboutContent).addClass("active").slideDown(200);
             const hash = window.location.hash;
+            window.scrollTo(0, 0);
         } else {
             window.location.href = targetId;
         }
@@ -1408,8 +1323,8 @@ $(document).ready(function () {
             } else {
                 $(".about__nav a").removeClass("active");
                 $(".about__item").slideUp(200);
-                $("#profile").addClass("active").slideDown(200);
-                $(".about__nav a[href='#profile']").addClass("active");
+                $("#about").addClass("active").slideDown(200);
+                $(".about__nav a[href='#about']").addClass("active");
             }
         }
     }
