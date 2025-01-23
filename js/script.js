@@ -1532,11 +1532,12 @@ $(document).ready(function () {
 //=================== Аккордион в футере ============
 
 $(".footer__inner-col-accordeon").click(function () {
-    $(this).closest(".footer__inner-col").toggleClass("opened");
+    const col = $(this).closest(".footer__inner-col");
+    col.toggleClass("opened");
 
-    if ($(this).hasClass("opened")) {
-        $(this).closest(".footer__inner-col").find("ul").slideDown(300);
+    if (col.hasClass("opened")) {
+        col.find("ul").slideDown(300);
     } else {
-        $(this).closest(".footer__inner-col").find("ul").slideUp(300);
+        col.find("ul").slideUp(300);
     }
 });
