@@ -103,6 +103,7 @@ $(document).ready(function () {
 
     const offerSlider = new Swiper(".offer-slider", {
         loop: true,
+        spaceBetween: 20,
         speed: 800,
         grabCursor: true,
         autoplay: {
@@ -113,6 +114,9 @@ $(document).ready(function () {
         navigation: {
             nextEl: ".offer-slider-next",
             prevEl: ".offer-slider-prev",
+        },
+        pagination: {
+            el: ".offer__inner .swiper-pagination",
         },
     });
 
@@ -128,15 +132,24 @@ $(document).ready(function () {
             nextEl: ".slider__menu .offer-slider-next",
             prevEl: ".slider__menu .offer-slider-prev",
         },
+        scrollbar: {
+            el: ".slider__menu .swiper-scrollbar",
+        },
         breakpoints: {
-            1200: {
-                spaceBetween: 13,
-            },
-            1500: {
-                spaceBetween: 16,
-            },
             0: {
+                grid: {
+                    rows: 2,
+                    fill: "row",
+                },
+                slidesPerView: "auto",
                 spaceBetween: 10,
+            },
+            601: {
+                grid: {
+                    rows: 1,
+                },
+                spaceBetween: 20,
+                slidesPerView: 7,
             },
         },
     });
@@ -152,15 +165,17 @@ $(document).ready(function () {
             nextEl: ".bestsellers .slider-next",
             prevEl: ".bestsellers .slider-prev",
         },
+        scrollbar: {
+            el: ".bestsellers .swiper-scrollbar",
+        },
         breakpoints: {
-            1200: {
-                spaceBetween: 13,
-            },
-            1500: {
-                spaceBetween: 16,
-            },
             0: {
+                slidesPerView: "auto",
                 spaceBetween: 10,
+            },
+            1026: {
+                slidesPerView: 5,
+                spaceBetween: 20,
             },
         },
     });
@@ -173,15 +188,17 @@ $(document).ready(function () {
             nextEl: ".novelties .slider-next",
             prevEl: ".novelties .slider-prev",
         },
+        scrollbar: {
+            el: ".novelties .swiper-scrollbar",
+        },
         breakpoints: {
-            1200: {
-                spaceBetween: 13,
-            },
-            1500: {
-                spaceBetween: 16,
-            },
             0: {
+                slidesPerView: "auto",
                 spaceBetween: 10,
+            },
+            1026: {
+                slidesPerView: 5,
+                spaceBetween: 20,
             },
         },
     });
@@ -441,36 +458,56 @@ $(document).ready(function () {
 
     //=================== Слайдер миниатюр в карточке каталога ============
 
-    $(".catalog__item").each(function (index, card) {
-        const $card = $(card);
-        const $swiperContainer = $card.find(".catalog__item-slider");
-        // Инициализация Swiper для каждой карточки
-        const swiper = new Swiper($swiperContainer[0], {
-            loop: true,
-            // autoplay: {
-            //     delay: 1000,
-            //     disableOnInteraction: false,
-            // },
+    $(".catalog__item").each(function (index, elem) {
+        const card = $(elem);
+        const swiperContainer = card.find(".catalog__item-slider");
+        const swiper = new Swiper(swiperContainer[0], {
             speed: 600,
-            slidesPerView: 1,
-            spaceBetween: 30,
-            // pagination: {
-            //     el: $card.find(".swiper-pagination")[0],
-            //     type: "bullets",
-            // },
+            scrollbar: {
+                el: card.find(".catalog__item-slider-scrollbar")[0],
+            },
+        });
+    });
+
+    function sliderMouseSlideInit() {
+        document.addEventListener("mousemove", function (e) {
+            const targetElement = e.target;
+            if (targetElement.closest("[data-mousemove-swipe]")) {
+                const sliderElement = targetElement.closest(
+                    "[data-mousemove-swipe]"
+                );
+                const sliderItem =
+                    sliderElement.swiper.slides[getIndex(sliderElement)];
+                const sliderLength = sliderElement.swiper.slides.length;
+
+                if (sliderLength > 1) {
+                    const sliderWidth = sliderItem.offsetWidth;
+                    const sliderPath = Math.round(sliderWidth / sliderLength);
+                    const sliderMousePos =
+                        e.clientX - $(sliderElement).offset().left;
+                    const sliderSlide = Math.floor(sliderMousePos / sliderPath);
+                    sliderElement.swiper.slideTo(sliderSlide);
+                }
+            }
         });
 
-        // swiper.autoplay.stop();
+        // Добавляем событие для отслеживания ухода мыши с элемента слайдера
+        document
+            .querySelectorAll("[data-mousemove-swipe]")
+            .forEach(function (sliderElement) {
+                sliderElement.addEventListener("mouseleave", function () {
+                    sliderElement.swiper.slideTo(0); // Возвращаем на первый слайд
+                });
+            });
 
-        // // Привязка событий к карточке
-        // $card.on("mouseenter", function () {
-        //     swiper.autoplay.start();
-        // });
+        function getIndex(el) {
+            return Array.from(el.parentNode.children).indexOf(el);
+        }
+    }
 
-        // $card.on("mouseleave", function () {
-        //     swiper.autoplay.stop();
-        // });
-    });
+    if (document.querySelector("[data-mousemove-swipe]")) {
+        sliderMouseSlideInit();
+    }
 
     //=================== Кнопка добавить в корзину ============
 
@@ -863,7 +900,9 @@ $(document).ready(function () {
 
     //=================== Форма получателя ============
 
-    $(".cart__recipient-form input").on("input", function () {
+    $(
+        ".cart__recipient-form input, .cart__delivery-courier input, .cart__delivery-courier textarea"
+    ).on("input", function () {
         if ($(this).val()) {
             $(this).addClass("typing");
         } else {
@@ -960,11 +999,23 @@ $(document).ready(function () {
     //=================== Радио боксы в корзине ============
 
     $(".radio-box").on("click", function () {
-        const isChecked = $(this).find("input").prop("checked");
-        $(this).find("input").prop("checked", !isChecked);
+        $(this).find("input").prop("checked", true);
     });
     $(".radio-box input").on("click", function () {
-        $(this).prop("checked", !$(this).prop("checked"));
+        $(this).prop("checked", true);
+    });
+
+    //=================== Переключение типа доставки ============
+
+    $(".cart__delivery-radio-box").on("click", function () {
+        const type = $(this).find("input").val();
+        if (type === "courier") {
+            $(".cart__delivery-point, .cart__delivery-date").slideUp(200);
+            $(".cart__delivery-courier").slideDown(200);
+        } else {
+            $(".cart__delivery-point, .cart__delivery-date").slideDown(200);
+            $(".cart__delivery-courier").slideUp(200);
+        }
     });
 
     //=================== Слайдер логотипов оригиналов ============
@@ -1062,18 +1113,12 @@ $(document).ready(function () {
         siblings.find("svg").fadeOut(200);
         const currentSort = $(this).attr("data-sort");
 
-        switch (currentSort) {
-            case "asc":
-                $(this).attr("data-sort", "desc");
-                break;
-            case "desc":
-                $(this).attr("data-sort", "");
-                $(this).find("svg").fadeOut(200);
-                break;
-            default:
-                $(this).attr("data-sort", "asc");
-                $(this).find("svg").fadeIn(200);
-                $(this).addClass("active");
+        if (currentSort === "asc") {
+            $(this).attr("data-sort", "desc");
+            $(this).find("svg").fadeIn(200);
+        } else {
+            $(this).attr("data-sort", "asc");
+            $(this).find("svg").fadeIn(200);
         }
     });
 
@@ -1400,8 +1445,8 @@ $(document).ready(function () {
         $("#catalogContentAdaptive").toggleClass("open");
     });
 
-    $("#catalog").click(function () {
-        $("#catalog").toggleClass("open");
+    $(".mega-menu-btn").click(function () {
+        $(".mega-menu-btn").toggleClass("open");
         $("#catalogContent").toggleClass("open");
         $(this).find(".swich-icon").toggleClass("open");
         $(this).find(".cross-icon").toggleClass("open");
@@ -1412,13 +1457,13 @@ $(document).ready(function () {
         var target = $(event.target);
         if (
             !target.closest("#catalogContent").length &&
-            !target.closest("#catalog").length &&
+            !target.closest(".mega-menu-btn").length &&
             $("#catalogContent").hasClass("open")
         ) {
-            $("#catalog").removeClass("open");
+            $(".mega-menu-btn").removeClass("open");
             $("#catalogContent").toggleClass("open");
-            $("#catalog").find(".swich-icon").toggleClass("open");
-            $("#catalog").find(".cross-icon").toggleClass("open");
+            $(".mega-menu-btn").find(".swich-icon").toggleClass("open");
+            $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
             $(".header__overlay").fadeToggle(300);
         }
     });
@@ -1469,10 +1514,10 @@ $(document).ready(function () {
             // Проверяем, нажата ли клавиша ESC
             closePopup(); // Вызов функции для закрытия попапа
 
-            $("#catalog").removeClass("open");
+            $(".mega-menu-btn").removeClass("open");
             $("#catalogContent").removeClass("open");
-            $("#catalog").find(".swich-icon").removeClass("open");
-            $("#catalog").find(".cross-icon").removeClass("open");
+            $(".mega-menu-btn").find(".swich-icon").removeClass("open");
+            $(".mega-menu-btn").find(".cross-icon").removeClass("open");
             $(".header__overlay").fadeOut(300);
         }
     });
@@ -1481,5 +1526,17 @@ $(document).ready(function () {
     function closePopup() {
         $(".popup").fadeOut(); // Скрываем попап
         $(".overlay").fadeOut(300);
+    }
+});
+
+//=================== Аккордион в футере ============
+
+$(".footer__inner-col-accordeon").click(function () {
+    $(this).closest(".footer__inner-col").toggleClass("opened");
+
+    if ($(this).hasClass("opened")) {
+        $(this).closest(".footer__inner-col").find("ul").slideDown(300);
+    } else {
+        $(this).closest(".footer__inner-col").find("ul").slideUp(300);
     }
 });
