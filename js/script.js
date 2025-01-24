@@ -304,6 +304,7 @@ $(document).ready(function () {
         innerWrapperSelector: ".filters",
         topSpacing: 110,
         bottomSpacing: 20,
+        minWidth: 601,
     });
 
     //=================== Диапазон цены в каталоге ============
@@ -518,6 +519,12 @@ $(document).ready(function () {
         bySelector = false
     ) => {
         const button = bySelector ? $(btn) : btn;
+        const parent = button.closest(".catalog__item-btns-row");
+        const quantitySelector = parent.find(".catalog__item-quantity");
+        width =
+            width !== "84px"
+                ? width
+                : parent.width() - quantitySelector.width() - 10;
         if (button.closest(parentSelector).hasClass("added")) {
             button.animate(
                 {
@@ -1466,6 +1473,43 @@ $(document).ready(function () {
             $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
             $(".header__overlay").fadeToggle(300);
         }
+
+        if (
+            !target.closest(".popup.open .popup-wrapper").length &&
+            !target.closest(".popup-btn").length
+        ) {
+            $(".popup.open").removeClass("open").fadeToggle(300);
+            $(".overlay").fadeOut(300);
+        }
+
+        if (
+            !target.closest(".catalog__list-filters").length &&
+            !target.closest(".catalog__list-row-button_sorter").length &&
+            $(".catalog__list-row-button_sorter").hasClass("opened") &&
+            $(window).width() <= 600
+        ) {
+            $(".catalog__list-filters.sorter").fadeOut(300);
+            $(".catalog__list-row-button_sorter").removeClass("opened");
+        }
+        if (
+            !target.closest("#filters").length &&
+            !target.closest(".catalog__list-row-button_filters").length &&
+            $(window).width() <= 600
+        ) {
+            $("#filters").animate(
+                {
+                    top: "100%",
+                },
+                300,
+                function () {
+                    $("#filters").css({
+                        display: "none",
+                    });
+                }
+            );
+            $(".catalog__overlay").fadeOut(300);
+            $(".catalog__list-row-button_filters").removeClass("opened");
+        }
     });
 
     $("#bannerClose").click(function () {
@@ -1493,17 +1537,6 @@ $(document).ready(function () {
         $(".overlay").fadeToggle(300);
     });
 
-    $(document).on("click", function (event) {
-        var target = $(event.target);
-        if (
-            !target.closest(".popup.open .popup-wrapper").length &&
-            !target.closest(".popup-btn").length
-        ) {
-            $(".popup.open").removeClass("open").fadeToggle(300);
-            $(".overlay").fadeOut(300);
-        }
-    });
-
     $(".popup-close").click(function () {
         $(".overlay").fadeOut(300);
         $(this).closest(".popup").fadeOut(300).removeClass("open");
@@ -1519,6 +1552,8 @@ $(document).ready(function () {
             $(".mega-menu-btn").find(".swich-icon").removeClass("open");
             $(".mega-menu-btn").find(".cross-icon").removeClass("open");
             $(".header__overlay").fadeOut(300);
+
+            $(".catalog__list-filters").fadeOut(300);
         }
     });
 
@@ -1540,4 +1575,109 @@ $(".footer__inner-col-accordeon").click(function () {
     } else {
         col.find("ul").slideUp(300);
     }
+});
+
+//=================== Кнопки фильтрации каталога на мобильных устройствах ============
+
+$(".catalog__list-row-button_sorter").click(function () {
+    const sorter = $(this)
+        .closest(".catalog__list-row")
+        .find(".catalog__list-filters.sorter");
+    sorter.fadeToggle(300);
+    $(this).toggleClass("opened");
+});
+
+$(".catalog__list-row-button_filters").click(function () {
+    const filters = $("#filters");
+    filters.find(".filters").css({
+        height: "calc(60vh - 29px)",
+    });
+    filters
+        .css({
+            display: "block",
+        })
+        .animate(
+            {
+                top: "40%",
+            },
+            300
+        );
+    $(".catalog__overlay").fadeIn(300);
+    $(this).toggleClass("opened");
+});
+
+$(".catalog__list-filters.sorter .sorter-item").click(function () {
+    if ($(window).width() <= 600) {
+        const sorter = $(this)
+            .closest(".catalog__list-row")
+            .find(".catalog__list-filters.sorter");
+        sorter.fadeOut(300);
+        $(".catalog__list-row-button_sorter")
+            .removeClass("opened")
+            .find("span")
+            .text($(this).text());
+    }
+});
+
+//=================== Фильтр меню на мобильных устройствах ============
+const draggItem = $(".filters__draggable");
+const draggable = $("#filters");
+let isDragging = false; // Флаг для отслеживания перетаскивания
+let startY; // Начальная позиция касания
+let startTop; // Начальная позиция элемента относительно верхней границы
+const threshold = $(window).height() * 0.3; // Граница 30% от нижнего края окна
+
+// Начало перетаскивания
+draggItem.on("touchstart", function (event) {
+    isDragging = true;
+    startY = event.originalEvent.touches[0].clientY; // Координата Y первого касания
+    startTop = parseInt(draggable.css("top"), 10); // Текущее значение top
+    event.preventDefault(); // Предотвращаем стандартное поведение
+});
+
+// Перемещение элемента
+$(document).on("touchmove", function (event) {
+    if (!isDragging) return;
+
+    const currentY = event.originalEvent.touches[0].clientY; // Текущая координата Y
+    const deltaY = currentY - startY; // Разница в движении пальца
+    const windowHeight = $(window).height(); // Высота окна
+
+    // Новое значение top
+    let newTop = startTop + deltaY;
+
+    // Ограничение сверху (min: 0) и снизу (max: windowHeight - draggableHeight)
+    newTop = Math.min(Math.max(newTop, 0), windowHeight - 50); // Верхняя граница = 0, нижняя граница = высота окна - 50px (высота заголовка)
+
+    draggable.css("top", newTop + "px");
+
+    draggable.find(".filters").css({
+        height: $(window).height() - newTop - 29 + "px",
+    });
+});
+
+// Окончание перетаскивания
+$(document).on("touchend", function () {
+    if (!isDragging) return;
+
+    const windowHeight = $(window).height(); // Высота окна
+    const currentTop = parseInt(draggable.css("top"), 10); // Текущее значение top
+
+    // Если пересекли 30% снизу, возвращаем вниз
+    if (currentTop > windowHeight - threshold) {
+        draggable.animate(
+            {
+                top: "100%",
+            },
+            300,
+            function () {
+                draggable.css({
+                    display: "none",
+                });
+            }
+        );
+        $(".catalog__overlay").fadeOut(300);
+    }
+
+    isDragging = false;
 });
