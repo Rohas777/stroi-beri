@@ -22062,7 +22062,15 @@ button:active):not(:has(.tip-mark:focus,
     background-color: #ffffff;
     z-index: 100000;
     border-radius: 20px 20px 0 0;
-    display: none;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+  }
+
+  .catalog__inner .aside.opened {
+    top: 40%;
   }
 
   .catalog__inner .filters {

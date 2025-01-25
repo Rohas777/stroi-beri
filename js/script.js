@@ -1517,17 +1517,13 @@ $(document).ready(function () {
             !target.closest(".catalog__list-row-button_filters").length &&
             $(window).width() <= 600
         ) {
-            $("#filters").animate(
-                {
-                    top: "100%",
-                },
-                300,
-                function () {
-                    $("#filters").css({
-                        display: "none",
-                    });
-                }
-            );
+            $("#filters").removeClass("opened").removeAttr("style");
+            // .animate(
+            //     {
+            //         top: "100%",
+            //     },
+            //     300
+            // );
             $(".catalog__overlay").fadeOut(300);
             $(".catalog__list-row-button_filters").removeClass("opened");
             enableScroll();
@@ -1615,18 +1611,14 @@ $(".catalog__list-row-button_filters").click(function () {
     filters.find(".filters").css({
         height: "calc(60vh - 29px)",
     });
-    filters
-        .css({
-            display: "block",
-        })
-        .animate(
-            {
-                top: "40%",
-            },
-            300
-        );
+    filters.addClass("opened");
+    // .animate(
+    //     {
+    //         top: "40%",
+    //     },
+    //     300
+    // );
     $(".catalog__overlay").fadeIn(300);
-    $(this).toggleClass("opened");
 });
 
 $(".catalog__list-filters.sorter .sorter-item").click(function () {
@@ -1687,18 +1679,17 @@ $(document).on("touchend", function () {
     const currentTop = parseInt(draggable.css("top"), 10); // Текущее значение top
 
     // Если пересекли 30% снизу, возвращаем вниз
-    if (currentTop > windowHeight - threshold) {
-        draggable.animate(
-            {
-                top: "100%",
-            },
-            300,
-            function () {
-                draggable.css({
-                    display: "none",
-                });
-            }
-        );
+    if (
+        currentTop > windowHeight - threshold ||
+        currentTop > windowHeight - 200
+    ) {
+        draggable.removeClass("opened").removeAttr("style");
+        // .animate(
+        //     {
+        //         top: "100%",
+        //     },
+        //     300
+        // );
         $(".catalog__overlay").fadeOut(300);
         enableScroll();
     }
