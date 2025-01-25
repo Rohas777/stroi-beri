@@ -22073,6 +22073,10 @@ button:active):not(:has(.tip-mark:focus,
     top: 40%;
   }
 
+  .catalog__inner .aside.stop-transition {
+    transition: none !important;
+  }
+
   .catalog__inner .filters {
     padding: 0 12px 20px;
     overflow: auto;
@@ -22191,6 +22195,7 @@ button:active):not(:has(.tip-mark:focus,
 
   .catalog__inner .filters__product-categorise-reset {
     gap: 5px;
+    font-size: 14px;
   }
 
   .catalog__inner .filters__product-categorise-reset svg {
@@ -22303,6 +22308,12 @@ button:active):not(:has(.tip-mark:focus,
   .catalog__inner .filters__product-categorise ul li:has(input[type=checkbox]) label {
     padding: 8px 0;
     gap: 8px;
+    font-size: 14px;
+  }
+
+  .catalog__inner .filters__product-categorise ul li:has(input[type=checkbox]) label input[type=checkbox] {
+    width: 20px;
+    height: 20px;
   }
 
   .catalog__inner .filters__product-categorise ul li:has(input[type=checkbox]) label input[type=checkbox]::before {
@@ -22315,6 +22326,11 @@ button:active):not(:has(.tip-mark:focus,
 
   .catalog__inner .filters__product-categorise.column-2 ul {
     row-gap: clamp(5px, 2.6666666667vw, 16px);
+  }
+
+  .catalog__inner .filters__product-categorise.column-2 ul {
+    gap: 0;
+    row-gap: 0;
   }
 
   .catalog__inner .filters__submit {

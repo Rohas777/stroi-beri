@@ -1517,13 +1517,10 @@ $(document).ready(function () {
             !target.closest(".catalog__list-row-button_filters").length &&
             $(window).width() <= 600
         ) {
-            $("#filters").removeClass("opened").removeAttr("style");
-            // .animate(
-            //     {
-            //         top: "100%",
-            //     },
-            //     300
-            // );
+            $("#filters")
+                .removeClass("stop-transition")
+                .removeClass("opened")
+                .removeAttr("style");
             $(".catalog__overlay").fadeOut(300);
             $(".catalog__list-row-button_filters").removeClass("opened");
             enableScroll();
@@ -1611,13 +1608,11 @@ $(".catalog__list-row-button_filters").click(function () {
     filters.find(".filters").css({
         height: "calc(60vh - 29px)",
     });
-    filters.addClass("opened");
-    // .animate(
-    //     {
-    //         top: "40%",
-    //     },
-    //     300
-    // );
+    filters.css({ transition: "top 0.3s ease-out" }).addClass("opened");
+
+    setTimeout(() => {
+        filters.addClass("stop-transition");
+    }, 300);
     $(".catalog__overlay").fadeIn(300);
 });
 
@@ -1683,13 +1678,11 @@ $(document).on("touchend", function () {
         currentTop > windowHeight - threshold ||
         currentTop > windowHeight - 200
     ) {
-        draggable.removeClass("opened").removeAttr("style");
-        // .animate(
-        //     {
-        //         top: "100%",
-        //     },
-        //     300
-        // );
+        draggable
+            .removeClass("stop-transition")
+            .removeClass("opened")
+            .removeAttr("style");
+
         $(".catalog__overlay").fadeOut(300);
         enableScroll();
     }
