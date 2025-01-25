@@ -1,3 +1,24 @@
+const disableScroll = () => {
+    $("html, body").css("overflow", "hidden");
+    $("header").css({
+        position: "fixed",
+        top: Math.max(0, $("header").offset().top - $(window).scrollTop()),
+    });
+    $("main").css({
+        marginTop: $("header").height(),
+    });
+};
+const enableScroll = () => {
+    $("html, body").css("overflow", "visible");
+    $("header").css({
+        position: "sticky",
+        top: 0,
+    });
+    $("main").css({
+        marginTop: 0,
+    });
+};
+
 $(document).ready(function () {
     //=================== Таймер в хедере ============
 
@@ -1509,6 +1530,7 @@ $(document).ready(function () {
             );
             $(".catalog__overlay").fadeOut(300);
             $(".catalog__list-row-button_filters").removeClass("opened");
+            enableScroll();
         }
     });
 
@@ -1589,6 +1611,7 @@ $(".catalog__list-row-button_sorter").click(function () {
 
 $(".catalog__list-row-button_filters").click(function () {
     const filters = $("#filters");
+    disableScroll();
     filters.find(".filters").css({
         height: "calc(60vh - 29px)",
     });
@@ -1677,6 +1700,7 @@ $(document).on("touchend", function () {
             }
         );
         $(".catalog__overlay").fadeOut(300);
+        enableScroll();
     }
 
     isDragging = false;
