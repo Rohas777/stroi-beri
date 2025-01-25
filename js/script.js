@@ -1651,7 +1651,17 @@ $(document).on("touchmove", function (event) {
 
     const currentY = event.originalEvent.touches[0].clientY; // Текущая координата Y
     const deltaY = currentY - startY; // Разница в движении пальца
-    const windowHeight = $(window).height(); // Высота окна
+
+    const viewportHeight = window.visualViewport?.height || $(window).height();
+
+    // Получаем отступ снизу (safe-area-inset-bottom) для iOS
+    const safeAreaInsetBottom = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+            "env(safe-area-inset-bottom)"
+        ) || 0,
+        10
+    );
+    const windowHeight = viewportHeight - safeAreaInsetBottom; // Высота окна
 
     // Новое значение top
     let newTop = startTop + deltaY;
