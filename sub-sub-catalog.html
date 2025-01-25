@@ -13044,356 +13044,416 @@
                     </div>
                 </div>
             </section>
+            <div class="catalog__overlay"></div>
 
             <section class="catalog">
                 <div class="container">
                     <div class="catalog__inner">
-                        <aside class="filters">
-                            <h4>Найдено 4500 товаров</h4>
-                            <div
-                                class="filters__product-categorise product-categories"
-                            >
-                                <p>Категории</p>
+                        <aside id="filters" class="aside">
+                            <div class="filters__draggable"></div>
+                            <div class="filters">
+                                <h4>Найдено 4500 товаров</h4>
+                                <div
+                                    class="filters__product-categorise product-categories"
+                                >
+                                    <p>Категории</p>
 
-                                <ul>
-                                    <li
-                                        class="filters__product-categorise-back"
+                                    <ul>
+                                        <li
+                                            class="filters__product-categorise-back"
+                                        >
+                                            <a href="sub-catalog.html">
+                                                <svg
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M15 5L9 12L15 19"
+                                                        stroke="#E94D11"
+                                                        stroke-width="1.5"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                    />
+                                                </svg>
+                                                Ленточные шуруповерты
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <a
+                                        class="filters__product-categorise-more"
+                                        href="#"
                                     >
-                                        <a href="sub-catalog.html">
+                                        Показать еще 2
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M15 5L9 12L15 19"
+                                                stroke="#E94D11"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div class="filters__product-categorise price">
+                                    <p>
+                                        Цена
+                                        <a
+                                            class="filters__product-categorise-reset"
+                                            href="#"
+                                        >
                                             <svg
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 16 16"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
                                             >
                                                 <path
-                                                    d="M15 5L9 12L15 19"
-                                                    stroke="#E94D11"
-                                                    stroke-width="1.5"
+                                                    d="M15 1L1 15M1 1L15 15"
+                                                    stroke="#28272D"
+                                                    stroke-width="2"
                                                     stroke-linecap="round"
-                                                    stroke-linejoin="round"
                                                 />
                                             </svg>
-                                            Ленточные шуруповерты
+
+                                            Сбросить
                                         </a>
-                                    </li>
-                                </ul>
-                                <a
-                                    class="filters__product-categorise-more"
-                                    href="#"
-                                >
-                                    Показать еще 2
-                                    <svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M15 5L9 12L15 19"
-                                            stroke="#E94D11"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        />
-                                    </svg>
-                                </a>
-                            </div>
-
-                            <div class="filters__product-categorise price">
-                                <p>
-                                    Цена
-                                    <a
-                                        class="filters__product-categorise-reset"
-                                        href="#"
-                                    >
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 16 16"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M15 1L1 15M1 1L15 15"
-                                                stroke="#28272D"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                    </p>
+                                    <div
+                                        id="slider-range"
+                                        data-min="15999"
+                                        data-max="80000"
+                                    ></div>
+                                    <div class="amount">
+                                        <label>
+                                            <span>от</span>
+                                            <input
+                                                type="text"
+                                                id="start-range"
+                                                maxlength="9"
                                             />
-                                        </svg>
-
-                                        Сбросить
-                                    </a>
-                                </p>
-                                <div
-                                    id="slider-range"
-                                    data-min="15999"
-                                    data-max="80000"
-                                ></div>
-                                <div class="amount">
-                                    <label>
-                                        <span>от</span>
-                                        <input
-                                            type="text"
-                                            id="start-range"
-                                            maxlength="9"
-                                        />
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 16 16"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M15 1L1 15M1 1L15 15"
-                                                stroke="#28272D"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                            <svg
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 16 16"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M15 1L1 15M1 1L15 15"
+                                                    stroke="#28272D"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </label>
+                                        <span class="devider"></span>
+                                        <label>
+                                            <span>от</span>
+                                            <input
+                                                type="text"
+                                                id="end-range"
+                                                maxlength="9"
                                             />
-                                        </svg>
-                                    </label>
-                                    <span class="devider"></span>
-                                    <label>
-                                        <span>от</span>
-                                        <input
-                                            type="text"
-                                            id="end-range"
-                                            maxlength="9"
-                                        />
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 16 16"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M15 1L1 15M1 1L15 15"
-                                                stroke="#28272D"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                            />
-                                        </svg>
-                                    </label>
+                                            <svg
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 16 16"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M15 1L1 15M1 1L15 15"
+                                                    stroke="#28272D"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="filters__product-categorise column-2">
-                                <p>
-                                    Производители
+                                <div
+                                    class="filters__product-categorise column-2"
+                                >
+                                    <p>
+                                        Производители
+                                        <a
+                                            class="filters__product-categorise-reset"
+                                            href="#"
+                                        >
+                                            <svg
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 16 16"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M15 1L1 15M1 1L15 15"
+                                                    stroke="#28272D"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+
+                                            Сбросить
+                                        </a>
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="manufacturers"
+                                                    checked
+                                                />
+                                                Производитель
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="manufacturers"
+                                                />
+                                                Производитель
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="manufacturers"
+                                                />
+                                                Производитель
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="manufacturers"
+                                                />
+                                                Производитель
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="manufacturers"
+                                                />
+                                                Производитель
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="manufacturers"
+                                                />
+                                                Производитель
+                                            </label>
+                                        </li>
+                                    </ul>
                                     <a
-                                        class="filters__product-categorise-reset"
+                                        class="filters__product-categorise-more"
                                         href="#"
                                     >
+                                        Показать еще 96
                                         <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 16 16"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path
-                                                d="M15 1L1 15M1 1L15 15"
-                                                stroke="#28272D"
-                                                stroke-width="2"
+                                                d="M15 5L9 12L15 19"
+                                                stroke="#E94D11"
+                                                stroke-width="1.5"
                                                 stroke-linecap="round"
+                                                stroke-linejoin="round"
                                             />
                                         </svg>
-
-                                        Сбросить
                                     </a>
-                                </p>
-                                <ul>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="manufacturers"
-                                                checked
-                                            />
-                                            Производитель
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="manufacturers"
-                                            />
-                                            Производитель
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="manufacturers"
-                                            />
-                                            Производитель
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="manufacturers"
-                                            />
-                                            Производитель
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="manufacturers"
-                                            />
-                                            Производитель
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="manufacturers"
-                                            />
-                                            Производитель
-                                        </label>
-                                    </li>
-                                </ul>
-                                <a
-                                    class="filters__product-categorise-more"
-                                    href="#"
-                                >
-                                    Показать еще 96
-                                    <svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M15 5L9 12L15 19"
-                                            stroke="#E94D11"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        />
-                                    </svg>
-                                </a>
-                            </div>
-                            <div class="filters__product-categorise">
-                                <p>
-                                    Емкость аккумулятора, А*ч
+                                </div>
+                                <div class="filters__product-categorise">
+                                    <p>
+                                        Емкость аккумулятора, А*ч
+                                        <a
+                                            class="filters__product-categorise-reset"
+                                            href="#"
+                                        >
+                                            <svg
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 16 16"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M15 1L1 15M1 1L15 15"
+                                                    stroke="#28272D"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+
+                                            Сбросить
+                                        </a>
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="battery-capacity"
+                                                />
+                                                1.2
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="battery-capacity"
+                                                />
+                                                1.3
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="battery-capacity"
+                                                />
+                                                1.4
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="battery-capacity"
+                                                />
+                                                1.5
+                                            </label>
+                                        </li>
+                                    </ul>
                                     <a
-                                        class="filters__product-categorise-reset"
+                                        class="filters__product-categorise-more"
                                         href="#"
                                     >
+                                        Показать еще 2
                                         <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 16 16"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
                                             <path
-                                                d="M15 1L1 15M1 1L15 15"
-                                                stroke="#28272D"
-                                                stroke-width="2"
+                                                d="M15 5L9 12L15 19"
+                                                stroke="#E94D11"
+                                                stroke-width="1.5"
                                                 stroke-linecap="round"
+                                                stroke-linejoin="round"
                                             />
                                         </svg>
-
-                                        Сбросить
                                     </a>
-                                </p>
-                                <ul>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="battery-capacity"
-                                            />
-                                            1.2
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="battery-capacity"
-                                            />
-                                            1.3
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="battery-capacity"
-                                            />
-                                            1.4
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="battery-capacity"
-                                            />
-                                            1.5
-                                        </label>
-                                    </li>
-                                </ul>
-                                <a
-                                    class="filters__product-categorise-more"
-                                    href="#"
-                                >
-                                    Показать еще 2
+                                </div>
+                                <button type="submit" class="filters__submit">
+                                    Показать 128 товаров
+                                </button>
+                                <button type="reset" class="filters__reset">
                                     <svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 16 16"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path
-                                            d="M15 5L9 12L15 19"
-                                            stroke="#E94D11"
-                                            stroke-width="1.5"
+                                            d="M15 1L1 15M1 1L15 15"
+                                            stroke="#28272D"
+                                            stroke-width="2"
                                             stroke-linecap="round"
-                                            stroke-linejoin="round"
                                         />
                                     </svg>
-                                </a>
-                            </div>
-                            <button type="submit" class="filters__submit">
-                                Показать 128 товаров
-                            </button>
-                            <button type="reset" class="filters__reset">
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M15 1L1 15M1 1L15 15"
-                                        stroke="#28272D"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                    />
-                                </svg>
 
-                                Сбросить все фильтры
-                            </button>
+                                    Сбросить все фильтры
+                                </button>
+                            </div>
                         </aside>
 
                         <div class="catalog__list">
                             <div class="catalog__list-row">
+                                <button
+                                    class="catalog__list-row-button catalog__list-row-button_sorter"
+                                >
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M22 7H2"
+                                            stroke="#E94D11"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M19 12H5"
+                                            stroke="#FFBD16"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M16 17H8"
+                                            stroke="#E94D11"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                    <span>По популярности</span>
+                                </button>
+                                <button
+                                    class="catalog__list-row-button catalog__list-row-button_filters"
+                                >
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M22 5.81399V6.50399C22 7.54199 22 8.06099 21.74 8.49099C21.48 8.92099 21.007 9.18799 20.058 9.72199L17.145 11.362C16.509 11.72 16.19 11.9 15.963 12.097C15.5056 12.4797 15.1889 13.004 15.063 13.587C15 13.872 15 14.206 15 14.873V17.543C15 19.452 15 20.406 14.332 20.824C13.664 21.242 12.725 20.874 10.846 20.14C9.951 19.79 9.504 19.616 9.252 19.261C9 18.907 9 18.451 9 17.542V14.872C9 14.206 9 13.872 8.936 13.587C8.81068 13.0043 8.49469 12.48 8.038 12.097C7.81 11.9 7.491 11.72 6.855 11.362L3.942 9.72199C2.993 9.18799 2.519 8.92199 2.26 8.49199C2 8.05999 2 7.54099 2 6.50299V5.81299"
+                                            stroke="#E94D11"
+                                            stroke-width="1.5"
+                                        />
+                                        <path
+                                            d="M22 5.815C22 4.488 22 3.825 21.56 3.412C21.122 3 20.415 3 19 3H5C3.586 3 2.879 3 2.44 3.412C2.001 3.824 2 4.488 2 5.815"
+                                            stroke="#FFBD16"
+                                            stroke-width="1.5"
+                                        />
+                                    </svg>
+                                    <span>Фильтр</span>
+                                </button>
                                 <div class="catalog__list-filters sorter">
                                     <p>Сортировать по:</p>
                                     <div class="sorter-item" data-sort="asc">
