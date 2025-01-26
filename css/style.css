@@ -22370,7 +22370,7 @@ button:active):not(:has(.tip-mark:focus,
     position: fixed;
     width: 100%;
     height: fit-content;
-    top: 100%;
+    top: 150%;
     left: 0;
     background-color: #ffffff;
     z-index: 100000;
