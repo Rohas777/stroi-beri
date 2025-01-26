@@ -325,7 +325,7 @@ $(document).ready(function () {
         innerWrapperSelector: ".filters",
         topSpacing: 110,
         bottomSpacing: 20,
-        minWidth: 601,
+        minWidth: 602,
     });
 
     //=================== Диапазон цены в каталоге ============
@@ -589,87 +589,13 @@ $(document).ready(function () {
     $(".product-page .add-to-cart").each(function (index, btn) {
         animateAddToCartButton(".add-to-cart", ".product-page", "150px", true);
     });
-
-    //=================== Уведомление о добавлении в корзину ============
-
-    /**
-     * Показывает уведомление, добавляя класс "show" и выполняя анимацию его появления.
-     *
-     * @param {jQuery} notification - jQuery элемент уведомления, который нужно показать.
-     */
-
     const showNotification = (notification) => {
         notification.addClass("show");
-        $({ offset: 150 }).animate(
-            { offset: 0 }, // Конечное значение
-            {
-                duration: 300,
-                step: function (now) {
-                    notification.css(
-                        "-moz-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css(
-                        "-ms-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css(
-                        "-webkit-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css(
-                        "-o-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css("transform", "translate(" + now + "%, 0)");
-                },
-            }
-        );
     };
-
-    /**
-     * Скрывает уведомление, удаляя класс "show" и выполняя анимацию его исчезновения.
-     *
-     * @param {jQuery} notification - jQuery элемент уведомления, который нужно скрыть.
-     */
 
     const hideNotification = (notification) => {
         notification.removeClass("show");
-        $({ offset: 0 }).animate(
-            { offset: 150 }, // Конечное значение
-            {
-                duration: 300,
-                step: function (now) {
-                    notification.css(
-                        "-moz-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css(
-                        "-ms-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css(
-                        "-webkit-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css(
-                        "-o-transform",
-                        "translate(" + now + "%, 0)"
-                    );
-                    notification.css("transform", "translate(" + now + "%, 0)");
-                },
-            }
-        );
     };
-    /**
-     * Закрывает уведомление, останавливая таймер закрытия уведомления,
-     * если он существует, и скрывая уведомление.
-     *
-     * !!!ВАЖНО!!! Вызывать только для предотварщения уже сработавшей
-     * анимации показа уведомления
-     *
-     * @param {jQuery} notification - jQuery элемент уведомления, которое нужно закрыть.
-     */
     const closeNotification = (notification) => {
         const progress = $(".catalog-notification__progress");
         // Остановить текущий таймер, если он существует
@@ -1466,7 +1392,7 @@ $(document).ready(function () {
         window.scrollTo(0, $(target).offset().top - 120);
     });
 
-    //=================== Мобильное меню ============
+    //=================== Мега меню ============
 
     $("#burger_menu").click(function () {
         $(this).toggleClass("open");
@@ -1479,6 +1405,10 @@ $(document).ready(function () {
         $(this).find(".swich-icon").toggleClass("open");
         $(this).find(".cross-icon").toggleClass("open");
         $(".header__overlay").fadeToggle(300);
+
+        if ($(".catalog__menu").hasClass("open") && $(window).width() <= 767) {
+            resetMobileMenu();
+        }
     });
 
     $(document).on("click", function (event) {
@@ -1515,6 +1445,7 @@ $(document).ready(function () {
         if (
             !target.closest("#filters").length &&
             !target.closest(".catalog__list-row-button_filters").length &&
+            !target.closest(".catalog-notification").length &&
             $(window).width() <= 600
         ) {
             $("#filters")
@@ -1544,7 +1475,63 @@ $(document).ready(function () {
 
     $(".category-btn").click(function () {
         showMegaMenuCategory(this);
+
+        if ($(window).width() <= 767) {
+            $(".catalog__menu-content aside").fadeOut(200);
+            $(".catalog__category-wrapper").fadeIn(200);
+        }
     });
+
+    //=================== Мобильное меню ============
+
+    const resetMobileMenu = () => {
+        $(".catalog__category-wrapper").fadeOut(200);
+        $(".catalog__menu-content aside").fadeOut(200);
+        showMenuItem(".catalog__navigation");
+    };
+
+    const hideMenuItem = (element) => {
+        $(element).css("pointer-events", "none").animate(
+            {
+                height: 0,
+                opacity: 0,
+            },
+            200
+        );
+    };
+
+    const showMenuItem = (element) => {
+        $(element).css("pointer-events", "auto").animate(
+            {
+                height: "100%",
+                opacity: 1,
+            },
+            200
+        );
+    };
+
+    $(".mobile-menu-catalog-open").click(function () {
+        hideMenuItem(".catalog__navigation");
+        $(".catalog__menu-content aside").fadeIn(200);
+    });
+
+    $(".catalog__category h2").click(function (e) {
+        if ($(window).width() <= 767) {
+            e.preventDefault();
+            $(".catalog__menu-content aside").fadeIn(200);
+            $(".catalog__category-wrapper").fadeOut(200);
+        }
+    });
+
+    $(".catalog__menu-content aside h2").click(function (e) {
+        if ($(window).width() <= 767) {
+            e.preventDefault();
+            $(".catalog__menu-content aside").fadeOut(200);
+            showMenuItem(".catalog__navigation");
+        }
+    });
+
+    //=================== Попапы ============
 
     $(".popup-btn").click(function () {
         const popup = $($(this).data("popup"));
@@ -1577,125 +1564,126 @@ $(document).ready(function () {
         $(".popup").fadeOut(); // Скрываем попап
         $(".overlay").fadeOut(300);
     }
-});
 
-//=================== Аккордион в футере ============
+    //=================== Аккордион в футере ============
 
-$(".footer__inner-col-accordeon").click(function () {
-    const col = $(this).closest(".footer__inner-col");
-    col.toggleClass("opened");
+    $(".footer__inner-col-accordeon").click(function () {
+        const col = $(this).closest(".footer__inner-col");
+        col.toggleClass("opened");
 
-    if (col.hasClass("opened")) {
-        col.find("ul").slideDown(300);
-    } else {
-        col.find("ul").slideUp(300);
-    }
-});
-
-//=================== Кнопки фильтрации каталога на мобильных устройствах ============
-
-$(".catalog__list-row-button_sorter").click(function () {
-    const sorter = $(this)
-        .closest(".catalog__list-row")
-        .find(".catalog__list-filters.sorter");
-    sorter.fadeToggle(300);
-    $(this).toggleClass("opened");
-});
-
-$(".catalog__list-row-button_filters").click(function () {
-    const filters = $("#filters");
-    disableScroll();
-    filters.find(".filters").css({
-        height: "calc(60vh - 29px)",
+        if (col.hasClass("opened")) {
+            col.find("ul").slideDown(300);
+        } else {
+            col.find("ul").slideUp(300);
+        }
     });
-    filters.css({ transition: "top 0.3s ease-out" }).addClass("opened");
 
-    setTimeout(() => {
-        filters.addClass("stop-transition");
-    }, 300);
-    $(".catalog__overlay").fadeIn(300);
-});
+    //=================== Кнопки фильтрации каталога на мобильных устройствах ============
 
-$(".catalog__list-filters.sorter .sorter-item").click(function () {
-    if ($(window).width() <= 600) {
+    $(".catalog__list-row-button_sorter").click(function () {
         const sorter = $(this)
             .closest(".catalog__list-row")
             .find(".catalog__list-filters.sorter");
-        sorter.fadeOut(300);
-        $(".catalog__list-row-button_sorter")
-            .removeClass("opened")
-            .find("span")
-            .text($(this).text());
-    }
-});
-
-//=================== Фильтр меню на мобильных устройствах ============
-const draggItem = $(".filters__draggable");
-const draggable = $("#filters");
-let isDragging = false; // Флаг для отслеживания перетаскивания
-let startY; // Начальная позиция касания
-let startTop; // Начальная позиция элемента относительно верхней границы
-const threshold = $(window).height() * 0.3; // Граница 30% от нижнего края окна
-
-// Начало перетаскивания
-draggItem.on("touchstart", function (event) {
-    isDragging = true;
-    startY = event.originalEvent.touches[0].clientY; // Координата Y первого касания
-    startTop = parseInt(draggable.css("top"), 10); // Текущее значение top
-    event.preventDefault(); // Предотвращаем стандартное поведение
-});
-
-// Перемещение элемента
-$(document).on("touchmove", function (event) {
-    if (!isDragging) return;
-
-    const currentY = event.originalEvent.touches[0].clientY; // Текущая координата Y
-    const deltaY = currentY - startY; // Разница в движении пальца
-    const windowHeight = $(window).height(); // Высота окна
-
-    const viewportHeight = window.visualViewport?.height || $(window).height();
-
-    // Получаем отступ снизу (safe-area-inset-bottom) для iOS
-    const safeAreaInsetBottom = parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue(
-            "env(safe-area-inset-bottom)"
-        ) || 0,
-        10
-    );
-
-    // Новое значение top
-    let newTop = startTop + deltaY;
-
-    // Ограничение сверху (min: 0) и снизу (max: windowHeight - draggableHeight)
-    newTop = Math.min(Math.max(newTop, 0), windowHeight - 50); // Верхняя граница = 0, нижняя граница = высота окна - 50px (высота заголовка)
-
-    draggable.css("top", newTop + "px");
-
-    draggable.find(".filters").css({
-        height: viewportHeight - safeAreaInsetBottom - newTop - 29 + "px",
+        sorter.fadeToggle(300);
+        $(this).toggleClass("opened");
     });
-});
 
-// Окончание перетаскивания
-$(document).on("touchend", function () {
-    if (!isDragging) return;
+    $(".catalog__list-row-button_filters").click(function () {
+        const filters = $("#filters");
+        disableScroll();
+        filters.find(".filters").css({
+            height: "calc(60vh - 29px)",
+        });
+        filters.css({ transition: "top 0.3s ease-out" }).addClass("opened");
 
-    const windowHeight = $(window).height(); // Высота окна
-    const currentTop = parseInt(draggable.css("top"), 10); // Текущее значение top
+        setTimeout(() => {
+            filters.addClass("stop-transition");
+        }, 300);
+        $(".catalog__overlay").fadeIn(300);
+    });
 
-    // Если пересекли 30% снизу, возвращаем вниз
-    if (
-        currentTop > windowHeight - threshold ||
-        currentTop > windowHeight - 200
-    ) {
-        draggable
-            .removeClass("stop-transition")
-            .removeClass("opened")
-            .removeAttr("style");
+    $(".catalog__list-filters.sorter .sorter-item").click(function () {
+        if ($(window).width() <= 600) {
+            const sorter = $(this)
+                .closest(".catalog__list-row")
+                .find(".catalog__list-filters.sorter");
+            sorter.fadeOut(300);
+            $(".catalog__list-row-button_sorter")
+                .removeClass("opened")
+                .find("span")
+                .text($(this).text());
+        }
+    });
 
-        $(".catalog__overlay").fadeOut(300);
-        enableScroll();
-    }
+    //=================== Фильтр меню на мобильных устройствах ============
+    const draggItem = $(".filters__draggable");
+    const draggable = $("#filters");
+    let isDragging = false; // Флаг для отслеживания перетаскивания
+    let startY; // Начальная позиция касания
+    let startTop; // Начальная позиция элемента относительно верхней границы
+    const threshold = $(window).height() * 0.3; // Граница 30% от нижнего края окна
 
-    isDragging = false;
+    // Начало перетаскивания
+    draggItem.on("touchstart", function (event) {
+        isDragging = true;
+        startY = event.originalEvent.touches[0].clientY; // Координата Y первого касания
+        startTop = parseInt(draggable.css("top"), 10); // Текущее значение top
+        event.preventDefault(); // Предотвращаем стандартное поведение
+    });
+
+    // Перемещение элемента
+    $(document).on("touchmove", function (event) {
+        if (!isDragging) return;
+
+        const currentY = event.originalEvent.touches[0].clientY; // Текущая координата Y
+        const deltaY = currentY - startY; // Разница в движении пальца
+        const windowHeight = $(window).height(); // Высота окна
+
+        const viewportHeight =
+            window.visualViewport?.height || $(window).height();
+
+        // Получаем отступ снизу (safe-area-inset-bottom) для iOS
+        const safeAreaInsetBottom = parseInt(
+            getComputedStyle(document.documentElement).getPropertyValue(
+                "env(safe-area-inset-bottom)"
+            ) || 0,
+            10
+        );
+
+        // Новое значение top
+        let newTop = startTop + deltaY;
+
+        // Ограничение сверху (min: 0) и снизу (max: windowHeight - draggableHeight)
+        newTop = Math.min(Math.max(newTop, 0), windowHeight - 50); // Верхняя граница = 0, нижняя граница = высота окна - 50px (высота заголовка)
+
+        draggable.css("top", newTop + "px");
+
+        draggable.find(".filters").css({
+            height: viewportHeight - safeAreaInsetBottom - newTop - 29 + "px",
+        });
+    });
+
+    // Окончание перетаскивания
+    $(document).on("touchend", function () {
+        if (!isDragging) return;
+
+        const windowHeight = $(window).height(); // Высота окна
+        const currentTop = parseInt(draggable.css("top"), 10); // Текущее значение top
+
+        // Если пересекли 30% снизу, возвращаем вниз
+        if (
+            currentTop > windowHeight - threshold ||
+            currentTop > windowHeight - 200
+        ) {
+            draggable
+                .removeClass("stop-transition")
+                .removeClass("opened")
+                .removeAttr("style");
+
+            $(".catalog__overlay").fadeOut(300);
+            enableScroll();
+        }
+
+        isDragging = false;
+    });
 });
