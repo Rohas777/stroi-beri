@@ -92,18 +92,12 @@ $(document).ready(function () {
             isStuck = true;
             if ($("body").hasClass("product-page")) {
                 $(".sticky").addClass("active");
-                stickyHeader
-                    .css("pointer-events", "none")
-                    .animate({ opacity: 0 }, 50);
             }
         } else if (rect.top > 0 && isStuck) {
             stickyHeader.css("box-shadow", "none");
             isStuck = false;
             if ($("body").hasClass("product-page")) {
                 $(".sticky").removeClass("active");
-                stickyHeader
-                    .css("pointer-events", "auto")
-                    .animate({ opacity: 1 }, 50);
             }
         }
 
@@ -540,7 +534,9 @@ $(document).ready(function () {
         bySelector = false
     ) => {
         const button = bySelector ? $(btn) : btn;
-        const parent = button.closest(".catalog__item-btns-row");
+        const parent = button.closest(
+            ".catalog__item-btns-row, .product__btns"
+        );
         const quantitySelector = parent.find(".catalog__item-quantity");
         width =
             width !== "84px"
@@ -1003,10 +999,23 @@ $(document).ready(function () {
             nextEl: ".product__slider-thumbs .slider-next",
             prevEl: ".product__slider-thumbs .slider-prev",
         },
+        breakpoints: {
+            0: {
+                direction: "horizontal",
+                slidesPerView: "auto",
+                freeMode: true,
+                spaceBetween: 4,
+            },
+            601: {
+                direction: "vertical",
+                slidesPerView: 6,
+                freeMode: false,
+                spaceBetween: 10,
+            },
+        },
     });
     const productSlider = new Swiper(".product__slider", {
         slidesPerView: 1,
-        direction: "vertical",
         spaceBetween: 10,
         effect: "fade",
         fadeEffect: {
@@ -1394,17 +1403,23 @@ $(document).ready(function () {
 
     //=================== Мега меню ============
 
-    $("#burger_menu").click(function () {
-        $(this).toggleClass("open");
-        $("#catalogContentAdaptive").toggleClass("open");
-    });
-
     $(".mega-menu-btn").click(function () {
         $(".mega-menu-btn").toggleClass("open");
         $("#catalogContent").toggleClass("open");
         $(this).find(".swich-icon").toggleClass("open");
         $(this).find(".cross-icon").toggleClass("open");
         $(".header__overlay").fadeToggle(300);
+
+        if ($(".catalog__menu").hasClass("open") && $(window).width() <= 767) {
+            resetMobileMenu();
+            $("#catalogContent")
+                .css("display", "block")
+                .animate({ left: 0 }, 200);
+        } else if ($(window).width() <= 767) {
+            $("#catalogContent").animate({ left: "-100%" }, 200, function () {
+                $("#catalogContent").removeAttr("style");
+            });
+        }
 
         if ($(".catalog__menu").hasClass("open") && $(window).width() <= 767) {
             resetMobileMenu();
@@ -1423,6 +1438,15 @@ $(document).ready(function () {
             $(".mega-menu-btn").find(".swich-icon").toggleClass("open");
             $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
             $(".header__overlay").fadeToggle(300);
+            if ($(window).width() <= 767) {
+                $("#catalogContent").animate(
+                    { left: "-100%" },
+                    200,
+                    function () {
+                        $("#catalogContent").removeAttr("style");
+                    }
+                );
+            }
         }
 
         if (
@@ -1554,6 +1578,16 @@ $(document).ready(function () {
             $(".mega-menu-btn").find(".swich-icon").removeClass("open");
             $(".mega-menu-btn").find(".cross-icon").removeClass("open");
             $(".header__overlay").fadeOut(300);
+
+            if ($(window).width() <= 767) {
+                $("#catalogContent").animate(
+                    { left: "-100%" },
+                    200,
+                    function () {
+                        $("#catalogContent").removeAttr("style");
+                    }
+                );
+            }
 
             $(".catalog__list-filters").fadeOut(300);
         }
