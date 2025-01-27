@@ -8407,6 +8407,7 @@ textarea:active) > span {
 
 .account__content {
   flex: 1px;
+  min-width: 0;
 }
 
 .account__content-item:not(.account__content-order) {
@@ -9098,6 +9099,60 @@ button:active):not(:has(.tip-mark:focus,
   padding: clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px);
 }
 
+.account__content-history-row {
+  position: relative;
+  margin-bottom: clamp(13.2px, 1.0416666667vw, 20px);
+  padding-bottom: clamp(13.2px, 1.0416666667vw, 20px);
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.account__content-history-row_mobile {
+  display: none;
+}
+
+.account__content-history-row_mobile p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.account__content-history-row-button {
+  align-items: center;
+  width: 100%;
+  padding: 14.5px 20px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  position: relative;
+  display: none;
+  justify-content: center;
+}
+
+.account__content-history-row-button svg {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  right: 10px;
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+}
+
+.account__content-history-row-button.opened svg {
+  -moz-transform: translate(0, -50%) rotate(180deg);
+  -ms-transform: translate(0, -50%) rotate(180deg);
+  -webkit-transform: translate(0, -50%) rotate(180deg);
+  -o-transform: translate(0, -50%) rotate(180deg);
+  transform: translate(0, -50%) rotate(180deg);
+}
+
 .account__content-history-sorter {
   display: -webkit-box;
   display: -moz-box;
@@ -9105,10 +9160,7 @@ button:active):not(:has(.tip-mark:focus,
   display: -webkit-flex;
   display: flex;
   gap: clamp(6.6px, 0.5208333333vw, 10px);
-  margin-bottom: clamp(13.2px, 1.0416666667vw, 20px);
-  padding-bottom: clamp(13.2px, 1.0416666667vw, 20px);
   align-items: center;
-  border-bottom: 1px solid #f0f0f0;
 }
 
 .account__content-history-sorter p {
@@ -9131,15 +9183,32 @@ button:active):not(:has(.tip-mark:focus,
   border: none !important;
 }
 
+.account__content .box:has(.account__content-promocodes-list) {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.account__content .box:has(.account__content-promocodes-list) .account__content-promocodes-list {
+  padding-left: 12px;
+}
+
 .account__content-promocodes-list {
-  display: -ms-grid;
-  display: -moz-grid;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   gap: clamp(13.2px, 1.0416666667vw, 20px);
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.account__content-promocodes-list::-webkit-scrollbar {
+  display: none;
 }
 
 .account__content-promocodes-list_empty .account__content-promocodes-item {
+  flex-shrink: 0;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -9147,8 +9216,8 @@ button:active):not(:has(.tip-mark:focus,
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(171.6px, 13.5416666667vw, 260px);
-  height: clamp(211.2px, 16.6666666667vw, 320px);
+  width: 260px;
+  height: 320px;
   position: relative;
 }
 
@@ -9171,12 +9240,15 @@ button:active):not(:has(.tip-mark:focus,
 
 .account__content-promocodes-list-item {
   color: #ffffff;
+  flex-shrink: 0;
+  width: 260px;
+  height: 320px;
 }
 
 .account__content-promocodes-list-item-top {
-  padding: clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px) clamp(6.6px, 0.5208333333vw, 10px) clamp(13.2px, 1.0416666667vw, 20px);
+  padding: 20px 20px 10px;
   background-color: #4d5c6b;
-  border-radius: clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px);
+  border-radius: 20px 20px 0 0;
 }
 
 .account__content-promocodes-list-item-top-title {
@@ -9186,23 +9258,23 @@ button:active):not(:has(.tip-mark:focus,
   display: -webkit-flex;
   display: flex;
   flex-direction: column;
-  margin-bottom: clamp(13.2px, 1.0416666667vw, 20px);
+  margin-bottom: 20px;
 }
 
 .account__content-promocodes-list-item-top-title span {
-  font-size: var(--font-size-14);
-  margin-bottom: clamp(3.3px, 0.2604166667vw, 5px);
+  font-size: 14px;
+  margin-bottom: 5px;
   align-self: center;
 }
 
 .account__content-promocodes-list-item-top-title strong {
   background-color: #ffffff;
   color: #e94d11;
-  font-size: var(--font-size-16);
+  font-size: 16px;
   font-weight: 900;
   letter-spacing: 20%;
-  padding: clamp(7.92px, 0.625vw, 12px) clamp(13.2px, 1.0416666667vw, 20px) clamp(7.92px, 0.625vw, 12px) clamp(13.2px, 1.0416666667vw, 20px);
-  border-radius: clamp(6.6px, 0.5208333333vw, 10px);
+  padding: 12px 20px;
+  border-radius: 10px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -9217,18 +9289,19 @@ button:active):not(:has(.tip-mark:focus,
 }
 
 .account__content-promocodes-list-item-top-info p {
-  font-size: var(--font-size-14);
-  margin-bottom: clamp(6.6px, 0.5208333333vw, 10px);
-  min-height: 76px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  height: 76px;
+  text-overflow: ellipsis;
 }
 
 .account__content-promocodes-list-item-top-info span {
-  font-size: var(--font-size-12);
+  font-size: 12px;
   align-self: end;
 }
 
 .account__content-promocodes-list-item-devider {
-  height: clamp(13.2px, 1.0416666667vw, 20px);
+  height: 20px;
   width: 100%;
   position: relative;
 }
@@ -9242,9 +9315,9 @@ button:active):not(:has(.tip-mark:focus,
 }
 
 .account__content-promocodes-list-item-bottom {
-  padding: clamp(9.24px, 0.7291666667vw, 14px) clamp(13.2px, 1.0416666667vw, 20px) clamp(9.24px, 0.7291666667vw, 14px) clamp(13.2px, 1.0416666667vw, 20px);
+  padding: 14px 20px;
   background-color: #4d5c6b;
-  border-radius: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px);
+  border-radius: 0 0 20px 20px;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -9255,8 +9328,8 @@ button:active):not(:has(.tip-mark:focus,
 }
 
 .account__content-promocodes-list-item-bottom a {
-  border-radius: clamp(13.2px, 1.0416666667vw, 20px);
-  padding: clamp(10.56px, 0.8333333333vw, 16px) clamp(24.42px, 1.9270833333vw, 37px) clamp(10.56px, 0.8333333333vw, 16px) clamp(24.42px, 1.9270833333vw, 37px);
+  border-radius: 20px;
+  padding: 16px 37px;
   color: #ffffff !important;
   background-color: #e94d11;
   -webkit-transition: all 0.2s ease-out 0s;
@@ -9264,8 +9337,9 @@ button:active):not(:has(.tip-mark:focus,
   -ms-transition: all 0.2s ease-out 0s;
   -o-transition: all 0.2s ease-out 0s;
   transition: all 0.2s ease-out 0s;
-  font-size: var(--font-size-16);
+  font-size: 16px;
   font-weight: 600;
+  width: 100%;
 }
 
 .account__content-promocodes-list-item-bottom a:hover {
@@ -12905,16 +12979,16 @@ button:active):not(:has(.tip-mark:focus,
     margin-bottom: clamp(8px, 0.78125vw, 10px);
   }
 
-  .account__content-history-sorter {
-    gap: clamp(8px, 0.78125vw, 10px);
-  }
-
-  .account__content-history-sorter {
+  .account__content-history-row {
     margin-bottom: clamp(16px, 1.5625vw, 20px);
   }
 
-  .account__content-history-sorter {
+  .account__content-history-row {
     padding-bottom: clamp(16px, 1.5625vw, 20px);
+  }
+
+  .account__content-history-sorter {
+    gap: clamp(8px, 0.78125vw, 10px);
   }
 
   .account__content-history-sorter p {
@@ -12923,34 +12997,6 @@ button:active):not(:has(.tip-mark:focus,
 
   .account__content-promocodes-list {
     gap: clamp(16px, 1.5625vw, 20px);
-  }
-
-  .account__content-promocodes-list_empty .account__content-promocodes-item {
-    height: clamp(256px, 25vw, 320px);
-  }
-
-  .account__content-promocodes-list-item-top {
-    border-radius: clamp(16px, 1.5625vw, 20px) clamp(16px, 1.5625vw, 20px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px);
-  }
-
-  .account__content-promocodes-list-item-top-title {
-    margin-bottom: clamp(16px, 1.5625vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-top-title span {
-    margin-bottom: clamp(4px, 0.390625vw, 5px);
-  }
-
-  .account__content-promocodes-list-item-top-info p {
-    margin-bottom: clamp(8px, 0.78125vw, 10px);
-  }
-
-  .account__content-promocodes-list-item-devider {
-    height: clamp(16px, 1.5625vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom {
-    border-radius: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(16px, 1.5625vw, 20px) clamp(16px, 1.5625vw, 20px);
   }
 
   .account__content-legal h2 {
@@ -17294,16 +17340,16 @@ button:active):not(:has(.tip-mark:focus,
     padding: clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px);
   }
 
-  .account__content-history-sorter {
-    gap: clamp(5.859px, 0.9765625vw, 10px);
-  }
-
-  .account__content-history-sorter {
+  .account__content-history-row {
     margin-bottom: clamp(11.718px, 1.953125vw, 20px);
   }
 
-  .account__content-history-sorter {
+  .account__content-history-row {
     padding-bottom: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .account__content-history-sorter {
+    gap: clamp(5.859px, 0.9765625vw, 10px);
   }
 
   .account__content-history-sorter p {
@@ -17320,62 +17366,6 @@ button:active):not(:has(.tip-mark:focus,
 
   .account__content-promocodes-list {
     gap: clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list_empty .account__content-promocodes-item {
-    width: clamp(152.334px, 25.390625vw, 260px);
-  }
-
-  .account__content-promocodes-list_empty .account__content-promocodes-item {
-    height: clamp(187.488px, 31.25vw, 320px);
-  }
-
-  .account__content-promocodes-list-item-top {
-    padding: clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(5.859px, 0.9765625vw, 10px) clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-top {
-    border-radius: clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px);
-  }
-
-  .account__content-promocodes-list-item-top-title {
-    margin-bottom: clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-top-title span {
-    margin-bottom: clamp(2.9295px, 0.48828125vw, 5px);
-  }
-
-  .account__content-promocodes-list-item-top-title strong {
-    padding: clamp(7.0308px, 1.171875vw, 12px) clamp(11.718px, 1.953125vw, 20px) clamp(7.0308px, 1.171875vw, 12px) clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-top-title strong {
-    border-radius: clamp(5.859px, 0.9765625vw, 10px);
-  }
-
-  .account__content-promocodes-list-item-top-info p {
-    margin-bottom: clamp(5.859px, 0.9765625vw, 10px);
-  }
-
-  .account__content-promocodes-list-item-devider {
-    height: clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom {
-    padding: clamp(8.2026px, 1.3671875vw, 14px) clamp(11.718px, 1.953125vw, 20px) clamp(8.2026px, 1.3671875vw, 14px) clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom {
-    border-radius: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom a {
-    border-radius: clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom a {
-    padding: clamp(9.3744px, 1.5625vw, 16px) clamp(21.6783px, 3.61328125vw, 37px) clamp(9.3744px, 1.5625vw, 16px) clamp(21.6783px, 3.61328125vw, 37px);
   }
 
   .account__content-legal h2 {
@@ -20119,6 +20109,11 @@ button:active):not(:has(.tip-mark:focus,
     height: clamp(7.5px, 4vw, 24px);
   }
 
+  .switch {
+    width: 46px;
+    height: 24px;
+  }
+
   .slider:before {
     width: clamp(6.25px, 3.3333333333vw, 20px);
   }
@@ -22704,7 +22699,7 @@ button:active):not(:has(.tip-mark:focus,
   .catalog__inner .filters {
     padding: 0 12px 20px;
     overflow: auto;
-    height: calc(60vh - 29px);
+    height: calc(60dvh - 29px);
   }
 
   .catalog__inner .filters__draggable {
@@ -23049,9 +23044,19 @@ button:active):not(:has(.tip-mark:focus,
     border-radius: 0;
   }
 
+  .catalog__inner .catalog__list-filters .sorter-item svg {
+    display: none !important;
+  }
+
   .catalog__inner .catalog__list-filters .sorter-item[data-sort=asc],
   .catalog__inner .catalog__list-filters .sorter-item[data-sort=desc] {
     background-color: #f0f0f0;
+    padding: 10px 12px !important;
+  }
+
+  .catalog__inner .catalog__list-filters .sorter-item[data-sort=asc] svg,
+  .catalog__inner .catalog__list-filters .sorter-item[data-sort=desc] svg {
+    display: none !important;
   }
 
   .catalog__inner .catalog__list-filters p {
@@ -25349,20 +25354,71 @@ button:active):not(:has(.tip-mark:focus,
     padding: 20px 12px;
   }
 
+  .account__content-history-row {
+    margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .account__content-history-row {
+    padding-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .account__content-history-row_mobile {
+    display: block;
+  }
+
+  .account__content-history-row-button {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
+
   .account__content-history-sorter {
     gap: clamp(3.125px, 1.6666666667vw, 10px);
   }
 
   .account__content-history-sorter {
-    margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+    position: absolute;
+    top: 105%;
+    left: 0;
+    box-shadow: 0 0 16px -4px rgba(12, 12, 13, 0.25);
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    background-color: #ffffff;
+    z-index: 100;
+    display: none;
   }
 
-  .account__content-history-sorter {
-    padding-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+  .account__content-history-sorter .sorter-item {
+    border-radius: 0;
+    padding: 10px 12px !important;
+  }
+
+  .account__content-history-sorter .sorter-item svg {
+    display: none !important;
+  }
+
+  .account__content-history-sorter .sorter-item[data-sort=asc],
+  .account__content-history-sorter .sorter-item[data-sort=desc] {
+    background-color: #f0f0f0;
+    padding: 10px 12px !important;
+  }
+
+  .account__content-history-sorter .sorter-item[data-sort=asc] svg,
+  .account__content-history-sorter .sorter-item[data-sort=desc] svg {
+    display: none !important;
   }
 
   .account__content-history-sorter p {
     margin-right: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .account__content-history-sorter p {
+    display: none;
   }
 
   .account__content-history-sorter-item {
@@ -25373,64 +25429,98 @@ button:active):not(:has(.tip-mark:focus,
     border-radius: clamp(3.125px, 1.6666666667vw, 10px);
   }
 
+  .account__content-history .catalog__item .catalog__item-quantity-btn {
+    width: 35px !important;
+  }
+
   .account__content-promocodes-list {
     gap: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
-  .account__content-promocodes-list_empty .account__content-promocodes-item {
-    width: clamp(81.25px, 43.3333333333vw, 260px);
+  .account__content-promocodes-list {
+    gap: 10px;
+    padding-bottom: 25px;
+  }
+
+  .account__content-promocodes-list::-webkit-scrollbar {
+    display: block;
+    height: 5px;
+  }
+
+  .account__content-promocodes-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 5px;
+  }
+
+  .account__content-promocodes-list::-webkit-scrollbar-thumb {
+    background-color: #4d5c6b;
+    border-radius: 5px;
+  }
+
+  .account__content-promocodes-list_empty {
+    gap: 10px;
+  }
+
+  .account__content-promocodes-list_empty::-webkit-scrollbar {
+    display: none !important;
   }
 
   .account__content-promocodes-list_empty .account__content-promocodes-item {
-    height: clamp(100px, 53.3333333333vw, 320px);
+    width: 150px;
+    height: 198px;
+  }
+
+  .account__content-promocodes-list_empty .account__content-promocodes-item span {
+    font-size: 12px;
+  }
+
+  .account__content-promocodes-list-item {
+    width: 150px;
+    height: 198px;
   }
 
   .account__content-promocodes-list-item-top {
-    padding: clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px) clamp(3.125px, 1.6666666667vw, 10px) clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-top {
-    border-radius: clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px);
+    padding: 10px 10px 5px 10px;
+    border-radius: 10px 10px 0 0;
   }
 
   .account__content-promocodes-list-item-top-title {
-    margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+    margin-bottom: 5px;
   }
 
   .account__content-promocodes-list-item-top-title span {
-    margin-bottom: clamp(1.5625px, 0.8333333333vw, 5px);
+    font-size: 10px;
   }
 
   .account__content-promocodes-list-item-top-title strong {
-    padding: clamp(3.75px, 2vw, 12px) clamp(6.25px, 3.3333333333vw, 20px) clamp(3.75px, 2vw, 12px) clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-top-title strong {
-    border-radius: clamp(3.125px, 1.6666666667vw, 10px);
+    font-size: 12px;
+    padding: 5px 20px;
+    border-radius: 5.78px;
   }
 
   .account__content-promocodes-list-item-top-info p {
-    margin-bottom: clamp(3.125px, 1.6666666667vw, 10px);
+    font-size: 10px;
+    height: 52px;
+    margin-bottom: 5px;
+  }
+
+  .account__content-promocodes-list-item-top-info span {
+    font-size: 8px;
   }
 
   .account__content-promocodes-list-item-devider {
-    height: clamp(6.25px, 3.3333333333vw, 20px);
+    height: 11px;
   }
 
   .account__content-promocodes-list-item-bottom {
-    padding: clamp(4.375px, 2.3333333333vw, 14px) clamp(6.25px, 3.3333333333vw, 20px) clamp(4.375px, 2.3333333333vw, 14px) clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom {
-    border-radius: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px);
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
   }
 
   .account__content-promocodes-list-item-bottom a {
-    border-radius: clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
-  .account__content-promocodes-list-item-bottom a {
-    padding: clamp(5px, 2.6666666667vw, 16px) clamp(11.5625px, 6.1666666667vw, 37px) clamp(5px, 2.6666666667vw, 16px) clamp(11.5625px, 6.1666666667vw, 37px);
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 10px 20px;
   }
 
   .account__content-legal h2 {

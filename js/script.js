@@ -542,6 +542,7 @@ $(document).ready(function () {
             width !== "84px"
                 ? width
                 : parent.width() - quantitySelector.width() - 10;
+        console.log(quantitySelector.offset.width);
         if (button.closest(parentSelector).hasClass("added")) {
             button.animate(
                 {
@@ -577,9 +578,10 @@ $(document).ready(function () {
             );
         }
     };
-
-    $(".catalog__item-add-to-cart").each(function (index, btn) {
-        animateAddToCartButton($(btn), ".catalog__item");
+    $(window).on("load", function () {
+        $(".catalog__item-add-to-cart").each(function (index, btn) {
+            animateAddToCartButton($(btn), ".catalog__item");
+        });
     });
 
     $(".product-page .add-to-cart").each(function (index, btn) {
@@ -1496,7 +1498,7 @@ $(document).ready(function () {
             $(".catalog__list-row-button_sorter").hasClass("opened") &&
             $(window).width() <= 600
         ) {
-            $(".catalog__list-filters.sorter").fadeOut(300);
+            $(".sorter").fadeOut(300);
             $(".catalog__list-row-button_sorter").removeClass("opened");
         }
         if (
@@ -1656,9 +1658,8 @@ $(document).ready(function () {
     //=================== Кнопки фильтрации каталога на мобильных устройствах ============
 
     $(".catalog__list-row-button_sorter").click(function () {
-        const sorter = $(this)
-            .closest(".catalog__list-row")
-            .find(".catalog__list-filters.sorter");
+        const sorter = $(this).closest(".filters-row").find(".sorter");
+        console.log($(this));
         sorter.fadeToggle(300);
         $(this).toggleClass("opened");
     });
@@ -1667,7 +1668,7 @@ $(document).ready(function () {
         const filters = $("#filters");
         disableScroll();
         filters.find(".filters").css({
-            height: "calc(60vh - 29px)",
+            height: "calc(60dvh - 29px)",
         });
         filters.css({ transition: "top 0.3s ease-out" }).addClass("opened");
 
@@ -1677,11 +1678,9 @@ $(document).ready(function () {
         $(".catalog__overlay").fadeIn(300);
     });
 
-    $(".catalog__list-filters.sorter .sorter-item").click(function () {
+    $(".sorter .sorter-item").click(function () {
         if ($(window).width() <= 600) {
-            const sorter = $(this)
-                .closest(".catalog__list-row")
-                .find(".catalog__list-filters.sorter");
+            const sorter = $(this).closest(".filters-row").find(".sorter");
             sorter.fadeOut(300);
             $(".catalog__list-row-button_sorter")
                 .removeClass("opened")
