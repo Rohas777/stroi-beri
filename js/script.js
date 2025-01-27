@@ -1116,6 +1116,9 @@ $(document).ready(function () {
         function (e) {
             e.preventDefault();
             e.stopPropagation();
+
+            $(".tip-mark").removeClass("opened");
+            $(this).toggleClass("opened");
         }
     );
 
@@ -1135,6 +1138,10 @@ $(document).ready(function () {
         $(this).addClass("active");
 
         const targetId = $(this).attr("href");
+
+        if ($(window).width() <= 600) {
+            $(".account aside").removeClass("active");
+        }
 
         if (!targetId.split("#")[0]) {
             window.scrollTo(0, 0);
@@ -1160,11 +1167,20 @@ $(document).ready(function () {
                     $(".account__content-item").not(target).slideUp(200);
                     target.slideDown(200);
                 }
+                if ($(window).width() <= 600) {
+                    $(".account aside").removeClass("active");
+                }
             } else {
                 $(".account__nav a").removeClass("active");
                 $(".account__content-item").slideUp(200);
-                $("#profile").addClass("active").slideDown(200);
-                $(".account__nav a[href='#profile']").addClass("active");
+
+                if ($(window).width() > 600) {
+                    $("#profile").addClass("active").slideDown(200);
+                    $(".account__nav a[href='#profile']").addClass("active");
+                }
+                if ($(window).width() <= 600) {
+                    $(".account aside").addClass("active");
+                }
             }
         }
     }
@@ -1175,15 +1191,32 @@ $(document).ready(function () {
         showElementFromHash();
     });
 
+    //=================== Мобильное меню в личном кабинете ============
+
+    $(".account__content-item h1, .account__content-item h2").click(
+        function () {
+            const hash = window.location.hash;
+            if (hash && $(window).width() <= 600) {
+                $(".account aside").addClass("active");
+                window.location = window.location.pathname + "#";
+            }
+        }
+    );
+
     //=================== Карточка заказа ============
 
     $(".order-card").each(function () {
         const goods = $(this).find(".order-card__product");
         const goodsCount = goods.length;
-        if (goodsCount > 6) {
+        if (goodsCount > 6 && $(window).width() > 600) {
             const overlay = $("<span>");
-            overlay.text("+" + (goodsCount - 6));
+            overlay.text(goodsCount - 6 + "+");
             goods.eq(3).append(overlay);
+        }
+        if (goodsCount > 8 && $(window).width() <= 600) {
+            const overlay = $("<span>");
+            overlay.text(goodsCount - 8 + "+");
+            goods.eq(4).append(overlay);
         }
     });
 
@@ -1479,6 +1512,14 @@ $(document).ready(function () {
             $(".catalog__overlay").fadeOut(300);
             $(".catalog__list-row-button_filters").removeClass("opened");
             enableScroll();
+        }
+
+        if (
+            !target.closest(".tip").length &&
+            !target.closest(".tip-mark").length &&
+            $(".tip-mark").hasClass("opened")
+        ) {
+            $(".tip-mark").removeClass("opened");
         }
     });
 
