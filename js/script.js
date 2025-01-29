@@ -787,30 +787,32 @@ $(document).ready(function () {
 
     //=================== Удаление товаров из корзины ============
 
-    const animateRemoveFromCart = (item) => {
-        item.closest(".cart__item").animate(
-            {
-                left: "-200%",
-            },
-            300,
-            function () {
-                $(this)
-                    .closest("li")
-                    .animate(
-                        {
-                            height: 0,
-                        },
-                        100,
-                        function () {
-                            $(this).remove();
-                        }
-                    );
-            }
-        );
+    const animateRemoveFromCart = (itemSelector, wrapperSelector) => {
+        $(itemSelector)
+            .closest(wrapperSelector)
+            .animate(
+                {
+                    left: "-200%",
+                },
+                300,
+                function () {
+                    $(this)
+                        .closest("li")
+                        .animate(
+                            {
+                                height: 0,
+                            },
+                            100,
+                            function () {
+                                $(this).remove();
+                            }
+                        );
+                }
+            );
     };
 
     $(".cart__item-remove").on("click", function () {
-        animateRemoveFromCart($(this));
+        animateRemoveFromCart(this, ".cart__item");
     });
 
     $(".cart__checkbox-all input").on("change", function () {
@@ -826,10 +828,25 @@ $(document).ready(function () {
 
         selectedItems.each(function (index, item) {
             setTimeout(function () {
-                animateRemoveFromCart($(item));
+                animateRemoveFromCart(item, ".cart__item");
             }, 100 * index);
         });
     });
+
+    //=================== Удаление товаров из заказов ============
+
+    $(".order-card__remove").on("click", function () {
+        animateRemoveFromCart(this, ".order-card");
+    });
+
+    //=================== Удаление организации из списка ============
+
+    $(".account__content-legal-item-header-options-remove").on(
+        "click",
+        function () {
+            animateRemoveFromCart(this, ".account__content-legal-item");
+        }
+    );
 
     //=================== Промокоды ============
 
@@ -1298,9 +1315,10 @@ $(document).ready(function () {
         }
     });
 
-    $(".account__content-legal-add-block_accordion").on("click", function () {
-        $(this).toggleClass("active");
+    $(".account__content-legal-add-block_accordion p").on("click", function () {
+        $(this).parent().toggleClass("active");
         $(this)
+            .parent()
             .find(".account__content-legal-add-block_accordion-content")
             .slideToggle(200);
     });

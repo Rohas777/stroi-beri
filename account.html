@@ -13872,6 +13872,28 @@
                                             </svg>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="/cart-empty.html">
+                                            Корзина (пусто)
+                                            <span>0</span>
+                                            <svg
+                                                class="arrow"
+                                                width="20"
+                                                height="20"
+                                                viewBox="0 0 20 20"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M7.5 15.9999L12.5 9.99988L7.5 3.99988"
+                                                    stroke="#4D5C6B"
+                                                    stroke-width="1.5"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </a>
+                                    </li>
 
                                     <li>
                                         <a href="#favs">
@@ -16466,7 +16488,26 @@
                             </div>
                             
                             <div class="account__content-item account__content-legal" id="legal-empty">
-                                <h2 class="box">Юридическое лицо</h2>
+                                <h2 class="box">
+                                    <i>
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M15 19.1998L9 11.9998L15 4.79983"
+                                                stroke="#E94D11"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </i>
+                                    Юридическое лицо
+                                </h2>
                                 <div class="box account__content-item-empty">
                                     <div class="account__content-item-empty-wrapper">
                                         <svg
@@ -16500,6 +16541,23 @@
                             
                             <div class="account__content-item account__content-legal" id="legal">
                                 <h2 class="box">
+                                    <i>
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M15 19.1998L9 11.9998L15 4.79983"
+                                                stroke="#E94D11"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </i>
                                     Юридическое лицо <a href="#legal-add">Добавить организацию</a>
                                 </h2>
                                 <ul class="account__content-legal-list">
@@ -16575,7 +16633,7 @@
                                 <h3>Смена реквизитов</h3>
                                 <div class="account__content-legal-edit-row">
                                     <label>
-                                        <input type="text" name="inn" />
+                                        <input type="text" name="inn" value="9102285733" readonly />
                                         <span>ИНН</span>
                                     </label>
                                     <p class="account__content-legal-edit-hint">
@@ -16597,7 +16655,7 @@
                                 </div>
                                 <div class="account__content-legal-edit-row">
                                     <label>
-                                        <input type="text" name="kpp" />
+                                        <input type="text" name="kpp" value="910801001" />
                                         <span>КПП<strong>*</strong></span>
                                     </label>
                                 </div>
@@ -16609,13 +16667,17 @@
                                 </div>
                                 <div class="account__content-legal-edit-row">
                                     <label>
-                                        <input type="text" name="name" />
+                                        <input type="text" name="name" value="ООО “ТОПАЗ”" />
                                         <span>Название организации<strong>*</strong></span>
                                     </label>
                                 </div>
                                 <div class="account__content-legal-edit-row">
                                     <label>
-                                        <input type="text" name="address" />
+                                        <input
+                                            type="text"
+                                            name="address"
+                                            value="Респ Крым, г Симферополь, ул Турецкая, д 12, помещ 16"
+                                        />
                                         <span>Юридический адрес<strong>*</strong></span>
                                     </label>
                                     <label>
@@ -16703,11 +16765,30 @@
                                         </span>
                                     </label>
                                 </div>
-                                <a href="#" class="account__content-legal-edit-save">Отправить</a>
+                                <a href="#legal" class="account__content-legal-edit-save">Отправить</a>
                             </div>
                             
                             <div class="account__content-item account__content-legal-add" id="legal-add">
-                                <h2 class="box">Юридическое лицо</h2>
+                                <h2 class="box">
+                                    <i>
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M15 19.1998L9 11.9998L15 4.79983"
+                                                stroke="#E94D11"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </i>
+                                    Юридическое лицо
+                                </h2>
                                 <div class="box account__content-legal-add-main">
                                     <h3>Укажите ИНН организации или ИП</h3>
                                     <div
@@ -16814,7 +16895,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <a href="#" class="account__content-legal-add-save"
+                                    <a href="#legal" class="account__content-legal-add-save"
                                         >Добавить организацию</a
                                     >
                                 </div>
@@ -16824,7 +16905,26 @@
                                 class="account__content-item account__content-legal-register"
                                 id="legal-register"
                             >
-                                <h2 class="box">Юридическое лицо</h2>
+                                <h2 class="box">
+                                    <i>
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M15 19.1998L9 11.9998L15 4.79983"
+                                                stroke="#E94D11"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </i>
+                                    Юридическое лицо
+                                </h2>
                                 <div class="box account__content-legal-register-main">
                                     <h3>Регистрация организации</h3>
                                     <div class="account__content-legal-register-columns">
@@ -16950,7 +17050,7 @@
                                                 </span>
                                             </label>
                                         </div>
-                                        <a href="#" class="account__content-legal-register-save"
+                                        <a href="#legal" class="account__content-legal-register-save"
                                             >Добавить организацию</a
                                         >
                                     </div>

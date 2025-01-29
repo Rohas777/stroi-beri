@@ -805,8 +805,8 @@ input[type=checkbox] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: clamp(13.2px, 1.0416666667vw, 20px);
-  height: clamp(13.2px, 1.0416666667vw, 20px);
+  width: 20px;
+  height: 20px;
   border: 1px solid #4d5c6b;
   border-radius: clamp(3.3px, 0.2604166667vw, 5px);
   display: -webkit-box;
@@ -821,6 +821,7 @@ input[type=checkbox] {
   -ms-transition: all 0.2s ease-out 0s;
   -o-transition: all 0.2s ease-out 0s;
   transition: all 0.2s ease-out 0s;
+  flex-shrink: 0;
 }
 
 input[type=checkbox]:checked {
@@ -7377,6 +7378,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 .cart__main {
   flex: 1;
+  width: 100%;
 }
 
 .cart__auth {
@@ -9340,6 +9342,7 @@ button:active):not(:has(.tip-mark:focus,
   font-size: 16px;
   font-weight: 600;
   width: 100%;
+  text-align: center;
 }
 
 .account__content-promocodes-list-item-bottom a:hover {
@@ -9370,6 +9373,7 @@ button:active):not(:has(.tip-mark:focus,
   background-color: #e94d11;
   border-radius: clamp(13.2px, 1.0416666667vw, 20px);
   color: #ffffff;
+  text-align: center;
 }
 
 .account__content-legal h2 a:hover {
@@ -9496,7 +9500,7 @@ button:active):not(:has(.tip-mark:focus,
 }
 
 .account__content-legal-item p:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .account__content-legal-edit h3,
@@ -9524,9 +9528,21 @@ button:active):not(:has(.tip-mark:focus,
   display: flex;
 }
 
-.account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span,
-.account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span,
-.account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span {
+.account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+input:active,
+.typing,
+input[readonly],
+input[value]) > span,
+.account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+input:active,
+.typing,
+input[readonly],
+input[value]) > span,
+.account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+input:active,
+.typing,
+input[readonly],
+input[value]) > span {
   font-size: var(--font-size-14);
   padding: clamp(0px, 0vw, 0px) clamp(3.3px, 0.2604166667vw, 5px) clamp(0px, 0vw, 0px) clamp(3.3px, 0.2604166667vw, 5px);
   top: -10px;
@@ -9548,6 +9564,15 @@ button:active):not(:has(.tip-mark:focus,
   font-size: var(--font-size-16);
   font-weight: 600;
   color: #28272d;
+  text-overflow: ellipsis;
+}
+
+.account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) input[readonly],
+.account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])) input[readonly],
+.account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])) input[readonly] {
+  color: #4d5c6b;
+  cursor: not-allowed;
+  letter-spacing: 0.1em;
 }
 
 .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) > span,
@@ -9627,6 +9652,7 @@ button:active):not(:has(.tip-mark:focus,
   transition: all 0.2s ease-out 0s;
   width: fit-content;
   display: block;
+  text-align: center;
 }
 
 .account__content-legal-edit .account__content-legal-add-save:hover,
@@ -9861,6 +9887,7 @@ button:active):not(:has(.tip-mark:focus,
 
 .account__content-legal-add-block_info label:has(.address-equal) {
   margin: clamp(13.2px, 1.0416666667vw, 20px) clamp(0px, 0vw, 0px) clamp(13.2px, 1.0416666667vw, 20px) clamp(0px, 0vw, 0px);
+  flex-shrink: 0;
 }
 
 .account__content-legal-add-block_accordion {
@@ -11274,18 +11301,6 @@ button:active):not(:has(.tip-mark:focus,
 
   #burger_menu span:nth-child(4) {
     top: clamp(17.6px, 1.71875vw, 22px);
-  }
-
-  input[type=checkbox] {
-    height: clamp(16px, 1.5625vw, 20px);
-  }
-
-  input[type=checkbox] {
-    height: clamp(13.2px, 1.0416666667vw, 20px);
-  }
-
-  input[type=checkbox]::before {
-    top: -2px;
   }
 
   input[type=radio] {
@@ -13795,14 +13810,6 @@ button:active):not(:has(.tip-mark:focus,
 
   #burger_menu span:nth-child(4) {
     top: clamp(12.8898px, 2.1484375vw, 22px);
-  }
-
-  input[type=checkbox] {
-    width: clamp(11.718px, 1.953125vw, 20px);
-  }
-
-  input[type=checkbox] {
-    height: clamp(11.718px, 1.953125vw, 20px);
   }
 
   input[type=checkbox] {
@@ -17450,9 +17457,21 @@ button:active):not(:has(.tip-mark:focus,
     width: clamp(269.514px, 44.921875vw, 460px);
   }
 
-  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span,
-  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span,
-  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span {
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span,
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span,
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span {
     padding: clamp(0px, 0vw, 0px) clamp(2.9295px, 0.48828125vw, 5px) clamp(0px, 0vw, 0px) clamp(2.9295px, 0.48828125vw, 5px);
   }
 
@@ -17510,6 +17529,10 @@ button:active):not(:has(.tip-mark:focus,
     border-radius: clamp(11.718px, 1.953125vw, 20px);
   }
 
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) {
+    width: 100%;
+  }
+
   .account__content-legal-edit-row {
     gap: clamp(23.436px, 3.90625vw, 40px);
   }
@@ -17518,8 +17541,18 @@ button:active):not(:has(.tip-mark:focus,
     margin-bottom: clamp(14.6475px, 2.44140625vw, 25px);
   }
 
+  .account__content-legal-edit-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(16.5px, 1.3020833333vw, 25px);
+  }
+
   .account__content-legal-edit-hint {
     gap: clamp(5.859px, 0.9765625vw, 10px);
+  }
+
+  .account__content-legal-edit-hint {
+    max-width: 100%;
   }
 
   .account__content-legal-edit-hint svg {
@@ -17626,16 +17659,38 @@ button:active):not(:has(.tip-mark:focus,
     margin-bottom: clamp(11.718px, 1.953125vw, 20px);
   }
 
+  .account__content-legal-register-columns {
+    gap: clamp(16.5px, 1.3020833333vw, 25px);
+    grid-template-columns: 1fr;
+  }
+
   .account__content-legal-register-column label:has(.address-equal) {
     margin: clamp(8.7885px, 1.46484375vw, 15px) clamp(0px, 0vw, 0px) clamp(14.6475px, 2.44140625vw, 25px) clamp(0px, 0vw, 0px);
+  }
+
+  .account__content-legal-register-column label:has(.address-equal) {
+    margin: 15px 0 25px;
   }
 
   .account__content-legal-register-row {
     margin-top: clamp(14.6475px, 2.44140625vw, 25px);
   }
 
+  .account__content-legal-register-row {
+    margin-top: 25px;
+  }
+
   .account__content-legal-register-bottom {
     gap: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .account__content-legal-register-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .account__content-legal-register-bottom {
+    gap: 20px;
   }
 
   .account__payment {
@@ -18731,6 +18786,14 @@ button:active):not(:has(.tip-mark:focus,
     bottom: clamp(11.718px, 1.953125vw, 20px);
   }
 
+  .account__content-legal-edit-row {
+    gap: clamp(14.6475px, 2.44140625vw, 25px);
+  }
+
+  .account__content-legal-register-columns {
+    gap: clamp(14.6475px, 2.44140625vw, 25px);
+  }
+
   .account__payment-btn {
     margin-top: clamp(11.718px, 1.953125vw, 20px);
   }
@@ -19289,6 +19352,14 @@ button:active):not(:has(.tip-mark:focus,
     bottom: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal-edit-row {
+    gap: clamp(7.8125px, 4.1666666667vw, 25px);
+  }
+
+  .account__content-legal-register-columns {
+    gap: clamp(7.8125px, 4.1666666667vw, 25px);
+  }
+
   .account__payment-btn {
     margin-top: clamp(6.25px, 3.3333333333vw, 20px);
   }
@@ -19667,6 +19738,14 @@ button:active):not(:has(.tip-mark:focus,
     bottom: clamp(16px, 1.5625vw, 20px);
   }
 
+  .account__content-legal-edit-row {
+    gap: clamp(20px, 1.953125vw, 25px);
+  }
+
+  .account__content-legal-register-columns {
+    gap: clamp(20px, 1.953125vw, 25px);
+  }
+
   .account__payment-btn {
     margin-top: clamp(16px, 1.5625vw, 20px);
   }
@@ -19715,10 +19794,6 @@ button:active):not(:has(.tip-mark:focus,
 }
 
 @media only screen and (max-width: 800px) {
-  input[type=checkbox]::before {
-    content: url("data:image/svg+xml,%3Csvg width='7' height='6' viewBox='0 0 10 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.74226 0.770012C9.90714 0.943125 9.99976 1.17779 9.99976 1.42245C9.99976 1.66712 9.90714 1.90178 9.74226 2.07489L3.87237 8.22999C3.70727 8.40289 3.48349 8.5 3.25016 8.5C3.01683 8.5 2.79304 8.40289 2.62795 8.22999L0.279994 5.76795C0.193487 5.68343 0.124102 5.5815 0.0759787 5.46824C0.0278551 5.35499 0.00197879 5.23273 -0.000107111 5.10877C-0.00219302 4.9848 0.0195542 4.86166 0.0638379 4.7467C0.108121 4.63174 0.174034 4.52731 0.257643 4.43963C0.341252 4.35196 0.440845 4.28285 0.550481 4.23641C0.660117 4.18998 0.777548 4.16717 0.895771 4.16936C1.01399 4.17155 1.13059 4.19868 1.23859 4.24914C1.3466 4.2996 1.4438 4.37236 1.52441 4.46307L3.25016 6.27267L8.49784 0.770012C8.66293 0.597115 8.88672 0.5 9.12005 0.5C9.35338 0.5 9.57717 0.597115 9.74226 0.770012Z' fill='white'/%3E%3C/svg%3E%0A");
-  }
-
   .categories__item img {
     height: clamp(33px, 4.6875vw, 45px);
     width: clamp(33px, 4.6875vw, 45px);
@@ -20160,25 +20235,7 @@ button:active):not(:has(.tip-mark:focus,
   }
 
   input[type=checkbox] {
-    width: clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
-  input[type=checkbox] {
-    height: clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
-  input[type=checkbox] {
     border-radius: clamp(1.5625px, 0.8333333333vw, 5px);
-  }
-
-  input[type=checkbox] {
-    width: 20px;
-    height: 20px;
-  }
-
-  input[type=checkbox]::before {
-    top: -1px;
-    content: url("data:image/svg+xml,%3Csvg width='10' height='9' viewBox='0 0 10 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.74226 0.770012C9.90714 0.943125 9.99976 1.17779 9.99976 1.42245C9.99976 1.66712 9.90714 1.90178 9.74226 2.07489L3.87237 8.22999C3.70727 8.40289 3.48349 8.5 3.25016 8.5C3.01683 8.5 2.79304 8.40289 2.62795 8.22999L0.279994 5.76795C0.193487 5.68343 0.124102 5.5815 0.0759787 5.46824C0.0278551 5.35499 0.00197879 5.23273 -0.000107111 5.10877C-0.00219302 4.9848 0.0195542 4.86166 0.0638379 4.7467C0.108121 4.63174 0.174034 4.52731 0.257643 4.43963C0.341252 4.35196 0.440845 4.28285 0.550481 4.23641C0.660117 4.18998 0.777548 4.16717 0.895771 4.16936C1.01399 4.17155 1.13059 4.19868 1.23859 4.24914C1.3466 4.2996 1.4438 4.37236 1.52441 4.46307L3.25016 6.27267L8.49784 0.770012C8.66293 0.597115 8.88672 0.5 9.12005 0.5C9.35338 0.5 9.57717 0.597115 9.74226 0.770012Z' fill='white'/%3E%3C/svg%3E%0A");
   }
 
   input[type=radio] {
@@ -25531,6 +25588,14 @@ button:active):not(:has(.tip-mark:focus,
     padding: clamp(6.25px, 3.3333333333vw, 20px) clamp(9.375px, 5vw, 30px) clamp(6.25px, 3.3333333333vw, 20px) clamp(9.375px, 5vw, 30px) !important;
   }
 
+  .account__content-legal h2 {
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 10px;
+    row-gap: 20px;
+    padding: 20px 12px !important;
+  }
+
   .account__content-legal h2 a {
     padding: clamp(5px, 2.6666666667vw, 16px) clamp(12.5px, 6.6666666667vw, 40px) clamp(5px, 2.6666666667vw, 16px) clamp(12.5px, 6.6666666667vw, 40px);
   }
@@ -25539,8 +25604,21 @@ button:active):not(:has(.tip-mark:focus,
     border-radius: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal h2 a {
+    font-size: 16px;
+    padding: 13px 20px;
+    width: 100%;
+    flex-grow: 1;
+    border-radius: 10px;
+  }
+
   .account__content-legal-list {
     gap: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .account__content-legal-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .account__content-legal-item-header {
@@ -25551,6 +25629,15 @@ button:active):not(:has(.tip-mark:focus,
     gap: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal-item-header {
+    margin-bottom: 20px;
+    gap: 20px;
+  }
+
+  .account__content-legal-item-header h3 {
+    font-size: 14px;
+  }
+
   .account__content-legal-item-header-btn {
     width: clamp(7.5px, 4vw, 24px);
   }
@@ -25559,8 +25646,17 @@ button:active):not(:has(.tip-mark:focus,
     height: clamp(7.5px, 4vw, 24px);
   }
 
+  .account__content-legal-item-header-btn {
+    width: 20px;
+    height: 20px;
+  }
+
   .account__content-legal-item-header-options {
     border-radius: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .account__content-legal-item-header-options {
+    border-radius: 10px;
   }
 
   .account__content-legal-item-header-options a {
@@ -25571,14 +25667,32 @@ button:active):not(:has(.tip-mark:focus,
     gap: clamp(3.125px, 1.6666666667vw, 10px);
   }
 
+  .account__content-legal-item-header-options a {
+    font-size: 14px;
+    gap: 10px;
+    padding: 8px 16px;
+  }
+
   .account__content-legal-item p {
     margin-bottom: clamp(1.5625px, 0.8333333333vw, 5px);
+  }
+
+  .account__content-legal-item p {
+    font-size: 12px;
+    margin-bottom: 5;
   }
 
   .account__content-legal-edit h3,
   .account__content-legal-add h3,
   .account__content-legal-register h3 {
     margin-bottom: clamp(9.375px, 5vw, 30px);
+  }
+
+  .account__content-legal-edit h3,
+  .account__content-legal-add h3,
+  .account__content-legal-register h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
   }
 
   .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])),
@@ -25605,10 +25719,59 @@ button:active):not(:has(.tip-mark:focus,
     width: clamp(143.75px, 76.6666666667vw, 460px);
   }
 
-  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span,
-  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span,
-  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus, input:active, .typing) > span {
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])),
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])),
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])) {
+    border-radius: 10px;
+    padding: 15.5px 20px;
+    font-size: 14px;
+    width: 100%;
+    height: auto;
+  }
+
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span,
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span,
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span {
     padding: clamp(0px, 0vw, 0px) clamp(1.5625px, 0.8333333333vw, 5px) clamp(0px, 0vw, 0px) clamp(1.5625px, 0.8333333333vw, 5px);
+  }
+
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span,
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span,
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])):has(input:focus,
+  input:active,
+  .typing,
+  input[readonly],
+  input[value]) > span {
+    padding: 0 6px;
+    font-size: 12px;
+    top: -7px;
+    left: 6px;
+  }
+
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) input,
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])) input,
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])) input {
+    font-size: 14px;
   }
 
   .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) > span,
@@ -25623,10 +25786,23 @@ button:active):not(:has(.tip-mark:focus,
     left: clamp(0.625px, 0.3333333333vw, 2px);
   }
 
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) > span,
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])) > span,
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])) > span {
+    left: 2px;
+    padding: 0 20px 0 18px;
+  }
+
   .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) > span strong,
   .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])) > span strong,
   .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])) > span strong {
     margin-left: clamp(0.625px, 0.3333333333vw, 2px);
+  }
+
+  .account__content-legal-edit label:not(:has(input[type=checkbox], input[type=file])) > span strong,
+  .account__content-legal-add label:not(:has(input[type=checkbox], input[type=file])) > span strong,
+  .account__content-legal-register label:not(:has(input[type=checkbox], input[type=file])) > span strong {
+    margin-left: 2px;
   }
 
   .account__content-legal-edit label:has(.address-equal),
@@ -25635,10 +25811,23 @@ button:active):not(:has(.tip-mark:focus,
     gap: clamp(2.5px, 1.3333333333vw, 8px);
   }
 
+  .account__content-legal-edit label:has(.address-equal),
+  .account__content-legal-add label:has(.address-equal),
+  .account__content-legal-register label:has(.address-equal) {
+    font-size: 14px;
+    gap: 8px;
+  }
+
   .account__content-legal-edit .account__content-legal-edit-row_physical-address-wrapper,
   .account__content-legal-add .account__content-legal-edit-row_physical-address-wrapper,
   .account__content-legal-register .account__content-legal-edit-row_physical-address-wrapper {
     margin-bottom: clamp(7.8125px, 4.1666666667vw, 25px);
+  }
+
+  .account__content-legal-edit .account__content-legal-edit-row_physical-address-wrapper,
+  .account__content-legal-add .account__content-legal-edit-row_physical-address-wrapper,
+  .account__content-legal-register .account__content-legal-edit-row_physical-address-wrapper {
+    margin-bottom: 30px;
   }
 
   .account__content-legal-edit .account__content-legal-add-save,
@@ -25665,6 +25854,21 @@ button:active):not(:has(.tip-mark:focus,
     border-radius: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal-edit .account__content-legal-add-save,
+  .account__content-legal-edit .account__content-legal-edit-save,
+  .account__content-legal-edit .account__content-legal-register-save,
+  .account__content-legal-add .account__content-legal-add-save,
+  .account__content-legal-add .account__content-legal-edit-save,
+  .account__content-legal-add .account__content-legal-register-save,
+  .account__content-legal-register .account__content-legal-add-save,
+  .account__content-legal-register .account__content-legal-edit-save,
+  .account__content-legal-register .account__content-legal-register-save {
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    width: 100%;
+  }
+
   .account__content-legal-edit-row {
     gap: clamp(12.5px, 6.6666666667vw, 40px);
   }
@@ -25673,8 +25877,18 @@ button:active):not(:has(.tip-mark:focus,
     margin-bottom: clamp(7.8125px, 4.1666666667vw, 25px);
   }
 
+  .account__content-legal-edit-row {
+    gap: 25px;
+    margin-bottom: 25px;
+  }
+
   .account__content-legal-edit-hint {
     gap: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .account__content-legal-edit-hint {
+    font-size: 12px;
+    gap: 5px;
   }
 
   .account__content-legal-edit-hint svg {
@@ -25685,16 +25899,36 @@ button:active):not(:has(.tip-mark:focus,
     height: clamp(7.5px, 4vw, 24px);
   }
 
+  .account__content-legal-edit-hint svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .account__content-legal-edit-doc {
     margin-bottom: clamp(12.5px, 6.6666666667vw, 40px);
+  }
+
+  .account__content-legal-edit-doc {
+    margin-bottom: 40px;
   }
 
   .account__content-legal-edit-doc p {
     margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal-edit-doc p {
+    font-family: 14px;
+    margin-bottom: 20px;
+  }
+
   .account__content-legal-edit-doc label {
     gap: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .account__content-legal-edit-doc label {
+    gap: 10px;
+    flex-direction: column;
+    align-items: start;
   }
 
   .account__content-legal-edit-doc label strong {
@@ -25709,12 +25943,35 @@ button:active):not(:has(.tip-mark:focus,
     padding: clamp(4.375px, 2.3333333333vw, 14px) clamp(9.375px, 5vw, 30px) clamp(4.375px, 2.3333333333vw, 14px) clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal-edit-doc label strong {
+    border-radius: 10px;
+    gap: 10px;
+    padding: 14px 30px 14px 20px;
+  }
+
+  .account__content-legal-edit-doc label strong span {
+    font-size: 14px;
+  }
+
   .account__content-legal-edit-doc label strong svg {
     width: clamp(5px, 2.6666666667vw, 16px);
   }
 
   .account__content-legal-edit-doc label strong svg {
     height: clamp(5px, 2.6666666667vw, 16px);
+  }
+
+  .account__content-legal-edit-doc label strong svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .account__content-legal-edit-filename span {
+    font-size: 14px;
+  }
+
+  .account__content-legal-add-main {
+    min-height: 460px;
   }
 
   .account__content-legal-add-block {
@@ -25725,16 +25982,39 @@ button:active):not(:has(.tip-mark:focus,
     margin-bottom: clamp(12.5px, 6.6666666667vw, 40px);
   }
 
+  .account__content-legal-add-block {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
   .account__content-legal-add-block_select ul {
     border-radius: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .account__content-legal-add-block_select ul {
+    border-radius: 10px;
+    top: calc(100% + 10px);
   }
 
   .account__content-legal-add-block_select ul li {
     padding: clamp(3.125px, 1.6666666667vw, 10px) clamp(4.6875px, 2.5vw, 15px) clamp(3.125px, 1.6666666667vw, 10px) clamp(4.6875px, 2.5vw, 15px);
   }
 
+  .account__content-legal-add-block_select ul li {
+    padding: 8px 12px;
+  }
+
   .account__content-legal-add-block_select ul li strong {
     margin-bottom: clamp(1.5625px, 0.8333333333vw, 5px);
+  }
+
+  .account__content-legal-add-block_select ul li strong {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+
+  .account__content-legal-add-block_select ul li p {
+    font-size: 10px;
   }
 
   .account__content-legal-add-block_info p {
@@ -25745,12 +26025,36 @@ button:active):not(:has(.tip-mark:focus,
     gap: clamp(3.125px, 1.6666666667vw, 10px);
   }
 
+  .account__content-legal-add-block_info p {
+    margin-bottom: 10px;
+    gap: 0;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .account__content-legal-add-block_info p span:first-of-type {
+    font-size: 12px;
+    color: #4d5c6b;
+  }
+
+  .account__content-legal-add-block_info p span:last-of-type {
+    font-size: 14px;
+  }
+
   .account__content-legal-add-block_info p:last-of-type {
     margin-bottom: clamp(9.375px, 5vw, 30px);
   }
 
+  .account__content-legal-add-block_info p:last-of-type {
+    margin-bottom: 20px;
+  }
+
   .account__content-legal-add-block_info label:has(.address-equal) {
     margin: clamp(6.25px, 3.3333333333vw, 20px) clamp(0px, 0vw, 0px) clamp(6.25px, 3.3333333333vw, 20px) clamp(0px, 0vw, 0px);
+  }
+
+  .account__content-legal-add-block_info label:has(.address-equal) {
+    margin: 20px 0 30px;
   }
 
   .account__content-legal-add-block_accordion p {
@@ -25761,6 +26065,11 @@ button:active):not(:has(.tip-mark:focus,
     margin-bottom: clamp(9.375px, 5vw, 30px);
   }
 
+  .account__content-legal-add-block_accordion p {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
   .account__content-legal-add-block_accordion p svg {
     width: clamp(6.25px, 3.3333333333vw, 20px);
   }
@@ -25769,8 +26078,17 @@ button:active):not(:has(.tip-mark:focus,
     height: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
+  .account__content-legal-add-block_accordion p svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .account__content-legal-add-block_accordion label {
     margin-top: clamp(7.8125px, 4.1666666667vw, 25px);
+  }
+
+  .account__content-legal-add-block_accordion label {
+    margin-top: 25px;
   }
 
   .account__content-legal-register-columns {
@@ -25779,6 +26097,11 @@ button:active):not(:has(.tip-mark:focus,
 
   .account__content-legal-register-columns {
     margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .account__content-legal-register-columns {
+    gap: 25px;
+    margin-bottom: 35px;
   }
 
   .account__content-legal-register-column label:has(.address-equal) {
