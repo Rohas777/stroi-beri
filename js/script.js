@@ -1153,13 +1153,14 @@ $(document).ready(function () {
 
     $(".account__nav a").on("click", function (e) {
         e.preventDefault();
+        if ($(this).hasClass("active")) return;
         $(".account__nav a").not(this).removeClass("active");
         $(this).addClass("active");
 
         const targetId = $(this).attr("href");
 
         if ($(window).width() <= 600) {
-            $(".account aside").removeClass("active");
+            $(".account aside").slideUp(200);
         }
 
         if (!targetId.split("#")[0]) {
@@ -1187,7 +1188,7 @@ $(document).ready(function () {
                     target.slideDown(200);
                 }
                 if ($(window).width() <= 600) {
-                    $(".account aside").removeClass("active");
+                    $(".account aside").slideUp(200);
                 }
             } else {
                 $(".account__nav a").removeClass("active");
@@ -1198,7 +1199,7 @@ $(document).ready(function () {
                     $(".account__nav a[href='#profile']").addClass("active");
                 }
                 if ($(window).width() <= 600) {
-                    $(".account aside").addClass("active");
+                    $(".account aside").slideDown(200);
                 }
             }
         }
@@ -1352,6 +1353,18 @@ $(document).ready(function () {
 
     $(".about__nav a").on("click", function (e) {
         e.preventDefault();
+        //=================== Мобильное меню на странице "О нас" ============
+
+        if ($(window).width() <= 600) {
+            if ($(this).hasClass("active")) {
+                $(".about__nav a").not(this).parent().slideToggle(200);
+                $(this).toggleClass("opened");
+            } else {
+                $(".about__nav a").not(this).parent().slideUp(200);
+                $(".about__nav a").removeClass("opened");
+            }
+        }
+        if ($(this).hasClass("active")) return;
         $(".about__nav a").not(this).removeClass("active");
         $(this).addClass("active");
 
@@ -1384,6 +1397,7 @@ $(document).ready(function () {
             } else {
                 $(".about__nav a").removeClass("active");
                 $(".about__item").slideUp(200);
+
                 $("#about").addClass("active").slideDown(200);
                 $(".about__nav a[href='#about']").addClass("active");
             }
@@ -1401,11 +1415,29 @@ $(document).ready(function () {
     const thxLetterSlider = new Swiper(".about__slider .swiper", {
         slidesPerView: 4,
         spaceBetween: 20,
-        speed: 800,
+        speed: 400,
 
         navigation: {
             nextEl: ".about__slider .slider-next",
             prevEl: ".about__slider .slider-prev",
+        },
+        scrollbar: {
+            el: ".about__slider .swiper-scrollbar",
+        },
+
+        breakpoints: {
+            0: {
+                slidesPerView: "auto",
+                spaceBetween: 10,
+                freeMode: true,
+            },
+            601: {
+                freeMode: false,
+            },
+            1026: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
         },
     });
 
