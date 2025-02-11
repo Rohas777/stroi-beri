@@ -17,6 +17,7 @@ const enableScroll = () => {
     $("main").css({
         marginTop: 0,
     });
+    console.log("first");
 };
 
 $(document).ready(function () {
@@ -101,7 +102,7 @@ $(document).ready(function () {
             }
         }
 
-        if (window.scrollY > 150) {
+        if (window.scrollY > $("body").height() / 2 || window.scrollY > 1000) {
             scrollToTopButton.fadeIn(200);
         } else {
             scrollToTopButton.fadeOut(200);
@@ -113,6 +114,47 @@ $(document).ready(function () {
     scrollToTopButton.on("click", function (e) {
         window.scrollTo(0, 0);
     });
+
+    //=================== Скрытие баннера ============
+
+    const storageKey = "is_hidden";
+
+    // Функция сброса в 00:00
+    function resetStorageAtMidnight() {
+        const now = new Date();
+        const midnight = new Date(now);
+        midnight.setHours(24, 0, 0, 0); // Следующая полночь
+        const timeUntilMidnight = midnight - now;
+
+        setTimeout(() => {
+            localStorage.setItem(storageKey, "false");
+            resetStorageAtMidnight(); // Перезапускаем таймер на следующую полночь
+        }, timeUntilMidnight);
+    }
+
+    // Ставим таймер сброса
+    resetStorageAtMidnight();
+
+    let isBannerHidden;
+
+    const checkIsBannerHidden = () => {
+        isBannerHidden =
+            localStorage.getItem(storageKey) &&
+            localStorage.getItem(storageKey) !== "false";
+    };
+
+    checkIsBannerHidden();
+
+    $("#bannerClose").click(function () {
+        $(this).parent().slideUp(300);
+        localStorage.setItem(storageKey, "true");
+        checkIsBannerHidden();
+        updateHeaderHeight();
+    });
+
+    if (!isBannerHidden) {
+        $(".header__sale-banner").slideDown(300);
+    }
 
     //=================== Слайдер в оффере на главной ============
 
@@ -163,59 +205,43 @@ $(document).ready(function () {
                 grid: {
                     rows: 1,
                 },
-                spaceBetween: 20,
+                spaceBetween: 10,
                 slidesPerView: 7,
+            },
+            1026: {
+                spaceBetween: 20,
             },
         },
     });
 
     //=================== Слайдр товаров ============
 
-    const bestsellersSlider = new Swiper(".bestsellers .products__slider", {
-        spaceBetween: 20,
-        speed: 600,
-        slidesPerView: 5,
-        grabCursor: true,
-        navigation: {
-            nextEl: ".bestsellers .slider-next",
-            prevEl: ".bestsellers .slider-prev",
-        },
-        scrollbar: {
-            el: ".bestsellers .swiper-scrollbar",
-        },
-        breakpoints: {
-            0: {
-                slidesPerView: "auto",
-                spaceBetween: 10,
+    $(".products:has(.products__slider)").each(function (index, elem) {
+        const block = $(elem);
+        const swiperContainer = block.find(".products__slider");
+        const slider = new Swiper(swiperContainer[0], {
+            spaceBetween: 20,
+            speed: 600,
+            slidesPerView: 5,
+            grabCursor: true,
+            navigation: {
+                nextEl: block.find(".slider-next")[0],
+                prevEl: block.find(".slider-prev")[0],
             },
-            1026: {
-                slidesPerView: 5,
-                spaceBetween: 20,
+            scrollbar: {
+                el: block.find(".swiper-scrollbar")[0],
             },
-        },
-    });
-    const noveltiesSlider = new Swiper(".novelties .products__slider", {
-        spaceBetween: 20,
-        speed: 600,
-        slidesPerView: 5,
-        grabCursor: true,
-        navigation: {
-            nextEl: ".novelties .slider-next",
-            prevEl: ".novelties .slider-prev",
-        },
-        scrollbar: {
-            el: ".novelties .swiper-scrollbar",
-        },
-        breakpoints: {
-            0: {
-                slidesPerView: "auto",
-                spaceBetween: 10,
+            breakpoints: {
+                0: {
+                    slidesPerView: "auto",
+                    spaceBetween: 10,
+                },
+                1025: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                },
             },
-            1026: {
-                slidesPerView: 5,
-                spaceBetween: 20,
-            },
-        },
+        });
     });
 
     function sliderMouseSlideInit() {
@@ -542,7 +568,7 @@ $(document).ready(function () {
             width !== "84px"
                 ? width
                 : parent.width() - quantitySelector.width() - 10;
-        console.log(width);
+        console.log(parent);
         if (button.closest(parentSelector).hasClass("added")) {
             button.animate(
                 {
@@ -560,7 +586,17 @@ $(document).ready(function () {
                 },
                 200
             );
-        } else {
+        }
+    };
+
+    const animateAddToCartButtonRemoved = (
+        btn,
+        parentSelector,
+        bySelector = false
+    ) => {
+        const button = bySelector ? $(btn) : btn;
+        if (button.closest(parentSelector).hasClass("added")) {
+            console.log(button);
             button.animate(
                 {
                     backgroundColor: "#e94d11",
@@ -608,7 +644,13 @@ $(document).ready(function () {
     let notificationTimeoutID;
 
     $(".add-to-cart-button").on("click", function () {
-        $(this).closest(".catalog__item, .product-page").toggleClass("added");
+        if (
+            $(this).closest(".catalog__item, .product-page").hasClass("added")
+        ) {
+            window.location.href = "/cart";
+            return;
+        }
+        $(this).closest(".catalog__item, .product-page").addClass("added");
         const notification = $(".catalog-notification");
         const progress = $(".catalog-notification__progress");
 
@@ -636,9 +678,6 @@ $(document).ready(function () {
             animateAddToCartButton($(this), ".catalog__item");
         }
 
-        if (!$(this).closest(".catalog__item, .product-page").hasClass("added"))
-            return;
-
         if (notification.hasClass("show")) {
             closeNotification(notification);
         }
@@ -661,11 +700,13 @@ $(document).ready(function () {
     });
 
     $(".order-card-mini__add-to-cart-button").on("click", function () {
-        $(this).closest(".order-card-mini").toggleClass("added");
+        if ($(this).closest(".order-card-mini").hasClass("added")) {
+            window.location.href = "/cart";
+            return;
+        }
+        $(this).closest(".order-card-mini").addClass("added");
         const notification = $(".catalog-notification");
         const progress = $(".catalog-notification__progress");
-
-        if (!$(this).closest(".order-card-mini").hasClass("added")) return;
 
         if (notification.hasClass("show")) {
             closeNotification(notification);
@@ -698,15 +739,7 @@ $(document).ready(function () {
             ? Number(counter.eq(0).text())
             : Number(counter.text());
 
-        if (currentQuantity === 1) {
-            if (!isProductPage) {
-                btn.closest(".catalog__item-quantity")
-                    .find(".catalog__item-quantity-btn_minus")
-                    .addClass("disabled");
-            } else {
-                $(".catalog__item-quantity-btn_minus").addClass("disabled");
-            }
-        } else {
+        if (currentQuantity !== 1) {
             if (!isProductPage) {
                 btn.closest(".catalog__item-quantity")
                     .find(".catalog__item-quantity-btn_minus")
@@ -762,8 +795,23 @@ $(document).ready(function () {
         }
 
         checkAvailableQuantityRange($(this));
-        if (currentQuantity < 1) {
+        if (currentQuantity <= 1) {
             counter.text(1);
+            checkAvailableQuantityRange($(this));
+
+            animateAddToCartButtonRemoved(
+                $(this)
+                    .closest(".catalog__item-btns-row")
+                    .find(".add-to-cart-button"),
+                ".catalog__item"
+            );
+            $(this).closest(".catalog__item").removeClass("added");
+            if (!!$(".product-page")) {
+                $(".add-to-cart-button").each(function (index, button) {
+                    animateAddToCartButtonRemoved($(button), ".product-page");
+                });
+                $(".product-page").removeClass("added");
+            }
         }
 
         if (currentQuantity > quantity) {
@@ -870,7 +918,7 @@ $(document).ready(function () {
     //=================== Форма получателя ============
 
     $(
-        ".cart__recipient-form input, .cart__delivery-courier input, .cart__delivery-courier textarea"
+        ".cart__recipient-form input, .cart__delivery-courier input, .cart__delivery-courier textarea, .auth__input input"
     ).on("input", function () {
         if ($(this).val()) {
             $(this).addClass("typing");
@@ -1095,6 +1143,11 @@ $(document).ready(function () {
         siblings.find("svg").fadeOut(200);
         const currentSort = $(this).attr("data-sort");
 
+        if ($(this).hasClass("one-dir")) {
+            $(this).attr("data-sort", "desc");
+            return;
+        }
+
         if (currentSort === "asc") {
             $(this).attr("data-sort", "desc");
             $(this).find("svg").fadeIn(200);
@@ -1178,12 +1231,13 @@ $(document).ready(function () {
                 }, 200);
             }
         } else {
+            window.scrollTo(0, 0);
             window.location.href = targetId;
         }
     });
 
     function showElementFromHash() {
-        if (window.location.pathname === "/account.html") {
+        if (window.location.pathname === "/account") {
             const hash = window.location.hash;
 
             if (hash) {
@@ -1199,6 +1253,7 @@ $(document).ready(function () {
                     $(".account aside").slideUp(200);
                 }
             } else {
+                window.scrollTo(0, 0);
                 $(".account__nav a").removeClass("active");
                 $(".account__content-item").slideUp(200);
 
@@ -1215,21 +1270,41 @@ $(document).ready(function () {
 
     showElementFromHash();
 
-    $(window).on("hashchange", function () {
+    $(window).on("hashchange", function (e) {
+        e.preventDefault();
+        window.scrollTo(0, 0);
+
         showElementFromHash();
+    });
+    if (
+        window.location.pathname.includes("about") ||
+        window.location.pathname.includes("account")
+    ) {
+        const hash = window.location.hash;
+        history.replaceState(null, null, window.location.pathname);
+
+        $(window).on("load", function (e) {
+            window.location.hash = hash;
+        });
+    }
+
+    $("a").click(function (e) {
+        if (window.location.href === this.href) {
+            e.preventDefault();
+        }
     });
 
     //=================== Мобильное меню в личном кабинете ============
 
-    $(".account__content-item h1, .account__content-item h2").click(
-        function () {
-            const hash = window.location.hash;
-            if (hash && $(window).width() <= 600) {
-                $(".account aside").addClass("active");
-                window.location = window.location.pathname + "#";
-            }
+    $(
+        ".account__content-item h1, .account__content-item h2, .account__content-item h3.back"
+    ).click(function () {
+        const hash = window.location.hash;
+        if (hash && $(window).width() <= 600) {
+            $(".account aside").addClass("active");
+            window.location = window.location.pathname + "#";
         }
-    );
+    });
 
     //=================== Карточка заказа ============
 
@@ -1391,7 +1466,7 @@ $(document).ready(function () {
     });
 
     function showAboutElementFromHash() {
-        if (window.location.pathname === "/about.html") {
+        if (window.location.pathname === "/about") {
             const hash = window.location.hash;
 
             if (hash) {
@@ -1494,6 +1569,35 @@ $(document).ready(function () {
         window.scrollTo(0, $(target).offset().top - 120);
     });
 
+    //=================== Отслеживание высоты хедера ============
+
+    function updateHeaderHeight() {
+        $(".catalog__menu-inner").css({
+            height: `calc(100vh - ${$(".header").height()}px + 20px)`,
+        });
+
+        if ($(window).width() <= 600) {
+            const offset = isBannerHidden ? 0 : 50;
+
+            $(".city-popup, .search").css({
+                paddingTop: `${offset}px`,
+            });
+        } else if ($(window).width() <= 767) {
+            const offset = isBannerHidden ? 0 : 60;
+
+            $(".city-popup, .search").css({
+                paddingTop: `${offset}px`,
+            });
+            // $(".city-popup__wrapper").css({
+            //     marginTop: `${$(".header").height()}px`,
+            // });
+        }
+    }
+
+    updateHeaderHeight();
+
+    $(window).on("resize", updateHeaderHeight);
+
     //=================== Мега меню ============
 
     $(".mega-menu-btn").click(function () {
@@ -1513,78 +1617,17 @@ $(document).ready(function () {
                 $("#catalogContent").removeAttr("style");
             });
         }
-
-        if ($(".catalog__menu").hasClass("open") && $(window).width() <= 767) {
-            resetMobileMenu();
-        }
     });
 
-    $(document).on("click", function (event) {
-        var target = $(event.target);
-        if (
-            !target.closest("#catalogContent").length &&
-            !target.closest(".mega-menu-btn").length &&
-            $("#catalogContent").hasClass("open")
-        ) {
-            $(".mega-menu-btn").removeClass("open");
-            $("#catalogContent").toggleClass("open");
-            $(".mega-menu-btn").find(".swich-icon").toggleClass("open");
-            $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
-            $(".header__overlay").fadeToggle(300);
-            if ($(window).width() <= 767) {
-                $("#catalogContent").animate(
-                    { left: "-100%" },
-                    200,
-                    function () {
-                        $("#catalogContent").removeAttr("style");
-                    }
-                );
-            }
-        }
-
-        if (
-            !target.closest(".popup.open .popup-wrapper").length &&
-            !target.closest(".popup-btn").length
-        ) {
-            $(".popup.open").removeClass("open").fadeToggle(300);
-            $(".overlay").fadeOut(300);
-        }
-
-        if (
-            !target.closest(".catalog__list-filters").length &&
-            !target.closest(".catalog__list-row-button_sorter").length &&
-            $(".catalog__list-row-button_sorter").hasClass("opened") &&
-            $(window).width() <= 600
-        ) {
-            $(".sorter").fadeOut(300);
-            $(".catalog__list-row-button_sorter").removeClass("opened");
-        }
-        if (
-            !target.closest("#filters").length &&
-            !target.closest(".catalog__list-row-button_filters").length &&
-            !target.closest(".catalog-notification").length &&
-            $(window).width() <= 600
-        ) {
-            $("#filters")
-                .removeClass("stop-transition")
-                .removeClass("opened")
-                .removeAttr("style");
-            $(".catalog__overlay").fadeOut(300);
-            $(".catalog__list-row-button_filters").removeClass("opened");
-            enableScroll();
-        }
-
-        if (
-            !target.closest(".tip").length &&
-            !target.closest(".tip-mark").length &&
-            $(".tip-mark").hasClass("opened")
-        ) {
-            $(".tip-mark").removeClass("opened");
-        }
-    });
-
-    $("#bannerClose").click(function () {
-        $(this).parent().slideUp(300);
+    $(".catalog__navigation a").click(function (e) {
+        $(".mega-menu-btn").removeClass("open");
+        $("#catalogContent").removeClass("open");
+        $(this).find(".swich-icon").removeClass("open");
+        $(this).find(".cross-icon").removeClass("open");
+        $(".header__overlay").fadeOut(300);
+        $("#catalogContent").animate({ left: "-100%" }, 200, function () {
+            $("#catalogContent").removeAttr("style");
+        });
     });
 
     const showMegaMenuCategory = (element) => {
@@ -1598,7 +1641,7 @@ $(document).ready(function () {
 
     showMegaMenuCategory(".category-btn.active");
 
-    $(".category-btn").click(function () {
+    $(".category-btn").bind("click mouseover", function () {
         showMegaMenuCategory(this);
 
         if ($(window).width() <= 767) {
@@ -1669,31 +1712,6 @@ $(document).ready(function () {
         $(this).closest(".popup").fadeOut(300).removeClass("open");
     });
 
-    $(document).on("keydown", function (event) {
-        if (event.key === "Escape" || event.keyCode === 27) {
-            // Проверяем, нажата ли клавиша ESC
-            closePopup(); // Вызов функции для закрытия попапа
-
-            $(".mega-menu-btn").removeClass("open");
-            $("#catalogContent").removeClass("open");
-            $(".mega-menu-btn").find(".swich-icon").removeClass("open");
-            $(".mega-menu-btn").find(".cross-icon").removeClass("open");
-            $(".header__overlay").fadeOut(300);
-
-            if ($(window).width() <= 767) {
-                $("#catalogContent").animate(
-                    { left: "-100%" },
-                    200,
-                    function () {
-                        $("#catalogContent").removeAttr("style");
-                    }
-                );
-            }
-
-            $(".catalog__list-filters").fadeOut(300);
-        }
-    });
-
     // Пример функции для закрытия попапа
     function closePopup() {
         $(".popup").fadeOut(); // Скрываем попап
@@ -1725,14 +1743,7 @@ $(document).ready(function () {
     $(".catalog__list-row-button_filters").click(function () {
         const filters = $("#filters");
         disableScroll();
-        filters.find(".filters").css({
-            height: "calc(60dvh - 29px)",
-        });
-        filters.css({ transition: "top 0.3s ease-out" }).addClass("opened");
-
-        setTimeout(() => {
-            filters.addClass("stop-transition");
-        }, 300);
+        filters.addClass("opened");
         $(".catalog__overlay").fadeIn(300);
     });
 
@@ -1748,74 +1759,391 @@ $(document).ready(function () {
     });
 
     //=================== Фильтр меню на мобильных устройствах ============
-    const draggItem = $(".filters__draggable");
-    const draggable = $("#filters");
-    let isDragging = false; // Флаг для отслеживания перетаскивания
-    let startY; // Начальная позиция касания
-    let startTop; // Начальная позиция элемента относительно верхней границы
-    const threshold = $(window).height() * 0.3; // Граница 30% от нижнего края окна
 
-    // Начало перетаскивания
-    draggItem.on("touchstart", function (event) {
-        isDragging = true;
-        startY = event.originalEvent.touches[0].clientY; // Координата Y первого касания
-        startTop = parseInt(draggable.css("top"), 10); // Текущее значение top
-        event.preventDefault(); // Предотвращаем стандартное поведение
+    $("#filters").on("scroll", function () {
+        if ($(this).scrollTop() === 0) {
+            $("#filters").removeClass("opened");
+            $(".catalog__overlay").fadeOut(300);
+            $(".catalog__list-row-button_filters").removeClass("opened");
+            enableScroll();
+        }
     });
 
-    // Перемещение элемента
-    $(document).on("touchmove", function (event) {
-        if (!isDragging) return;
+    //=================== Поиск ============
+    const openSearch = () => {
+        $(".search").addClass("opened").fadeIn(300);
+        $(".search #search").focus();
+        disableScroll();
+    };
+    const closeSearch = () => {
+        $(".search").removeClass("opened").fadeOut(300);
+        enableScroll();
+    };
+    const closeAndClearSearch = () => {
+        $(".search #search, #header-search-anchor").val("");
+        $(".search__results").slideUp(300);
+        closeSearch();
+    };
 
-        const currentY = event.originalEvent.touches[0].clientY; // Текущая координата Y
-        const deltaY = currentY - startY; // Разница в движении пальца
-        const windowHeight = $(window).height(); // Высота окна
+    const checkSearchInputs = () => {
+        if ($(".search #search").val().length > 0) {
+            $(".search__results").slideDown(300);
+        } else {
+            $(".search__results").slideUp(300);
+        }
+    };
 
-        const viewportHeight =
-            window.visualViewport?.height || $(window).height();
+    $(".search__input-clean").click(closeAndClearSearch);
 
-        // Получаем отступ снизу (safe-area-inset-bottom) для iOS
-        const safeAreaInsetBottom = parseInt(
-            getComputedStyle(document.documentElement).getPropertyValue(
-                "env(safe-area-inset-bottom)"
-            ) || 0,
-            10
-        );
+    $(".search #search").on("input", function () {
+        $("#header-search-anchor").val($(this).val());
+        checkSearchInputs();
+    });
 
-        // Новое значение top
-        let newTop = startTop + deltaY;
+    $(".header-search:has(#header-search-anchor)").click(openSearch);
 
-        // Ограничение сверху (min: 0) и снизу (max: windowHeight - draggableHeight)
-        newTop = Math.min(Math.max(newTop, 0), windowHeight - 50); // Верхняя граница = 0, нижняя граница = высота окна - 50px (высота заголовка)
+    $("#header-search-anchor").on("input", function () {
+        $(".search #search").val($(this).val());
+        checkSearchInputs();
+    });
 
-        draggable.css("top", newTop + "px");
+    //=================== Поиск города ============
 
-        draggable.find(".filters").css({
-            height: viewportHeight - safeAreaInsetBottom - newTop - 29 + "px",
+    $(".city-popup .search-input input").on("input", function () {
+        const val = $(this).val().toLowerCase();
+        $(".city-popup__body label").each(function () {
+            const text = $(this).find("span")[0].innerText.toLowerCase();
+            if (text.includes(val)) {
+                $(this).slideDown(200);
+            } else {
+                $(this).slideUp(200);
+            }
         });
     });
 
-    // Окончание перетаскивания
-    $(document).on("touchend", function () {
-        if (!isDragging) return;
+    $(".city-popup-btn").click(function () {
+        disableScroll();
+        $(".city-popup").fadeIn(300).addClass("open");
 
-        const windowHeight = $(window).height(); // Высота окна
-        const currentTop = parseInt(draggable.css("top"), 10); // Текущее значение top
+        $(".mega-menu-btn").removeClass("open");
+        $("#catalogContent").toggleClass("open");
+        $(".mega-menu-btn").find(".swich-icon").toggleClass("open");
+        $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
+        $(".header__overlay").fadeToggle(300);
 
-        // Если пересекли 30% снизу, возвращаем вниз
+        if ($(window).width() <= 767) {
+            $("#catalogContent").animate({ left: "-100%" }, 200, function () {
+                $("#catalogContent").removeAttr("style");
+            });
+        }
+    });
+
+    $(".city-popup__close").click(function () {
+        $(".city-popup .search-input input").val("");
+        $(".city-popup__body label").slideDown(200);
+        $(".city-popup").fadeOut(300).removeClass("open");
+        enableScroll();
+    });
+
+    //=================== Нажатие на ESC ============
+
+    $(document).on("keydown", function (event) {
+        if (event.key === "Escape" || event.keyCode === 27) {
+            // Проверяем, нажата ли клавиша ESC
+            closePopup(); // Вызов функции для закрытия попапа
+
+            $(".mega-menu-btn").removeClass("open");
+            $("#catalogContent").removeClass("open");
+            $(".mega-menu-btn").find(".swich-icon").removeClass("open");
+            $(".mega-menu-btn").find(".cross-icon").removeClass("open");
+            $(".header__overlay").fadeOut(300);
+            $(".city-popup").fadeOut(300).removeClass("open");
+            $(".auth").fadeOut(200).removeClass("opened");
+            closeSearch();
+
+            if ($(window).width() <= 767) {
+                $("#catalogContent").animate(
+                    { left: "-100%" },
+                    200,
+                    function () {
+                        $("#catalogContent").removeAttr("style");
+                    }
+                );
+            }
+
+            $(".catalog__list-filters").fadeOut(300);
+        }
+    });
+
+    //=================== Клик вне попапа ============
+
+    $(document).on("click", function (event) {
+        var target = $(event.target);
         if (
-            currentTop > windowHeight - threshold ||
-            currentTop > windowHeight - 200
+            !target.closest("#catalogContent").length &&
+            !target.closest(".mega-menu-btn").length &&
+            $("#catalogContent").hasClass("open")
         ) {
-            draggable
-                .removeClass("stop-transition")
-                .removeClass("opened")
-                .removeAttr("style");
+            $(".mega-menu-btn").removeClass("open");
+            $("#catalogContent").toggleClass("open");
+            $(".mega-menu-btn").find(".swich-icon").toggleClass("open");
+            $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
+            $(".header__overlay").fadeToggle(300);
 
-            $(".catalog__overlay").fadeOut(300);
+            if ($(window).width() <= 767) {
+                $("#catalogContent").animate(
+                    { left: "-100%" },
+                    200,
+                    function () {
+                        $("#catalogContent").removeAttr("style");
+                    }
+                );
+            }
             enableScroll();
         }
 
-        isDragging = false;
+        if (
+            !target.closest(".popup.open .popup-wrapper").length &&
+            !target.closest(".popup-btn").length
+        ) {
+            $(".popup.open").removeClass("open").fadeToggle(300);
+            $(".overlay").fadeOut(300);
+        }
+
+        if (
+            !target.closest(".search__wrapper").length &&
+            !target.closest(".header-search:has(#header-search-anchor)")
+                .length &&
+            $(".search").hasClass("opened")
+        ) {
+            closeSearch();
+        }
+
+        if (
+            !target.closest(".city-popup").length &&
+            !target.closest(".city-popup-btn").length &&
+            $(".city-popup-btn").hasClass("open")
+        ) {
+            $(".city-popup .search-input input").val("");
+            $(".city-popup__body label").slideDown(200);
+            $(".city-popup").fadeOut(300).removeClass("open");
+            enableScroll();
+        }
+
+        if (
+            !target.closest(".auth__wrapper").length &&
+            !target.closest(".header__main-group-item_account.not-loggined")
+                .length &&
+            $(".auth").hasClass("opened")
+        ) {
+            $(".auth").fadeOut(200).removeClass("opened");
+            enableScroll();
+        }
+
+        if (
+            !target.closest(".catalog__list-filters").length &&
+            !target.closest(".catalog__list-row-button_sorter").length &&
+            $(".catalog__list-row-button_sorter").hasClass("opened") &&
+            $(window).width() <= 600
+        ) {
+            $(".sorter").fadeOut(300);
+            $(".catalog__list-row-button_sorter").removeClass("opened");
+        }
+        if (
+            !target.closest("#filters .filters__wrapper").length &&
+            !target.closest(".catalog__list-row-button_filters").length &&
+            !target.closest(".catalog-notification").length &&
+            $("#filters").hasClass("opened") &&
+            $(window).width() <= 600
+        ) {
+            $("#filters").removeClass("opened");
+            $(".catalog__overlay").fadeOut(300);
+            $(".catalog__list-row-button_filters").removeClass("opened");
+            enableScroll();
+        }
+
+        if (
+            !target.closest(".tip").length &&
+            !target.closest(".tip-mark").length &&
+            $(".tip-mark").hasClass("opened")
+        ) {
+            $(".tip-mark").removeClass("opened");
+        }
     });
+
+    //=================== Промокоды ============
+
+    $(".account__content-promocodes-list-item-bottom a").click(function (e) {
+        e.preventDefault();
+        $(this)
+            .closest(".account__content-promocodes-list-item")
+            .addClass("used")
+            .find(".account__content-promocodes-list-item-top-info span")
+            .text("Уже использован!");
+    });
+
+    //========================================================
+    //=================== Авторизация ========================
+    //========================================================
+
+    //=================== Валидация ============
+    const validateEmail = (email) => {
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    };
+
+    const validatePhone = (phone) => {
+        var phonePattern = /^\+?\d{11}$/;
+        return phonePattern.test(phone);
+    };
+
+    function validatePassword(password) {
+        let passwordPattern = /^[a-zA-Z\d!@#$%^&*()_+{}\[\]:;<>,.?/~`-]{8,}$/;
+        return passwordPattern.test(password);
+    }
+
+    const validateInput = (input) => {
+        const value = input.val().trim();
+        if (value === "") {
+            return false;
+        }
+
+        if (input[0].hasAttribute("data-form-text")) {
+            return value.length < 20;
+        }
+
+        if (input[0].hasAttribute("data-form-email-or-phone")) {
+            return validateEmail(value) || validatePhone(value);
+        }
+
+        if (input[0].hasAttribute("data-form-email")) {
+            return validateEmail(value);
+        }
+
+        if (input[0].hasAttribute("data-form-password")) {
+            return validatePassword(value);
+        }
+
+        if (input[0].hasAttribute("data-form-password-confirm")) {
+            return (
+                value ===
+                input.closest("form").find("[data-form-password]").val().trim()
+            );
+        }
+
+        if (input.attr("type") === "checkbox") {
+            return input.prop("checked");
+        }
+
+        return true;
+    };
+
+    let authInputsArray = $(".auth__form input[required]")
+        .map(function (index, elem) {
+            return {
+                input: $(elem).attr("name"),
+                isValid: false,
+                form: $(this).closest(".auth__form").attr("id"),
+            };
+        })
+        .get();
+
+    $(".auth__form input[required]").on("input", function () {
+        const formId = $(this).closest(".auth__form").attr("id");
+        const elem = authInputsArray.find(
+            (item) => item.input === $(this).attr("name")
+        );
+
+        const isValid = validateInput($(this));
+        if (isValid) $(this).removeClass("error");
+
+        elem.isValid = isValid;
+
+        const isFormValid = authInputsArray
+            .filter((item) => item.form === formId)
+            .every((item) => item.isValid);
+
+        const button = $("#" + formId).find(".auth__btn");
+        if (isFormValid) {
+            button.removeClass("disabled");
+        } else {
+            button.addClass("disabled");
+        }
+    });
+
+    const authForms = {
+        "initial-form": [],
+        "login-form": [],
+        "register-form": [],
+    };
+
+    $(".auth__form button[type='submit']").on("click", function (e) {
+        e.preventDefault();
+        const form = $(this).closest("form");
+        const isFormValid = authInputsArray
+            .filter((item) => item.form === form.attr("id"))
+            .every((item) => item.isValid);
+
+        if (isFormValid) {
+            // form.submit();
+            const formData = form
+                .find("[required]")
+                .map((index, item) => {
+                    return {
+                        name: $(item).attr("name"),
+                        value: $(item).val().trim(),
+                    };
+                })
+                .get();
+            authForms[form.attr("id")] = formData;
+            console.log(authForms);
+
+            if (form.attr("id") === "initial-form") {
+                $("#initial-form").slideUp(200);
+                $("#login-form").slideDown(200);
+            }
+            if (form.attr("id") === "login-form") {
+                $("#login-form").slideUp(200);
+                $("#register-form").slideDown(200);
+            }
+            if (form.attr("id") === "register-form") {
+                window.location.href = "/account";
+            }
+        } else {
+            const requires = authInputsArray
+                .filter(
+                    (item) => item.form === form.attr("id") && !item.isValid
+                )
+                .map((item) => item.input);
+
+            requires.forEach((item) => {
+                form.find("input[name='" + item + "']").addClass("error");
+            });
+
+            console.log("Form is not valid");
+        }
+    });
+
+    //=================== Логика попапа ========================
+
+    $(".auth__form h4 a").click(function (e) {
+        e.preventDefault();
+        $(this).closest(".auth__form").slideUp(200);
+        $("#initial-form").slideDown(200);
+    });
+
+    $(".header__main-group-item_account.not-loggined").click(function (e) {
+        e.preventDefault();
+        $(".auth").fadeIn(200).addClass("opened");
+        disableScroll();
+    });
+
+    $(".auth__close").click(function () {
+        $(".auth").fadeOut(200).removeClass("opened");
+        enableScroll();
+    });
+
+    //========================================================
+    //========================================================
+    //========================================================
 });
