@@ -1278,6 +1278,16 @@ input[type=number]::-webkit-inner-spin-button {
   border-radius: 10px;
   background: #f0f0f0;
   padding: 6px 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header__top-inner nav ul li.accent a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 
 .header__top-inner nav ul li.accent svg path {
@@ -1286,6 +1296,10 @@ input[type=number]::-webkit-inner-spin-button {
   -ms-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
+}
+
+.header__top-inner nav ul li.accent:hover span {
+  color: #e94d11;
 }
 
 .header__top-inner nav ul li.accent:hover svg path {

@@ -17,7 +17,6 @@ const enableScroll = () => {
     $("main").css({
         marginTop: 0,
     });
-    console.log("first");
 };
 
 $(document).ready(function () {
@@ -1885,10 +1884,10 @@ $(document).ready(function () {
             $("#catalogContent").hasClass("open")
         ) {
             $(".mega-menu-btn").removeClass("open");
-            $("#catalogContent").toggleClass("open");
-            $(".mega-menu-btn").find(".swich-icon").toggleClass("open");
-            $(".mega-menu-btn").find(".cross-icon").toggleClass("open");
-            $(".header__overlay").fadeToggle(300);
+            $("#catalogContent").removeClass("open");
+            $(".mega-menu-btn").find(".swich-icon").removeClass("open");
+            $(".mega-menu-btn").find(".cross-icon").removeClass("open");
+            $(".header__overlay").fadeOut(300);
 
             if ($(window).width() <= 767) {
                 $("#catalogContent").animate(
@@ -1899,7 +1898,6 @@ $(document).ready(function () {
                     }
                 );
             }
-            enableScroll();
         }
 
         if (
@@ -1920,9 +1918,9 @@ $(document).ready(function () {
         }
 
         if (
-            !target.closest(".city-popup").length &&
+            !target.closest(".city-popup__wrapper").length &&
             !target.closest(".city-popup-btn").length &&
-            $(".city-popup-btn").hasClass("open")
+            $(".city-popup").hasClass("open")
         ) {
             $(".city-popup .search-input input").val("");
             $(".city-popup__body label").slideDown(200);
