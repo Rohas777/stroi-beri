@@ -646,7 +646,7 @@ $(document).ready(function () {
         if (
             $(this).closest(".catalog__item, .product-page").hasClass("added")
         ) {
-            window.location.href = "/cart";
+            window.location.href = "/cart.html";
             return;
         }
         $(this).closest(".catalog__item, .product-page").addClass("added");
@@ -700,7 +700,7 @@ $(document).ready(function () {
 
     $(".order-card-mini__add-to-cart-button").on("click", function () {
         if ($(this).closest(".order-card-mini").hasClass("added")) {
-            window.location.href = "/cart";
+            window.location.href = "/cart.html";
             return;
         }
         $(this).closest(".order-card-mini").addClass("added");
@@ -1236,7 +1236,7 @@ $(document).ready(function () {
     });
 
     function showElementFromHash() {
-        if (window.location.pathname === "/account") {
+        if (window.location.pathname === "/account.html") {
             const hash = window.location.hash;
 
             if (hash) {
@@ -1465,7 +1465,7 @@ $(document).ready(function () {
     });
 
     function showAboutElementFromHash() {
-        if (window.location.pathname === "/about") {
+        if (window.location.pathname === "/about.html") {
             const hash = window.location.hash;
 
             if (hash) {
@@ -2105,7 +2105,7 @@ $(document).ready(function () {
                 $("#register-form").slideDown(200);
             }
             if (form.attr("id") === "register-form") {
-                window.location.href = "/account";
+                window.location.href = "/account.html";
             }
         } else {
             const requires = authInputsArray
