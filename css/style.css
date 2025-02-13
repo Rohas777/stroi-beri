@@ -10756,12 +10756,6 @@ textarea:active) > span {
   justify-content: center;
 }
 
-.not-found__inner svg {
-  width: clamp(749.76px, 59.1666666667vw, 1136px);
-  margin-bottom: clamp(13.2px, 1.0416666667vw, 20px);
-  animation: circle-move 5000ms infinite ease-in-out;
-}
-
 .not-found__inner h1 {
   text-align: center;
   font-size: var(--font-size-32);
@@ -10789,6 +10783,43 @@ textarea:active) > span {
   color: #ffffff !important;
   cursor: pointer;
   font-size: var(--font-size-18);
+}
+
+.not-found__svg {
+  position: relative;
+  margin-bottom: clamp(13.2px, 1.0416666667vw, 20px);
+}
+
+.not-found__svg svg:not(.main) {
+  position: absolute;
+}
+
+.not-found__svg .main {
+  width: clamp(749.76px, 59.1666666667vw, 1136px);
+}
+
+.not-found__svg .brush {
+  width: clamp(157.08px, 12.3958333333vw, 238px);
+  top: 13.7%;
+  right: 5%;
+}
+
+.not-found__svg .drill {
+  width: clamp(335.28px, 26.4583333333vw, 508px);
+  bottom: 1.5%;
+  right: 27.7%;
+}
+
+.not-found__svg .gear {
+  width: clamp(76.56px, 6.0416666667vw, 116px);
+  top: 14%;
+  left: 36.6%;
+}
+
+.not-found__svg .wrench {
+  width: clamp(184.8px, 14.5833333333vw, 280px);
+  bottom: 2.7%;
+  left: 5.1%;
 }
 
 .order-submit-page main {
@@ -12920,16 +12951,16 @@ textarea:active) > span {
     margin: clamp(32px, 3.125vw, 40px) clamp(0px, 0vw, 0px) clamp(32px, 3.125vw, 40px) clamp(0px, 0vw, 0px);
   }
 
-  .not-found__inner svg {
-    margin-bottom: clamp(16px, 1.5625vw, 20px);
-  }
-
   .not-found__inner h1 {
     margin-bottom: clamp(16px, 1.5625vw, 20px);
   }
 
   .not-found__inner p {
     margin-bottom: clamp(32px, 3.125vw, 40px);
+  }
+
+  .not-found__svg {
+    margin-bottom: clamp(16px, 1.5625vw, 20px);
   }
 
   .order-submit__content h1 {
@@ -17844,14 +17875,6 @@ textarea:active) > span {
     margin: clamp(23.436px, 3.90625vw, 40px) clamp(0px, 0vw, 0px) clamp(23.436px, 3.90625vw, 40px) clamp(0px, 0vw, 0px);
   }
 
-  .not-found__inner svg {
-    width: clamp(665.5824px, 110.9375vw, 1136px);
-  }
-
-  .not-found__inner svg {
-    margin-bottom: clamp(11.718px, 1.953125vw, 20px);
-  }
-
   .not-found__inner h1 {
     margin-bottom: clamp(11.718px, 1.953125vw, 20px);
   }
@@ -17866,6 +17889,58 @@ textarea:active) > span {
 
   .not-found__inner a {
     border-radius: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .not-found__svg {
+    margin-bottom: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .not-found__svg .main {
+    width: clamp(665.5824px, 110.9375vw, 1136px);
+  }
+
+  .not-found__svg .main {
+    width: clamp(606.54px, 47.8645833333vw, 919px);
+  }
+
+  .not-found__svg .brush {
+    width: clamp(139.4442px, 23.2421875vw, 238px);
+  }
+
+  .not-found__svg .brush {
+    width: clamp(141.9px, 11.1979166667vw, 215px);
+    top: 9.7%;
+    right: 3.5%;
+  }
+
+  .not-found__svg .drill {
+    width: clamp(297.6372px, 49.609375vw, 508px);
+  }
+
+  .not-found__svg .drill {
+    width: clamp(302.28px, 23.8541666667vw, 458px);
+    bottom: -3.5%;
+    right: 26.7%;
+  }
+
+  .not-found__svg .gear {
+    width: clamp(67.9644px, 11.328125vw, 116px);
+  }
+
+  .not-found__svg .gear {
+    width: clamp(68.64px, 5.4166666667vw, 104px);
+    top: 12%;
+    left: 35.6%;
+  }
+
+  .not-found__svg .wrench {
+    width: clamp(164.052px, 27.34375vw, 280px);
+  }
+
+  .not-found__svg .wrench {
+    width: clamp(154.44px, 12.1875vw, 234px);
+    bottom: -1.3%;
+    left: 3.1%;
   }
 
   .order-submit__inner {
@@ -18631,6 +18706,26 @@ textarea:active) > span {
     padding: clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px);
   }
 
+  .not-found__svg .main {
+    width: clamp(538.4421px, 89.74609375vw, 919px);
+  }
+
+  .not-found__svg .brush {
+    width: clamp(125.9685px, 20.99609375vw, 215px);
+  }
+
+  .not-found__svg .drill {
+    width: clamp(268.3422px, 44.7265625vw, 458px);
+  }
+
+  .not-found__svg .gear {
+    width: clamp(60.9336px, 10.15625vw, 104px);
+  }
+
+  .not-found__svg .wrench {
+    width: clamp(137.1006px, 22.8515625vw, 234px);
+  }
+
   .order-submit__inner {
     padding: clamp(123.039px, 20.5078125vw, 210px) clamp(0px, 0vw, 0px) clamp(123.039px, 20.5078125vw, 210px) clamp(0px, 0vw, 0px);
   }
@@ -19308,6 +19403,26 @@ textarea:active) > span {
 
   .article aside {
     padding: clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .not-found__svg .main {
+    width: clamp(287.1875px, 153.1666666667vw, 919px);
+  }
+
+  .not-found__svg .brush {
+    width: clamp(67.1875px, 35.8333333333vw, 215px);
+  }
+
+  .not-found__svg .drill {
+    width: clamp(143.125px, 76.3333333333vw, 458px);
+  }
+
+  .not-found__svg .gear {
+    width: clamp(32.5px, 17.3333333333vw, 104px);
+  }
+
+  .not-found__svg .wrench {
+    width: clamp(73.125px, 39vw, 234px);
   }
 
   .order-submit__inner {
@@ -27368,21 +27483,13 @@ textarea:active) > span {
     margin: 20px 0;
   }
 
-  .not-found__inner svg {
-    width: clamp(355px, 189.3333333333vw, 1136px);
-  }
-
-  .not-found__inner svg {
-    margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
-  }
-
   .not-found__inner h1 {
     margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
   }
 
   .not-found__inner h1 {
-    margin-bottom: clamp(6.6px, 0.5208333333vw, 10px);
-    font-size: var(--font-size-30);
+    margin-bottom: 6px;
+    font-size: 16px;
   }
 
   .not-found__inner p {
@@ -27390,7 +27497,8 @@ textarea:active) > span {
   }
 
   .not-found__inner p {
-    font-size: var(--font-size-26);
+    font-size: 14px;
+    margin-bottom: 20px;
   }
 
   .not-found__inner a {
@@ -27402,8 +27510,57 @@ textarea:active) > span {
   }
 
   .not-found__inner a {
-    padding: clamp(18.48px, 1.4583333333vw, 28px) clamp(39.6px, 3.125vw, 60px) clamp(18.48px, 1.4583333333vw, 28px) clamp(39.6px, 3.125vw, 60px);
-    font-size: var(--font-size-30);
+    padding: 14px 30px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  .not-found__svg {
+    margin-bottom: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .not-found__svg {
+    margin-top: 24px;
+  }
+
+  .not-found__svg .main {
+    width: clamp(355px, 189.3333333333vw, 1136px);
+  }
+
+  .not-found__svg .main {
+    width: 100%;
+  }
+
+  .not-found__svg .brush {
+    width: clamp(74.375px, 39.6666666667vw, 238px);
+  }
+
+  .not-found__svg .brush {
+    width: 20.94svw;
+  }
+
+  .not-found__svg .drill {
+    width: clamp(158.75px, 84.6666666667vw, 508px);
+  }
+
+  .not-found__svg .drill {
+    width: 44.69svw;
+  }
+
+  .not-found__svg .gear {
+    width: clamp(36.25px, 19.3333333333vw, 116px);
+  }
+
+  .not-found__svg .gear {
+    width: 10.31svw;
+  }
+
+  .not-found__svg .wrench {
+    width: clamp(87.5px, 46.6666666667vw, 280px);
+  }
+
+  .not-found__svg .wrench {
+    width: 22.81svw;
   }
 
   .order-submit__inner {
@@ -27629,10 +27786,6 @@ textarea:active) > span {
   .catalog-page.sub-catalog .categories__item span {
     margin-bottom: clamp(8px, 0.78125vw, 10px);
   }
-
-  .not-found__inner h1 {
-    margin-bottom: clamp(8px, 0.78125vw, 10px);
-  }
 }
 
 @media only screen and (max-width: 600px) and (max-width: 1025px) {
@@ -27814,14 +27967,6 @@ textarea:active) > span {
 
   .product__photo {
     padding: clamp(0px, 0vw, 0px) clamp(12.8898px, 2.1484375vw, 22px) clamp(0px, 0vw, 0px) clamp(12.8898px, 2.1484375vw, 22px);
-  }
-
-  .not-found__inner h1 {
-    margin-bottom: clamp(5.859px, 0.9765625vw, 10px);
-  }
-
-  .not-found__inner a {
-    padding: clamp(16.4052px, 2.734375vw, 28px) clamp(35.154px, 5.859375vw, 60px) clamp(16.4052px, 2.734375vw, 28px) clamp(35.154px, 5.859375vw, 60px);
   }
 
   .container {
@@ -28012,14 +28157,6 @@ textarea:active) > span {
 
   .product__photo {
     padding: clamp(0px, 0vw, 0px) clamp(6.875px, 3.6666666667vw, 22px) clamp(0px, 0vw, 0px) clamp(6.875px, 3.6666666667vw, 22px);
-  }
-
-  .not-found__inner h1 {
-    margin-bottom: clamp(3.125px, 1.6666666667vw, 10px);
-  }
-
-  .not-found__inner a {
-    padding: clamp(8.75px, 4.6666666667vw, 28px) clamp(18.75px, 10vw, 60px) clamp(8.75px, 4.6666666667vw, 28px) clamp(18.75px, 10vw, 60px);
   }
 
   .container {
