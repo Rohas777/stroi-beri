@@ -131,64 +131,64 @@ legend {
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("fonts/segoe-ui-semi-light.eot");
-  src: url("fonts/segoe-ui-semi-light.eot?#iefix") format("embedded-opentype"), url("fonts/segoe-ui-semi-light.woff") format("woff"), url("fonts/segoe-ui-semi-light.woff2") format("woff2"), url("fonts/segoe-ui-semi-light.otf") format("opentype"), url("fonts/segoe-ui-semi-light.ttf") format("truetype"), url("fonts/segoe-ui-semi-light.svg") format("svg");
+  src: url("/fonts/segoe-ui-semi-light.eot");
+  src: url("/fonts/segoe-ui-semi-light.eot?#iefix") format("embedded-opentype"), url("/fonts/segoe-ui-semi-light.woff") format("woff"), url("/fonts/segoe-ui-semi-light.woff2") format("woff2"), url("/fonts/segoe-ui-semi-light.otf") format("opentype"), url("/fonts/segoe-ui-semi-light.ttf") format("truetype"), url("/fonts/segoe-ui-semi-light.svg") format("svg");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("fonts/segoe-ui-black.eot");
-  src: url("fonts/segoe-ui-black.eot?#iefix") format("embedded-opentype"), url("fonts/segoe-ui-black.woff") format("woff"), url("fonts/segoe-ui-black.woff2") format("woff2"), url("fonts/segoe-ui-black.otf") format("opentype"), url("fonts/segoe-ui-black.ttf") format("truetype"), url("fonts/segoe-ui-black.svg") format("svg");
+  src: url("/fonts/segoe-ui-black.eot");
+  src: url("/fonts/segoe-ui-black.eot?#iefix") format("embedded-opentype"), url("/fonts/segoe-ui-black.woff") format("woff"), url("/fonts/segoe-ui-black.woff2") format("woff2"), url("/fonts/segoe-ui-black.otf") format("opentype"), url("/fonts/segoe-ui-black.ttf") format("truetype"), url("/fonts/segoe-ui-black.svg") format("svg");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("fonts/segoe-ui-bold.eot");
-  src: url("fonts/segoe-ui-bold.eot?#iefix") format("embedded-opentype"), url("fonts/segoe-ui-bold.woff") format("woff"), url("fonts/segoe-ui-bold.woff2") format("woff2"), url("fonts/segoe-ui-bold.otf") format("opentype"), url("fonts/segoe-ui-bold.ttf") format("truetype"), url("fonts/segoe-ui-bold.svg") format("svg");
+  src: url("/fonts/segoe-ui-bold.eot");
+  src: url("/fonts/segoe-ui-bold.eot?#iefix") format("embedded-opentype"), url("/fonts/segoe-ui-bold.woff") format("woff"), url("/fonts/segoe-ui-bold.woff2") format("woff2"), url("/fonts/segoe-ui-bold.otf") format("opentype"), url("/fonts/segoe-ui-bold.ttf") format("truetype"), url("/fonts/segoe-ui-bold.svg") format("svg");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("fonts/segoe-ui-light.eot");
-  src: url("fonts/segoe-ui-light.eot?#iefix") format("embedded-opentype"), url("fonts/segoe-ui-light.woff") format("woff"), url("fonts/segoe-ui-light.woff2") format("woff2"), url("fonts/segoe-ui-light.otf") format("opentype"), url("fonts/segoe-ui-light.ttf") format("truetype"), url("fonts/segoe-ui-light.svg") format("svg");
+  src: url("/fonts/segoe-ui-light.eot");
+  src: url("/fonts/segoe-ui-light.eot?#iefix") format("embedded-opentype"), url("/fonts/segoe-ui-light.woff") format("woff"), url("/fonts/segoe-ui-light.woff2") format("woff2"), url("/fonts/segoe-ui-light.otf") format("opentype"), url("/fonts/segoe-ui-light.ttf") format("truetype"), url("/fonts/segoe-ui-light.svg") format("svg");
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("fonts/segoe-ui-regular.eot");
-  src: url("fonts/segoe-ui-regular.eot?#iefix") format("embedded-opentype"), url("fonts/segoe-ui-regular.woff") format("woff"), url("fonts/segoe-ui-regular.woff2") format("woff2"), url("fonts/segoe-ui-regular.otf") format("opentype"), url("fonts/segoe-ui-regular.ttf") format("truetype"), url("fonts/segoe-ui-regular.svg") format("svg");
+  src: url("/fonts/segoe-ui-regular.eot");
+  src: url("/fonts/segoe-ui-regular.eot?#iefix") format("embedded-opentype"), url("/fonts/segoe-ui-regular.woff") format("woff"), url("/fonts/segoe-ui-regular.woff2") format("woff2"), url("/fonts/segoe-ui-regular.otf") format("opentype"), url("/fonts/segoe-ui-regular.ttf") format("truetype"), url("/fonts/segoe-ui-regular.svg") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("fonts/segoe-ui-semibold.eot");
-  src: url("fonts/segoe-ui-semibold.eot?#iefix") format("embedded-opentype"), url("fonts/segoe-ui-semibold.woff") format("woff"), url("fonts/segoe-ui-semibold.woff2") format("woff2"), url("fonts/segoe-ui-semibold.otf") format("opentype"), url("fonts/segoe-ui-semibold.ttf") format("truetype"), url("fonts/segoe-ui-semibold.svg") format("svg");
+  src: url("/fonts/segoe-ui-semibold.eot");
+  src: url("/fonts/segoe-ui-semibold.eot?#iefix") format("embedded-opentype"), url("/fonts/segoe-ui-semibold.woff") format("woff"), url("/fonts/segoe-ui-semibold.woff2") format("woff2"), url("/fonts/segoe-ui-semibold.otf") format("opentype"), url("/fonts/segoe-ui-semibold.ttf") format("truetype"), url("/fonts/segoe-ui-semibold.svg") format("svg");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Century Gothic";
-  src: url("fonts/centurygothic.eot");
-  src: url("fonts/centurygothic.eot?#iefix") format("embedded-opentype"), url("fonts/centurygothic.woff") format("woff"), url("fonts/centurygothic.woff2") format("woff2"), url("fonts/centurygothic.otf") format("opentype"), url("fonts/centurygothic.ttf") format("truetype"), url("fonts/centurygothic.svg") format("svg");
+  src: url("/fonts/centurygothic.eot");
+  src: url("/fonts/centurygothic.eot?#iefix") format("embedded-opentype"), url("/fonts/centurygothic.woff") format("woff"), url("/fonts/centurygothic.woff2") format("woff2"), url("/fonts/centurygothic.otf") format("opentype"), url("/fonts/centurygothic.ttf") format("truetype"), url("/fonts/centurygothic.svg") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Century Gothic";
-  src: url("fonts/centurygothic_bold.eot");
-  src: url("fonts/centurygothic_bold.eot?#iefix") format("embedded-opentype"), url("fonts/centurygothic_bold.woff") format("woff"), url("fonts/centurygothic_bold.woff2") format("woff2"), url("fonts/centurygothic_bold.otf") format("opentype"), url("fonts/centurygothic_bold.ttf") format("truetype"), url("fonts/centurygothic_bold.svg") format("svg");
+  src: url("/fonts/centurygothic_bold.eot");
+  src: url("/fonts/centurygothic_bold.eot?#iefix") format("embedded-opentype"), url("/fonts/centurygothic_bold.woff") format("woff"), url("/fonts/centurygothic_bold.woff2") format("woff2"), url("/fonts/centurygothic_bold.otf") format("opentype"), url("/fonts/centurygothic_bold.ttf") format("truetype"), url("/fonts/centurygothic_bold.svg") format("svg");
   font-weight: bold;
   font-style: normal;
 }
