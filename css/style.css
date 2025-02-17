@@ -468,7 +468,7 @@ img {
 .input:has(textarea) textarea:focus {
   outline: none;
   font-size: var(--font-size-18);
-  font-family: var(--font-century-gothic);
+  font-family: var(--font-segoe-ui);
   font-weight: bold;
 }
 
@@ -498,7 +498,7 @@ img {
 .header__menu-stock-btn span {
   font-size: var(--font-size-16);
   color: #e94d11;
-  font-family: var(--font-century-gothic);
+  font-family: var(--font-segoe-ui);
   font-weight: bold;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
@@ -2259,7 +2259,7 @@ input[type=number]::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   gap: clamp(9.9px, 0.78125vw, 15px);
-  font-family: var(--font-century-gothic);
+  font-family: var(--font-segoe-ui);
   font-size: var(--font-size-16);
   overflow: hidden;
   padding: clamp(10.56px, 0.8333333333vw, 16px) clamp(13.2px, 1.0416666667vw, 20px) clamp(10.56px, 0.8333333333vw, 16px) clamp(9.9px, 0.78125vw, 15px);
@@ -2284,7 +2284,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 .search-input input:focus {
   font-size: var(--font-size-18);
-  font-family: var(--font-century-gothic);
+  font-family: var(--font-segoe-ui);
   font-weight: bold;
 }
 
@@ -4456,7 +4456,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .catalog__item-mini h3 {
-  font-family: var(--font-century-gothic);
+  font-family: var(--font-segoe-ui);
   font-weight: bold;
   line-height: clamp(13.2px, 1.0416666667vw, 20px);
   font-size: var(--font-size-16);
