@@ -2076,7 +2076,7 @@ $(document).ready(function () {
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4.86967 10.5814L2.02184 7.82189C1.86839 7.67319 1.66027 7.58966 1.44325 7.58966C1.22624 7.58966 1.01811 7.67319 0.864661 7.82189C0.711208 7.97058 0.625 8.17226 0.625 8.38255C0.625 8.48667 0.646165 8.58977 0.687286 8.68597C0.728407 8.78217 0.788679 8.86958 0.864661 8.9432L4.29518 12.2674C4.61525 12.5775 5.13229 12.5775 5.45236 12.2674L14.1353 3.85355C14.2888 3.70485 14.375 3.50318 14.375 3.29289C14.375 3.0826 14.2888 2.88093 14.1353 2.73223C13.9819 2.58354 13.7738 2.5 13.5567 2.5C13.3397 2.5 13.1316 2.58354 12.9782 2.73223L4.86967 10.5814Z" fill="#2BB41F"/>
             </svg>
-            Выбрать
+            <span>Выбрать</span>
         </button>
       </div>
     `);
@@ -2098,11 +2098,12 @@ $(document).ready(function () {
     // Select pickup point
     $(document).on("click", ".select-button", function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         if ($(this).hasClass("selected")) return;
 
-        $(".select-button").removeClass("selected");
-        $(this).addClass("selected");
+        $(".select-button.selected").removeClass("selected").find("span").text("Выбрать");
+        $(this).addClass("selected").find("span").text("Выбран");
 
         const pointId = $(this).closest(".pickup-point").data("id");
         const point = pickupPoints.find((p) => p.id === pointId);
