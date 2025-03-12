@@ -5609,6 +5609,224 @@ textarea:active) > span {
   background-color: #f0f0f0;
 }
 
+.pickup-popup {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  padding-top: clamp(46.2px, 3.6458333333vw, 70px);
+  padding-bottom: clamp(46.2px, 3.6458333333vw, 70px);
+  background: rgba(40, 39, 45, 0.4);
+  display: none;
+}
+
+.pickup-popup__wrapper {
+  border-radius: 20px;
+  background-color: #ffffff;
+  margin: 0px auto;
+  overflow: hidden;
+  width: clamp(682.44px, 53.8541666667vw, 1034px);
+  height: clamp(520.08px, 41.0416666667vw, 788px);
+  display: flex;
+}
+
+.pickup-sidebar {
+  width: clamp(303.6px, 23.9583333333vw, 460px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.pickup-header {
+  padding: clamp(19.8px, 1.5625vw, 30px) clamp(19.8px, 1.5625vw, 30px) clamp(0px, 0vw, 0px) clamp(19.8px, 1.5625vw, 30px);
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: clamp(6.6px, 0.5208333333vw, 10px);
+  border: none;
+  background: none;
+  font-size: var(--font-size-24);
+  font-weight: 700;
+  color: #28272d;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: clamp(26.4px, 2.0833333333vw, 40px);
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+}
+
+.back-button svg {
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  width: clamp(16.5px, 1.3020833333vw, 25px);
+  height: clamp(21.12px, 1.6666666667vw, 32px);
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  padding: clamp(10.56px, 0.8333333333vw, 16px) clamp(13.2px, 1.0416666667vw, 20px) clamp(10.56px, 0.8333333333vw, 16px) clamp(35.64px, 2.8125vw, 54px);
+  border: none;
+  background: #f0f0f0;
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  border-radius: clamp(13.2px, 1.0416666667vw, 20px);
+  font-size: var(--font-size-16);
+}
+
+.search-box input::placeholder {
+  color: #616175;
+  font-weight: 300;
+}
+
+.search-box input:focus {
+  outline: none;
+  background: #f0f0f0;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: clamp(9.9px, 0.78125vw, 15px);
+  width: clamp(15.84px, 1.25vw, 24px);
+  height: clamp(15.84px, 1.25vw, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.pickup-points {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(0px, 0vw, 0px) clamp(10.56px, 0.8333333333vw, 16px) clamp(0px, 0vw, 0px) clamp(19.8px, 1.5625vw, 30px);
+  margin-right: clamp(6.6px, 0.5208333333vw, 10px);
+}
+
+.pickup-points::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pickup-points::-webkit-scrollbar-track {
+  background: transparent;
+  /* цвет дорожки */
+}
+
+.pickup-points::-webkit-scrollbar-thumb {
+  background-color: #4d5c6b;
+  /* цвет плашки */
+  border-radius: 5px;
+  /* закругления плашки */
+}
+
+.pickup-point {
+  padding: clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px) clamp(13.2px, 1.0416666667vw, 20px);
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pickup-point.selected {
+  background: #f9f9f9;
+}
+
+.pickup-point h3 {
+  font-size: var(--font-size-18);
+  font-weight: 600;
+  margin-bottom: clamp(6.6px, 0.5208333333vw, 10px);
+}
+
+.pickup-point .hours {
+  font-size: var(--font-size-16);
+  color: #4d5c6b;
+}
+
+.pickup-point .select-button {
+  margin-top: clamp(13.2px, 1.0416666667vw, 20px);
+  padding: clamp(10.56px, 0.8333333333vw, 16px) clamp(26.4px, 2.0833333333vw, 40px) clamp(10.56px, 0.8333333333vw, 16px) clamp(26.4px, 2.0833333333vw, 40px);
+  background: #f0f0f0;
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  border: none;
+  border-radius: clamp(13.2px, 1.0416666667vw, 20px);
+  font-size: var(--font-size-16);
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+}
+
+.pickup-point .select-button svg {
+  position: absolute;
+  top: 50%;
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  left: 0;
+  width: 0;
+  height: 0;
+  -webkit-transition: all 0.2s ease-out 0s;
+  -moz-transition: all 0.2s ease-out 0s;
+  -ms-transition: all 0.2s ease-out 0s;
+  -o-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+}
+
+.pickup-point .select-button.selected {
+  color: #2bb41f !important;
+  background: transparent !important;
+  padding: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(16.5px, 1.3020833333vw, 25px) !important;
+}
+
+.pickup-point .select-button.selected svg {
+  width: clamp(9.9px, 0.78125vw, 15px);
+  height: clamp(9.9px, 0.78125vw, 15px);
+}
+
+.pickup-map {
+  flex: 1;
+  height: 100%;
+}
+
+.pickup-switch {
+  display: none;
+  margin-bottom: 20px;
+  gap: 5px;
+}
+
+.pickup-switch-btn {
+  background-color: #f0f0f0;
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+
+.pickup-switch-btn.active {
+  background-color: #e94d11 !important;
+  color: #fff !important;
+}
+
 .offer__inner {
   margin-bottom: clamp(26.4px, 2.0833333333vw, 40px);
 }
@@ -11755,6 +11973,42 @@ textarea:active) > span {
     margin-top: clamp(24px, 2.34375vw, 30px);
   }
 
+  .pickup-popup {
+    padding-top: clamp(56px, 5.46875vw, 70px);
+  }
+
+  .pickup-popup {
+    padding-bottom: clamp(56px, 5.46875vw, 70px);
+  }
+
+  .back-button {
+    gap: clamp(8px, 0.78125vw, 10px);
+  }
+
+  .back-button {
+    margin-bottom: clamp(32px, 3.125vw, 40px);
+  }
+
+  .search-box .search-icon {
+    left: clamp(12px, 1.171875vw, 15px);
+  }
+
+  .pickup-points {
+    margin-right: clamp(8px, 0.78125vw, 10px);
+  }
+
+  .pickup-point h3 {
+    margin-bottom: clamp(8px, 0.78125vw, 10px);
+  }
+
+  .pickup-point .select-button {
+    margin-top: clamp(16px, 1.5625vw, 20px);
+  }
+
+  .pickup-point .select-button.selected {
+    padding: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(20px, 1.953125vw, 25px) !important;
+  }
+
   .offer__inner {
     margin-bottom: clamp(32px, 3.125vw, 40px);
   }
@@ -15218,6 +15472,112 @@ textarea:active) > span {
 
   .search__results-all {
     padding: clamp(14.0616px, 2.34375vw, 24px) clamp(35.154px, 5.859375vw, 60px) clamp(14.0616px, 2.34375vw, 24px) clamp(35.154px, 5.859375vw, 60px);
+  }
+
+  .pickup-popup {
+    padding-top: clamp(41.013px, 6.8359375vw, 70px);
+  }
+
+  .pickup-popup {
+    padding-bottom: clamp(41.013px, 6.8359375vw, 70px);
+  }
+
+  .pickup-popup__wrapper {
+    width: clamp(605.8206px, 100.9765625vw, 1034px);
+  }
+
+  .pickup-popup__wrapper {
+    height: clamp(461.6892px, 76.953125vw, 788px);
+  }
+
+  .pickup-popup__wrapper {
+    width: 90svw !important;
+    height: 100svh !important;
+    position: relative;
+  }
+
+  .pickup-sidebar {
+    width: clamp(269.514px, 44.921875vw, 460px);
+  }
+
+  .pickup-header {
+    padding: clamp(17.577px, 2.9296875vw, 30px) clamp(17.577px, 2.9296875vw, 30px) clamp(0px, 0vw, 0px) clamp(17.577px, 2.9296875vw, 30px);
+  }
+
+  .back-button {
+    gap: clamp(5.859px, 0.9765625vw, 10px);
+  }
+
+  .back-button {
+    margin-bottom: clamp(23.436px, 3.90625vw, 40px);
+  }
+
+  .back-button svg {
+    width: clamp(14.6475px, 2.44140625vw, 25px);
+  }
+
+  .back-button svg {
+    height: clamp(18.7488px, 3.125vw, 32px);
+  }
+
+  .search-box input {
+    padding: clamp(9.3744px, 1.5625vw, 16px) clamp(11.718px, 1.953125vw, 20px) clamp(9.3744px, 1.5625vw, 16px) clamp(31.6386px, 5.2734375vw, 54px);
+  }
+
+  .search-box input {
+    border-radius: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .search-box .search-icon {
+    left: clamp(8.7885px, 1.46484375vw, 15px);
+  }
+
+  .search-box .search-icon {
+    width: clamp(14.0616px, 2.34375vw, 24px);
+  }
+
+  .search-box .search-icon {
+    height: clamp(14.0616px, 2.34375vw, 24px);
+  }
+
+  .pickup-points {
+    padding: clamp(0px, 0vw, 0px) clamp(9.3744px, 1.5625vw, 16px) clamp(0px, 0vw, 0px) clamp(17.577px, 2.9296875vw, 30px);
+  }
+
+  .pickup-points {
+    margin-right: clamp(5.859px, 0.9765625vw, 10px);
+  }
+
+  .pickup-point {
+    padding: clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px) clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .pickup-point h3 {
+    margin-bottom: clamp(5.859px, 0.9765625vw, 10px);
+  }
+
+  .pickup-point .select-button {
+    margin-top: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .pickup-point .select-button {
+    padding: clamp(9.3744px, 1.5625vw, 16px) clamp(23.436px, 3.90625vw, 40px) clamp(9.3744px, 1.5625vw, 16px) clamp(23.436px, 3.90625vw, 40px);
+  }
+
+  .pickup-point .select-button {
+    border-radius: clamp(11.718px, 1.953125vw, 20px);
+  }
+
+  .pickup-point .select-button.selected {
+    padding: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(14.6475px, 2.44140625vw, 25px) !important;
+  }
+
+  .pickup-point .select-button.selected svg {
+    width: clamp(8.7885px, 1.46484375vw, 15px);
+  }
+
+  .pickup-point .select-button.selected svg {
+    height: clamp(8.7885px, 1.46484375vw, 15px);
   }
 
   .offer .container:has(.offer__inner) {
@@ -20194,6 +20554,99 @@ textarea:active) > span {
     background-color: #fff;
     z-index: 1;
   }
+
+  .pickup-sidebar {
+    width: 100% !important;
+  }
+
+  .pickup-header {
+    padding: 30px 30px 0 30px !important;
+  }
+
+  .back-button {
+    margin-bottom: 20px !important;
+    font-size: clamp(18px, 5.5vw, 20px) !important;
+    gap: 10px !important;
+  }
+
+  .back-button svg {
+    width: 25px !important;
+    height: 32px !important;
+  }
+
+  .search-box input {
+    font-size: 16px !important;
+    border-radius: 20px !important;
+    padding: 16px 20px 16px 54px !important;
+  }
+
+  .search-box .search-icon {
+    left: 15px !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .pickup-points {
+    padding: 0 16px 0 30px;
+    margin-right: 10px;
+  }
+
+  .pickup-point {
+    padding: 20px !important;
+  }
+
+  .pickup-point h3 {
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .pickup-point .hours {
+    font-size: 16px !important;
+  }
+
+  .pickup-point .select-button {
+    font-size: 16px !important;
+    border-radius: 20px !important;
+    padding: 16px 40px !important;
+  }
+
+  .pickup-point .select-button.selected {
+    padding: 0 0 0 25px !important;
+  }
+
+  .pickup-point .select-button.selected svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .pickup-map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin-top: 120px;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity 0.2s ease-out 0s;
+    -moz-transition: opacity 0.2s ease-out 0s;
+    -ms-transition: opacity 0.2s ease-out 0s;
+    -o-transition: opacity 0.2s ease-out 0s;
+    transition: opacity 0.2s ease-out 0s;
+  }
+
+  .pickup-map.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .pickup-switch {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
 }
 
 @media only screen and (max-width: 767px) and (max-width: 1025px) {
@@ -23122,6 +23575,119 @@ textarea:active) > span {
   .auth__close {
     top: 10px;
     right: 10px;
+  }
+
+  .pickup-popup {
+    padding-top: clamp(21.875px, 11.6666666667vw, 70px);
+  }
+
+  .pickup-popup {
+    padding-bottom: clamp(21.875px, 11.6666666667vw, 70px);
+  }
+
+  .pickup-popup__wrapper {
+    width: clamp(323.125px, 172.3333333333vw, 1034px);
+  }
+
+  .pickup-popup__wrapper {
+    height: clamp(246.25px, 131.3333333333vw, 788px);
+  }
+
+  .pickup-popup__wrapper {
+    width: 100% !important;
+  }
+
+  .pickup-sidebar {
+    width: clamp(143.75px, 76.6666666667vw, 460px);
+  }
+
+  .pickup-header {
+    padding: clamp(9.375px, 5vw, 30px) clamp(9.375px, 5vw, 30px) clamp(0px, 0vw, 0px) clamp(9.375px, 5vw, 30px);
+  }
+
+  .pickup-header {
+    padding: 20px 12px 0 12px !important;
+  }
+
+  .back-button {
+    gap: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .back-button {
+    margin-bottom: clamp(12.5px, 6.6666666667vw, 40px);
+  }
+
+  .back-button svg {
+    width: clamp(7.8125px, 4.1666666667vw, 25px);
+  }
+
+  .back-button svg {
+    height: clamp(10px, 5.3333333333vw, 32px);
+  }
+
+  .search-box input {
+    padding: clamp(5px, 2.6666666667vw, 16px) clamp(6.25px, 3.3333333333vw, 20px) clamp(5px, 2.6666666667vw, 16px) clamp(16.875px, 9vw, 54px);
+  }
+
+  .search-box input {
+    border-radius: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .search-box .search-icon {
+    left: clamp(4.6875px, 2.5vw, 15px);
+  }
+
+  .search-box .search-icon {
+    width: clamp(7.5px, 4vw, 24px);
+  }
+
+  .search-box .search-icon {
+    height: clamp(7.5px, 4vw, 24px);
+  }
+
+  .pickup-points {
+    padding: clamp(0px, 0vw, 0px) clamp(5px, 2.6666666667vw, 16px) clamp(0px, 0vw, 0px) clamp(9.375px, 5vw, 30px);
+  }
+
+  .pickup-points {
+    margin-right: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .pickup-points {
+    padding: 0 4px 0 12px !important;
+    margin-right: 4px !important;
+  }
+
+  .pickup-point {
+    padding: clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px) clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .pickup-point h3 {
+    margin-bottom: clamp(3.125px, 1.6666666667vw, 10px);
+  }
+
+  .pickup-point .select-button {
+    margin-top: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .pickup-point .select-button {
+    padding: clamp(5px, 2.6666666667vw, 16px) clamp(12.5px, 6.6666666667vw, 40px) clamp(5px, 2.6666666667vw, 16px) clamp(12.5px, 6.6666666667vw, 40px);
+  }
+
+  .pickup-point .select-button {
+    border-radius: clamp(6.25px, 3.3333333333vw, 20px);
+  }
+
+  .pickup-point .select-button.selected {
+    padding: clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(0px, 0vw, 0px) clamp(7.8125px, 4.1666666667vw, 25px) !important;
+  }
+
+  .pickup-point .select-button.selected svg {
+    width: clamp(4.6875px, 2.5vw, 15px);
+  }
+
+  .pickup-point .select-button.selected svg {
+    height: clamp(4.6875px, 2.5vw, 15px);
   }
 
   .offer .container:has(.offer__inner) {
@@ -28630,6 +29196,27 @@ textarea:active) > span {
 
   .auth__btn:not(.disabled):hover {
     background-color: #d9310d;
+  }
+
+  .back-button:hover {
+    color: #e94d11;
+  }
+
+  .back-button:hover svg {
+    -moz-transform: translate(-3px, 0);
+    -ms-transform: translate(-3px, 0);
+    -webkit-transform: translate(-3px, 0);
+    -o-transform: translate(-3px, 0);
+    transform: translate(-3px, 0);
+  }
+
+  .pickup-point:hover {
+    background: #f9f9f9;
+  }
+
+  .pickup-point .select-button:hover {
+    background: #4d5c6b;
+    color: #fff;
   }
 
   .offer__inner .offer-slider:hover .slider-button {

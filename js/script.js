@@ -36,25 +36,15 @@ $(document).ready(function () {
             }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-                (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            );
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
             // Обновляем значения в HTML
-            const $daysSpans = $timerElement.find(
-                ".header__sale-banner-timer-group-days span"
-            );
-            const $hoursSpans = $timerElement.find(
-                ".header__sale-banner-timer-group-hours span"
-            );
-            const $minutesSpans = $timerElement.find(
-                ".header__sale-banner-timer-group-minutes span"
-            );
-            const $secondsSpans = $timerElement.find(
-                ".header__sale-banner-timer-group-seconds span"
-            );
+            const $daysSpans = $timerElement.find(".header__sale-banner-timer-group-days span");
+            const $hoursSpans = $timerElement.find(".header__sale-banner-timer-group-hours span");
+            const $minutesSpans = $timerElement.find(".header__sale-banner-timer-group-minutes span");
+            const $secondsSpans = $timerElement.find(".header__sale-banner-timer-group-seconds span");
 
             $daysSpans.eq(0).text(Math.floor(days / 10)); // Первая цифра
             $daysSpans.eq(1).text(days % 10); // Вторая цифра
@@ -137,9 +127,7 @@ $(document).ready(function () {
     let isBannerHidden;
 
     const checkIsBannerHidden = () => {
-        isBannerHidden =
-            localStorage.getItem(storageKey) &&
-            localStorage.getItem(storageKey) !== "false";
+        isBannerHidden = localStorage.getItem(storageKey) && localStorage.getItem(storageKey) !== "false";
     };
 
     checkIsBannerHidden();
@@ -247,11 +235,8 @@ $(document).ready(function () {
         document.addEventListener("mousemove", function (e) {
             const targetElement = e.target;
             if (targetElement.closest("[data-mousemove-swipe]")) {
-                const sliderElement = targetElement.closest(
-                    "[data-mousemove-swipe]"
-                );
-                const sliderItem =
-                    sliderElement.swiper.slides[getIndex(sliderElement)];
+                const sliderElement = targetElement.closest("[data-mousemove-swipe]");
+                const sliderItem = sliderElement.swiper.slides[getIndex(sliderElement)];
                 const sliderLength = sliderElement.swiper.slides.length;
                 if (sliderLength > 1) {
                     const sliderWidth = sliderItem.offsetWidth;
@@ -264,13 +249,11 @@ $(document).ready(function () {
         });
 
         // Добавляем событие для отслеживания ухода мыши с элемента слайдера
-        document
-            .querySelectorAll("[data-mousemove-swipe]")
-            .forEach(function (sliderElement) {
-                sliderElement.addEventListener("mouseleave", function () {
-                    sliderElement.swiper.slideTo(0); // Возвращаем на первый слайд
-                });
+        document.querySelectorAll("[data-mousemove-swipe]").forEach(function (sliderElement) {
+            sliderElement.addEventListener("mouseleave", function () {
+                sliderElement.swiper.slideTo(0); // Возвращаем на первый слайд
             });
+        });
 
         function getIndex(el) {
             return Array.from(el.parentNode.children).indexOf(el);
@@ -395,10 +378,7 @@ $(document).ready(function () {
         range: true,
         min: $("#slider-range").data("min"),
         max: $("#slider-range").data("max"),
-        values: [
-            $("#slider-range").data("min"),
-            $("#slider-range").data("max"),
-        ],
+        values: [$("#slider-range").data("min"), $("#slider-range").data("max")],
         slide: function (event, ui) {
             $("#start-range").val(priceMask(ui.values[0]));
             $("#end-range").val(priceMask(ui.values[1]));
@@ -448,10 +428,7 @@ $(document).ready(function () {
             resetEndRange();
         }
 
-        $(this)
-            .closest(".filters__product-categorise")
-            .find("input[type='checkbox']")
-            .prop("checked", false);
+        $(this).closest(".filters__product-categorise").find("input[type='checkbox']").prop("checked", false);
 
         $(this).fadeOut(200);
     });
@@ -460,22 +437,15 @@ $(document).ready(function () {
 
     const resetCommonFilter = (categoryWrapper) => {
         if (!!categoryWrapper.find("input[type='checkbox']:checked").length) {
-            categoryWrapper
-                .find(".filters__product-categorise-reset")
-                .fadeIn(200);
+            categoryWrapper.find(".filters__product-categorise-reset").fadeIn(200);
         } else {
-            categoryWrapper
-                .find(".filters__product-categorise-reset")
-                .fadeOut(200);
+            categoryWrapper.find(".filters__product-categorise-reset").fadeOut(200);
         }
     };
 
-    $(".filters__product-categorise input[type='checkbox']").on(
-        "change",
-        function () {
-            resetCommonFilter($(this).closest(".filters__product-categorise"));
-        }
-    );
+    $(".filters__product-categorise input[type='checkbox']").on("change", function () {
+        resetCommonFilter($(this).closest(".filters__product-categorise"));
+    });
 
     $(".filters__product-categorise").each(function () {
         resetCommonFilter($(this));
@@ -488,13 +458,8 @@ $(document).ready(function () {
         resetStartRange();
         resetEndRange();
 
-        $(".filters__product-categorise input[type='checkbox']").prop(
-            "checked",
-            false
-        );
-        $(
-            ".filters__product-categorise .filters__product-categorise-reset"
-        ).fadeOut(200);
+        $(".filters__product-categorise input[type='checkbox']").prop("checked", false);
+        $(".filters__product-categorise .filters__product-categorise-reset").fadeOut(200);
     });
 
     //=================== Слайдер миниатюр в карточке каталога ============
@@ -514,18 +479,14 @@ $(document).ready(function () {
         document.addEventListener("mousemove", function (e) {
             const targetElement = e.target;
             if (targetElement.closest("[data-mousemove-swipe]")) {
-                const sliderElement = targetElement.closest(
-                    "[data-mousemove-swipe]"
-                );
-                const sliderItem =
-                    sliderElement.swiper.slides[getIndex(sliderElement)];
+                const sliderElement = targetElement.closest("[data-mousemove-swipe]");
+                const sliderItem = sliderElement.swiper.slides[getIndex(sliderElement)];
                 const sliderLength = sliderElement.swiper.slides.length;
 
                 if (sliderLength > 1) {
                     const sliderWidth = sliderItem.offsetWidth;
                     const sliderPath = Math.round(sliderWidth / sliderLength);
-                    const sliderMousePos =
-                        e.clientX - $(sliderElement).offset().left;
+                    const sliderMousePos = e.clientX - $(sliderElement).offset().left;
                     const sliderSlide = Math.floor(sliderMousePos / sliderPath);
                     sliderElement.swiper.slideTo(sliderSlide);
                 }
@@ -533,13 +494,11 @@ $(document).ready(function () {
         });
 
         // Добавляем событие для отслеживания ухода мыши с элемента слайдера
-        document
-            .querySelectorAll("[data-mousemove-swipe]")
-            .forEach(function (sliderElement) {
-                sliderElement.addEventListener("mouseleave", function () {
-                    sliderElement.swiper.slideTo(0); // Возвращаем на первый слайд
-                });
+        document.querySelectorAll("[data-mousemove-swipe]").forEach(function (sliderElement) {
+            sliderElement.addEventListener("mouseleave", function () {
+                sliderElement.swiper.slideTo(0); // Возвращаем на первый слайд
             });
+        });
 
         function getIndex(el) {
             return Array.from(el.parentNode.children).indexOf(el);
@@ -552,21 +511,11 @@ $(document).ready(function () {
 
     //=================== Кнопка добавить в корзину ============
 
-    const animateAddToCartButton = (
-        btn,
-        parentSelector,
-        width = "84px",
-        bySelector = false
-    ) => {
+    const animateAddToCartButton = (btn, parentSelector, width = "84px", bySelector = false) => {
         const button = bySelector ? $(btn) : btn;
-        const parent = button.closest(
-            ".catalog__item-btns-row, .product__btns"
-        );
+        const parent = button.closest(".catalog__item-btns-row, .product__btns");
         const quantitySelector = parent.find(".catalog__item-quantity");
-        width =
-            width !== "84px"
-                ? width
-                : parent.width() - quantitySelector.width() - 10;
+        width = width !== "84px" ? width : parent.width() - quantitySelector.width() - 10;
         console.log(parent);
         if (button.closest(parentSelector).hasClass("added")) {
             button.animate(
@@ -588,11 +537,7 @@ $(document).ready(function () {
         }
     };
 
-    const animateAddToCartButtonRemoved = (
-        btn,
-        parentSelector,
-        bySelector = false
-    ) => {
+    const animateAddToCartButtonRemoved = (btn, parentSelector, bySelector = false) => {
         const button = bySelector ? $(btn) : btn;
         if (button.closest(parentSelector).hasClass("added")) {
             console.log(button);
@@ -643,9 +588,7 @@ $(document).ready(function () {
     let notificationTimeoutID;
 
     $(".add-to-cart-button").on("click", function () {
-        if (
-            $(this).closest(".catalog__item, .product-page").hasClass("added")
-        ) {
+        if ($(this).closest(".catalog__item, .product-page").hasClass("added")) {
             window.location.href = "/cart.html";
             return;
         }
@@ -657,21 +600,10 @@ $(document).ready(function () {
             const containers = $(".product__btns");
             let diff;
             containers.each(function (index, container) {
-                const currentDiff =
-                    $(container).width() -
-                    $(container).find(".catalog__item-quantity").width();
-                diff =
-                    currentDiff == 0
-                        ? diff
-                        : !!currentDiff
-                        ? currentDiff
-                        : diff;
+                const currentDiff = $(container).width() - $(container).find(".catalog__item-quantity").width();
+                diff = currentDiff == 0 ? diff : !!currentDiff ? currentDiff : diff;
                 const width = diff - 10 + "px";
-                animateAddToCartButton(
-                    $(container).find(".add-to-cart-button"),
-                    ".product-page",
-                    width
-                );
+                animateAddToCartButton($(container).find(".add-to-cart-button"), ".product-page", width);
             });
         } else {
             animateAddToCartButton($(this), ".catalog__item");
@@ -727,22 +659,14 @@ $(document).ready(function () {
     // ================== Выбор количества товара ============
 
     const checkAvailableQuantityRange = (btn) => {
-        const quantity = btn
-            .closest(".catalog__item-quantity")
-            .data("quantity");
+        const quantity = btn.closest(".catalog__item-quantity").data("quantity");
         const isProductPage = !!btn.closest(".product-page").length;
-        const counter = isProductPage
-            ? $(".catalog__item-quantity span")
-            : btn.closest(".catalog__item-quantity").find("span");
-        let currentQuantity = isProductPage
-            ? Number(counter.eq(0).text())
-            : Number(counter.text());
+        const counter = isProductPage ? $(".catalog__item-quantity span") : btn.closest(".catalog__item-quantity").find("span");
+        let currentQuantity = isProductPage ? Number(counter.eq(0).text()) : Number(counter.text());
 
         if (currentQuantity !== 1) {
             if (!isProductPage) {
-                btn.closest(".catalog__item-quantity")
-                    .find(".catalog__item-quantity-btn_minus")
-                    .removeClass("disabled");
+                btn.closest(".catalog__item-quantity").find(".catalog__item-quantity-btn_minus").removeClass("disabled");
             } else {
                 $(".catalog__item-quantity-btn_minus").removeClass("disabled");
             }
@@ -750,17 +674,13 @@ $(document).ready(function () {
 
         if (currentQuantity === quantity) {
             if (!isProductPage) {
-                btn.closest(".catalog__item-quantity")
-                    .find(".catalog__item-quantity-btn_plus")
-                    .addClass("disabled");
+                btn.closest(".catalog__item-quantity").find(".catalog__item-quantity-btn_plus").addClass("disabled");
             } else {
                 $(".catalog__item-quantity-btn_plus").addClass("disabled");
             }
         } else {
             if (!isProductPage) {
-                btn.closest(".catalog__item-quantity")
-                    .find(".catalog__item-quantity-btn_plus")
-                    .removeClass("disabled");
+                btn.closest(".catalog__item-quantity").find(".catalog__item-quantity-btn_plus").removeClass("disabled");
             } else {
                 $(".catalog__item-quantity-btn_plus").removeClass("disabled");
             }
@@ -772,16 +692,10 @@ $(document).ready(function () {
     });
 
     $(".catalog__item-quantity-btn").on("click", function () {
-        const quantity = $(this)
-            .closest(".catalog__item-quantity")
-            .data("quantity");
+        const quantity = $(this).closest(".catalog__item-quantity").data("quantity");
         const isProductPage = !!$(this).closest(".product-page").length;
-        const counter = isProductPage
-            ? $(".catalog__item-quantity span")
-            : $(this).closest(".catalog__item-quantity").find("span");
-        let currentQuantity = isProductPage
-            ? Number(counter.eq(0).text())
-            : Number(counter.text());
+        const counter = isProductPage ? $(".catalog__item-quantity span") : $(this).closest(".catalog__item-quantity").find("span");
+        let currentQuantity = isProductPage ? Number(counter.eq(0).text()) : Number(counter.text());
 
         if ($(this).hasClass("disabled")) return;
 
@@ -798,12 +712,7 @@ $(document).ready(function () {
             counter.text(1);
             checkAvailableQuantityRange($(this));
 
-            animateAddToCartButtonRemoved(
-                $(this)
-                    .closest(".catalog__item-btns-row")
-                    .find(".add-to-cart-button"),
-                ".catalog__item"
-            );
+            animateAddToCartButtonRemoved($(this).closest(".catalog__item-btns-row").find(".add-to-cart-button"), ".catalog__item");
             $(this).closest(".catalog__item").removeClass("added");
             if (!!$(".product-page")) {
                 $(".add-to-cart-button").each(function (index, button) {
@@ -825,9 +734,7 @@ $(document).ready(function () {
             $(".product-page").toggleClass("fav");
             $(".catalog__item-fav").toggleClass("active");
         } else {
-            $(this)
-                .closest(".catalog__item, .cart__item, .order-card-mini")
-                .toggleClass("fav");
+            $(this).closest(".catalog__item, .cart__item, .order-card-mini").toggleClass("fav");
             $(this).toggleClass("active");
         }
     });
@@ -888,12 +795,9 @@ $(document).ready(function () {
 
     //=================== Удаление организации из списка ============
 
-    $(".account__content-legal-item-header-options-remove").on(
-        "click",
-        function () {
-            animateRemoveFromCart(this, ".account__content-legal-item");
-        }
-    );
+    $(".account__content-legal-item-header-options-remove").on("click", function () {
+        animateRemoveFromCart(this, ".account__content-legal-item");
+    });
 
     //=================== Промокоды ============
 
@@ -901,9 +805,7 @@ $(document).ready(function () {
         if ($(this).val()) {
             $(".cart__buy-promo").addClass("typing").removeClass("activated");
         } else {
-            $(".cart__buy-promo")
-                .removeClass("typing")
-                .removeClass("activated");
+            $(".cart__buy-promo").removeClass("typing").removeClass("activated");
         }
     });
 
@@ -916,15 +818,16 @@ $(document).ready(function () {
 
     //=================== Форма получателя ============
 
-    $(
-        ".cart__recipient-form input, .cart__delivery-courier input, .cart__delivery-courier textarea, .auth__input input"
-    ).on("input", function () {
-        if ($(this).val()) {
-            $(this).addClass("typing");
-        } else {
-            $(this).removeClass("typing");
+    $(".cart__recipient-form input, .cart__delivery-courier input, .cart__delivery-courier textarea, .auth__input input").on(
+        "input",
+        function () {
+            if ($(this).val()) {
+                $(this).addClass("typing");
+            } else {
+                $(this).removeClass("typing");
+            }
         }
-    });
+    );
 
     const recipientOptions = [
         {
@@ -942,15 +845,11 @@ $(document).ready(function () {
     ];
 
     const createListRecipients = (id) => {
-        const filteredOptions = recipientOptions.filter(
-            (option) => option.id !== id
-        );
+        const filteredOptions = recipientOptions.filter((option) => option.id !== id);
         $(".cart__recipient-selector ul").empty();
         filteredOptions.forEach((option) => {
             $(".cart__recipient-selector ul").append(`
-            <li data-is-organization="${option.isOrganization}" data-id="${
-                option.id
-            }">
+            <li data-is-organization="${option.isOrganization}" data-id="${option.id}">
                 <strong>${option.name}</strong>
                 ${option.tel ? `<span>${option.tel}</span>` : ""}
             </li>
@@ -961,11 +860,7 @@ $(document).ready(function () {
             e.preventDefault();
             const id = $(this).data("id");
             console.log("id");
-            $(this)
-                .closest(".cart__recipient-selector")
-                .find("p")
-                .attr("data-id", id)
-                .text($(this).find("strong").text());
+            $(this).closest(".cart__recipient-selector").find("p").attr("data-id", id).text($(this).find("strong").text());
 
             if (!$(this).data("is-organization")) {
                 $(this)
@@ -979,15 +874,10 @@ $(document).ready(function () {
                 $(".cart__recipient-switch").slideDown(200);
                 onSwitchRecipient();
             } else {
-                $(this)
-                    .closest(".cart__recipient-select")
-                    .find("label:has(input[type='tel'])")
-                    .fadeOut(200);
+                $(this).closest(".cart__recipient-select").find("label:has(input[type='tel'])").fadeOut(200);
                 $(".cart__recipient-alert").slideDown(200);
 
-                $(".cart__recipient-another, .cart__recipient-switch").slideUp(
-                    200
-                );
+                $(".cart__recipient-another, .cart__recipient-switch").slideUp(200);
             }
             createListRecipients(id);
         });
@@ -1133,9 +1023,7 @@ $(document).ready(function () {
     });
 
     //=================== Сортировка отзывов ============
-    $(
-        ".sorter-item[data-sort='asc'] svg, .sorter-item[data-sort='desc'] svg"
-    ).fadeIn(200);
+    $(".sorter-item[data-sort='asc'] svg, .sorter-item[data-sort='desc'] svg").fadeIn(200);
     $(".sorter-item").on("click", function () {
         const siblings = $(".sorter-item").not(this);
         siblings.attr("data-sort", "");
@@ -1160,38 +1048,26 @@ $(document).ready(function () {
 
     $(".account__content-profile-row_contacts input").on("input", function () {
         if ($(this).val()) {
-            $(this)
-                .closest(".input")
-                .addClass("typing")
-                .removeClass("activated");
+            $(this).closest(".input").addClass("typing").removeClass("activated");
         } else {
-            $(this)
-                .closest(".input")
-                .removeClass("typing")
-                .removeClass("activated");
+            $(this).closest(".input").removeClass("typing").removeClass("activated");
         }
     });
 
     $(".account__content-profile-row_contacts button").on("click", function () {
         const input = $(this).closest(".input").find("input");
         if (input.val()) {
-            $(this)
-                .closest(".input")
-                .addClass("activated")
-                .removeClass("typing");
+            $(this).closest(".input").addClass("activated").removeClass("typing");
         }
     });
 
-    $(".account__content-profile-row_contacts .tip-mark").on(
-        "click",
-        function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+    $(".account__content-profile-row_contacts .tip-mark").on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-            $(".tip-mark").removeClass("opened");
-            $(this).toggleClass("opened");
-        }
-    );
+        $(".tip-mark").removeClass("opened");
+        $(this).toggleClass("opened");
+    });
 
     //=================== Якорные ссылки ============
 
@@ -1275,10 +1151,7 @@ $(document).ready(function () {
 
         showElementFromHash();
     });
-    if (
-        window.location.pathname.includes("about") ||
-        window.location.pathname.includes("account")
-    ) {
+    if (window.location.pathname.includes("about") || window.location.pathname.includes("account")) {
         const hash = window.location.hash;
         history.replaceState(null, null, window.location.pathname);
 
@@ -1295,9 +1168,7 @@ $(document).ready(function () {
 
     //=================== Мобильное меню в личном кабинете ============
 
-    $(
-        ".account__content-item h1, .account__content-item h2, .account__content-item h3.back"
-    ).click(function () {
+    $(".account__content-item h1, .account__content-item h2, .account__content-item h3.back").click(function () {
         const hash = window.location.hash;
         if (hash && $(window).width() <= 600) {
             $(".account aside").addClass("active");
@@ -1325,15 +1196,10 @@ $(document).ready(function () {
     //=================== Опции юр лица ============
 
     $(".account__content-legal-item-header-btn").on("click", function () {
-        $(this)
-            .closest(".account__content-legal-item")
-            .find(".account__content-legal-item-header-options")
-            .fadeToggle(200);
+        $(this).closest(".account__content-legal-item").find(".account__content-legal-item-header-options").fadeToggle(200);
     });
     $(".account__content-legal-item-header-options a").on("click", function () {
-        $(this)
-            .closest(".account__content-legal-item-header-options")
-            .fadeToggle(200);
+        $(this).closest(".account__content-legal-item-header-options").fadeToggle(200);
     });
 
     //=================== Инпут загрузки документа юр лица ============
@@ -1343,12 +1209,8 @@ $(document).ready(function () {
         const parent = $(this).closest(".account__content-legal-edit-doc");
         const button = parent.find("strong");
 
-        const fileNameBlock = $(
-            ".account__content-legal-edit-filename span:first-child"
-        );
-        const fileTypeBlock = $(
-            ".account__content-legal-edit-filename span:last-child"
-        );
+        const fileNameBlock = $(".account__content-legal-edit-filename span:first-child");
+        const fileTypeBlock = $(".account__content-legal-edit-filename span:last-child");
         fileNameBlock.empty();
         fileTypeBlock.empty();
         parent.removeClass("success");
@@ -1380,9 +1242,7 @@ $(document).ready(function () {
     //=================== Инпуты юр лица ============
 
     $(".address-equal").on("change", function () {
-        const hiddenInput = $(this)
-            .closest(".account__content-item")
-            .find(".account__content-legal-edit-row_physical-address-wrapper");
+        const hiddenInput = $(this).closest(".account__content-item").find(".account__content-legal-edit-row_physical-address-wrapper");
         if ($(this).is(":checked")) {
             hiddenInput.slideUp(200);
         } else {
@@ -1400,26 +1260,20 @@ $(document).ready(function () {
 
     $(".account__content-legal-add-block_accordion p").on("click", function () {
         $(this).parent().toggleClass("active");
-        $(this)
-            .parent()
-            .find(".account__content-legal-add-block_accordion-content")
-            .slideToggle(200);
+        $(this).parent().find(".account__content-legal-add-block_accordion-content").slideToggle(200);
     });
 
     $(".account__content-legal-add-save").hide();
-    $(".account__content-legal-add-block_select input").on(
-        "input",
-        function () {
-            if ($(this).hasClass("typing")) {
-                $(".account__content-legal-add-block_select ul").slideDown(200);
-            } else {
-                $(".account__content-legal-add-block_select ul").slideUp(200);
-                $(".account__content-legal-add-block_info").slideUp(200);
-                $(".account__content-legal-add-block_accordion").slideUp(200);
-                $(".account__content-legal-add-save").slideUp(200);
-            }
+    $(".account__content-legal-add-block_select input").on("input", function () {
+        if ($(this).hasClass("typing")) {
+            $(".account__content-legal-add-block_select ul").slideDown(200);
+        } else {
+            $(".account__content-legal-add-block_select ul").slideUp(200);
+            $(".account__content-legal-add-block_info").slideUp(200);
+            $(".account__content-legal-add-block_accordion").slideUp(200);
+            $(".account__content-legal-add-save").slideUp(200);
         }
-    );
+    });
 
     $(".account__content-legal-add-block_select li").on("click", function () {
         $(".account__content-legal-add-block_select ul").slideUp(200);
@@ -1608,9 +1462,7 @@ $(document).ready(function () {
 
         if ($(".catalog__menu").hasClass("open") && $(window).width() <= 767) {
             resetMobileMenu();
-            $("#catalogContent")
-                .css("display", "block")
-                .animate({ left: 0 }, 200);
+            $("#catalogContent").css("display", "block").animate({ left: 0 }, 200);
         } else if ($(window).width() <= 767) {
             $("#catalogContent").animate({ left: "-100%" }, 200, function () {
                 $("#catalogContent").removeAttr("style");
@@ -1750,10 +1602,7 @@ $(document).ready(function () {
         if ($(window).width() <= 600) {
             const sorter = $(this).closest(".filters-row").find(".sorter");
             sorter.fadeOut(300);
-            $(".catalog__list-row-button_sorter")
-                .removeClass("opened")
-                .find("span")
-                .text($(this).text());
+            $(".catalog__list-row-button_sorter").removeClass("opened").find("span").text($(this).text());
         }
     });
 
@@ -1858,16 +1707,13 @@ $(document).ready(function () {
             $(".header__overlay").fadeOut(300);
             $(".city-popup").fadeOut(300).removeClass("open");
             $(".auth").fadeOut(200).removeClass("opened");
+            $(".pickup-popup").fadeOut(200).removeClass("opened");
             closeSearch();
 
             if ($(window).width() <= 767) {
-                $("#catalogContent").animate(
-                    { left: "-100%" },
-                    200,
-                    function () {
-                        $("#catalogContent").removeAttr("style");
-                    }
-                );
+                $("#catalogContent").animate({ left: "-100%" }, 200, function () {
+                    $("#catalogContent").removeAttr("style");
+                });
             }
 
             $(".catalog__list-filters").fadeOut(300);
@@ -1890,28 +1736,20 @@ $(document).ready(function () {
             $(".header__overlay").fadeOut(300);
 
             if ($(window).width() <= 767) {
-                $("#catalogContent").animate(
-                    { left: "-100%" },
-                    200,
-                    function () {
-                        $("#catalogContent").removeAttr("style");
-                    }
-                );
+                $("#catalogContent").animate({ left: "-100%" }, 200, function () {
+                    $("#catalogContent").removeAttr("style");
+                });
             }
         }
 
-        if (
-            !target.closest(".popup.open .popup-wrapper").length &&
-            !target.closest(".popup-btn").length
-        ) {
+        if (!target.closest(".popup.open .popup-wrapper").length && !target.closest(".popup-btn").length) {
             $(".popup.open").removeClass("open").fadeToggle(300);
             $(".overlay").fadeOut(300);
         }
 
         if (
             !target.closest(".search__wrapper").length &&
-            !target.closest(".header-search:has(#header-search-anchor)")
-                .length &&
+            !target.closest(".header-search:has(#header-search-anchor)").length &&
             $(".search").hasClass("opened")
         ) {
             closeSearch();
@@ -1930,11 +1768,18 @@ $(document).ready(function () {
 
         if (
             !target.closest(".auth__wrapper").length &&
-            !target.closest(".header__main-group-item_account.not-loggined")
-                .length &&
+            !target.closest(".header__main-group-item_account.not-loggined").length &&
             $(".auth").hasClass("opened")
         ) {
             $(".auth").fadeOut(200).removeClass("opened");
+            enableScroll();
+        }
+        if (
+            !target.closest(".pickup-popup__wrapper").length &&
+            !target.closest(".cart__delivery-change-btn").length &&
+            $(".pickup-popup").hasClass("opened")
+        ) {
+            $(".pickup-popup").fadeOut(200).removeClass("opened");
             enableScroll();
         }
 
@@ -1960,11 +1805,7 @@ $(document).ready(function () {
             enableScroll();
         }
 
-        if (
-            !target.closest(".tip").length &&
-            !target.closest(".tip-mark").length &&
-            $(".tip-mark").hasClass("opened")
-        ) {
+        if (!target.closest(".tip").length && !target.closest(".tip-mark").length && $(".tip-mark").hasClass("opened")) {
             $(".tip-mark").removeClass("opened");
         }
     });
@@ -2023,10 +1864,7 @@ $(document).ready(function () {
         }
 
         if (input[0].hasAttribute("data-form-password-confirm")) {
-            return (
-                value ===
-                input.closest("form").find("[data-form-password]").val().trim()
-            );
+            return value === input.closest("form").find("[data-form-password]").val().trim();
         }
 
         if (input.attr("type") === "checkbox") {
@@ -2048,18 +1886,14 @@ $(document).ready(function () {
 
     $(".auth__form input[required]").on("input", function () {
         const formId = $(this).closest(".auth__form").attr("id");
-        const elem = authInputsArray.find(
-            (item) => item.input === $(this).attr("name")
-        );
+        const elem = authInputsArray.find((item) => item.input === $(this).attr("name"));
 
         const isValid = validateInput($(this));
         if (isValid) $(this).removeClass("error");
 
         elem.isValid = isValid;
 
-        const isFormValid = authInputsArray
-            .filter((item) => item.form === formId)
-            .every((item) => item.isValid);
+        const isFormValid = authInputsArray.filter((item) => item.form === formId).every((item) => item.isValid);
 
         const button = $("#" + formId).find(".auth__btn");
         if (isFormValid) {
@@ -2078,9 +1912,7 @@ $(document).ready(function () {
     $(".auth__form button[type='submit']").on("click", function (e) {
         e.preventDefault();
         const form = $(this).closest("form");
-        const isFormValid = authInputsArray
-            .filter((item) => item.form === form.attr("id"))
-            .every((item) => item.isValid);
+        const isFormValid = authInputsArray.filter((item) => item.form === form.attr("id")).every((item) => item.isValid);
 
         if (isFormValid) {
             // form.submit();
@@ -2108,11 +1940,7 @@ $(document).ready(function () {
                 window.location.href = "/account.html";
             }
         } else {
-            const requires = authInputsArray
-                .filter(
-                    (item) => item.form === form.attr("id") && !item.isValid
-                )
-                .map((item) => item.input);
+            const requires = authInputsArray.filter((item) => item.form === form.attr("id") && !item.isValid).map((item) => item.input);
 
             requires.forEach((item) => {
                 form.find("input[name='" + item + "']").addClass("error");
@@ -2142,6 +1970,165 @@ $(document).ready(function () {
     });
 
     //========================================================
+    //=====================Pickup Popup=======================
     //========================================================
-    //========================================================
+
+    $(document).on("click", ".cart__delivery-change-btn", function () {
+        $(".pickup-popup").fadeIn(200).addClass("opened");
+        disableScroll();
+    });
+
+    $(document).on("click", ".back-button", function () {
+        $(".pickup-popup").fadeOut(200).removeClass("opened");
+        enableScroll();
+    });
+
+    $(document).on("click", ".pickup-switch-btn", function () {
+        if ($(window).width() > 767) return;
+
+        $(".pickup-switch-btn").removeClass("active");
+        $(this).addClass("active");
+
+        if ($(this).hasClass("pickup-switch-btn_map")) {
+            $(".pickup-map").addClass("active");
+        } else {
+            $(".pickup-map").removeClass("active");
+        }
+    });
+
+    const pickupPoints = [
+        {
+            id: 1,
+            address: "Севастополь, улица Хрусталёва, 1",
+            hours: "Пн - Вс: с 9:00 до 21:00",
+            coordinates: [44.5883, 33.5228],
+        },
+        {
+            id: 2,
+            address: "Севастополь, улица Хрусталёва, 2",
+            hours: "Пн - Вс: с 9:00 до 21:00",
+            coordinates: [43.5883, 33.5228],
+        },
+        {
+            id: 3,
+            address: "Севастополь, улица Хрусталёва, 3",
+            hours: "Пн - Вс: с 9:00 до 21:00",
+            coordinates: [45.5883, 33.5228],
+        },
+        {
+            id: 3,
+            address: "Севастополь, улица Хрусталёва, 3",
+            hours: "Пн - Вс: с 9:00 до 21:00",
+            coordinates: [45.5883, 33.5228],
+        },
+        {
+            id: 3,
+            address: "Севастополь, улица Хрусталёва, 3",
+            hours: "Пн - Вс: с 9:00 до 21:00",
+            coordinates: [45.5883, 33.5228],
+        },
+        {
+            id: 3,
+            address: "Севастополь, улица Хрусталёва, 3",
+            hours: "Пн - Вс: с 9:00 до 21:00",
+            coordinates: [45.5883, 33.5228],
+        },
+    ];
+
+    // Initialize Yandex Maps
+    let myMap;
+
+    ymaps.ready(() => {
+        myMap = new ymaps.Map("map", {
+            center: [44.5883, 33.5228], // Севастополь
+            zoom: 12,
+            controls: ["zoomControl"],
+        });
+
+        // Add markers for each pickup point
+        pickupPoints.forEach((point) => {
+            const placemark = new ymaps.Placemark(
+                point.coordinates,
+                {
+                    balloonContent: `
+          <h3>${point.address}</h3>
+          <p>${point.hours}</p>
+        `,
+                },
+                {
+                    preset: "islands#blueCircleDotIcon",
+                }
+            );
+            myMap.geoObjects.add(placemark);
+        });
+    });
+
+    // Render pickup points list
+    function renderPickupPoints() {
+        const $pointsList = $(".pickup-points");
+
+        pickupPoints.forEach((point) => {
+            const $point = $(`
+      <div class="pickup-point" data-id="${point.id}">
+        <h3>${point.address}</h3>
+        <div class="hours">${point.hours}</div>
+        <button class="select-button">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.86967 10.5814L2.02184 7.82189C1.86839 7.67319 1.66027 7.58966 1.44325 7.58966C1.22624 7.58966 1.01811 7.67319 0.864661 7.82189C0.711208 7.97058 0.625 8.17226 0.625 8.38255C0.625 8.48667 0.646165 8.58977 0.687286 8.68597C0.728407 8.78217 0.788679 8.86958 0.864661 8.9432L4.29518 12.2674C4.61525 12.5775 5.13229 12.5775 5.45236 12.2674L14.1353 3.85355C14.2888 3.70485 14.375 3.50318 14.375 3.29289C14.375 3.0826 14.2888 2.88093 14.1353 2.73223C13.9819 2.58354 13.7738 2.5 13.5567 2.5C13.3397 2.5 13.1316 2.58354 12.9782 2.73223L4.86967 10.5814Z" fill="#2BB41F"/>
+            </svg>
+            Выбрать
+        </button>
+      </div>
+    `);
+
+            $pointsList.append($point);
+        });
+    }
+
+    // Search functionality
+    $(".search-box input").on("input", function () {
+        const searchText = $(this).val().toLowerCase();
+
+        $(".pickup-point").each(function () {
+            const address = $(this).find("h3").text().toLowerCase();
+            $(this).toggle(address.includes(searchText));
+        });
+    });
+
+    // Select pickup point
+    $(document).on("click", ".select-button", function (e) {
+        e.preventDefault();
+
+        if ($(this).hasClass("selected")) return;
+
+        $(".select-button").removeClass("selected");
+        $(this).addClass("selected");
+
+        const pointId = $(this).closest(".pickup-point").data("id");
+        const point = pickupPoints.find((p) => p.id === pointId);
+
+        $(".cart__delivery-about > span").text(point.address);
+        $(".cart__delivery-about > p").text(point.hours);
+    });
+
+    $(document).on("click", ".pickup-point", function () {
+        if ($(this).hasClass("selected")) return;
+
+        $(".pickup-point").removeClass("selected");
+        $(this).addClass("selected");
+
+        const pointId = $(this).data("id");
+        const point = pickupPoints.find((p) => p.id === pointId);
+
+        myMap.setCenter(point.coordinates, 16);
+
+        if ($(window).width() <= 767) {
+            $(".pickup-switch-btn").removeClass("active");
+            $(".pickup-switch-btn_map").addClass("active");
+            $(".pickup-map").addClass("active");
+        }
+    });
+
+    // Initialize
+    renderPickupPoints();
 });
