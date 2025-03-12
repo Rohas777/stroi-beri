@@ -23585,6 +23585,11 @@ textarea:active) > span {
     padding-bottom: clamp(21.875px, 11.6666666667vw, 70px);
   }
 
+  .pickup-popup {
+    padding: 0 !important;
+    height: 100svh;
+  }
+
   .pickup-popup__wrapper {
     width: clamp(323.125px, 172.3333333333vw, 1034px);
   }
@@ -23595,6 +23600,7 @@ textarea:active) > span {
 
   .pickup-popup__wrapper {
     width: 100% !important;
+    border-radius: 0;
   }
 
   .pickup-sidebar {
